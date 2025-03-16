@@ -31,6 +31,27 @@ namespace App.EndPoints.MVC.Controllers
 
         public async Task<IActionResult> Index()
 		{
+            string servicesCacheKey = "ServicesCachKey";
+            string categoriesCacheKey = "CategoriesCacheKey";
+            if (!_memoryCache.TryGetValue(servicesCacheKey, out List<Service> services))
+            {
+                services = await _serviceAppService.GetAll(default);
+                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30));
+                _memoryCache.Set(servicesCacheKey, services, cacheEntryOptions);
+            }
+            if (!_memoryCache.TryGetValue(categoriesCacheKey, out List<Category> categories))
+            {
+                categories = await _categoryAppService.GetAll(default);
+                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(10));
+                _memoryCache.Set(categoriesCacheKey, categories, cacheEntryOptions);
+            }
+            ViewBag.Categories = categories.Take(4).ToList();
+            var model = services.Take(3).ToList();
+            return View(model);
+        }
+
+		public async Task<IActionResult> Categories()
+		{
             string categoriesCacheKey = "CategoriesCacheKey";
             if (!_memoryCache.TryGetValue(categoriesCacheKey, out List<Category> categories))
             {
@@ -39,18 +60,6 @@ namespace App.EndPoints.MVC.Controllers
                 _memoryCache.Set(categoriesCacheKey, categories, cacheEntryOptions);
             }
             var model = categories;
-            return View(model);
-        }
-
-		public async Task<IActionResult> Services()
-		{
-            string servicesCacheKey = "ServicesCachKey";
-            if (!_memoryCache.TryGetValue(servicesCacheKey, out List<Service> model))
-            {
-                model = await _serviceAppService.GetAll(default);
-                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30));
-                _memoryCache.Set(servicesCacheKey, model, cacheEntryOptions);
-            }
             return View(model);
         }
 

@@ -1,66 +1,76 @@
-﻿@model List<App.Domain.Core.Entities.Services.Category>
-
+﻿@model List<App.Domain.Core.Entities.Services.Service>
 
 @{
     ViewData["Title"] = "Home";
     Layout = "_Layout";
 }
-
-<!-- Hero Section -->
-<div class="hero-section py-5 mb-4" style="background: linear-gradient(rgba(40,167,69,0.8), rgba(33,136,56,0.6));
-                                               background-size: cover;
-                                               background-position: center;
-                                               clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);">
-    <div class="container text-center text-white py-5">
-        <h1 class="display-4 mb-4">راحت انجام می شه</h1>
-        <p class="lead mb-4">جستجوی خدمات مورد نظر</p>
-        <div class="search-container mx-auto" style="max-width: 600px;">
-            <div class="input-group">
-                <input type="text" class="form-control form-control-lg" placeholder="دنبال چه می گردید؟">
-                <button class="btn btn-lg btn-light" type="button">جستجو</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<section class="space min gray">
+<section class="feature_section">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                <div class="sec_title position-relative text-center mb-5">
-                    <h6 class="theme-cl">دسته بندی‌ها</h6>
-                </div>
-            </div>
-        </div>
-        <!-- row -->
-
-        <div class="row align-items-center">
-            @foreach (var item in Model)
+        <div class="feature_container">
+            @foreach (var category in ViewBag.Categories) 
             {
-                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">
-                    <div class="cats-wrap text-center">
-                        <a asp-action="SubCategories" asp-route-id="@item.Id" class="Goodup-catg-wrap">
-                            <div class="Goodup-catg-icon"><img style="width:50%" src="@item.Image" /></div>
-                            <div class="Goodup-catg-caption">
-                                <h4 class="fs-md mb-0 ft-medium m-catrio">@item.Title</h4>
-                            </div>
-                        </a>
+                <div class = "box">
+                    <div class = "img-box">
+                        @if (!string.IsNullOrEmpty(category.Image))
+                        {
+                            <img src="@category.Image" alt="@category.Title" height = "50" width = "50"/>
+                        }
+                        else
+                        {
+                            <svg><!-- Add a placeholder SVG here --></svg>
+                        }
                     </div>
+                    <h5 class = "name">
+                        @category.Title
+                    </h5>
                 </div>
             }
+            <div class = "box">
+                <div class = "img-box">
+                    <a href="">
+                        بیشتر   
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<section class="service_section layout_padding">
+    <div class="container ">
+        <div class="heading_container heading_center">
+            <h2> خدمات </h2>
+        </div>
+        <div class="row">
+           @foreach (var service in Model){
+                <div class="col-sm-6 col-md-4 mx-auto">
+                    <div class = "box" >
+                        <div class = "img-box">
+                            <img src = "@service.Image" alt = "Service Picture" />
+                        </div>
+                        <div class="detail-box">
+                            <h5>
+                                @service.Title
+                            </h5>
+                            <p>
+                                @service.Description
+                            </p>
+                        </div>
+                    </div>
+                </div>
+           }
+        </div>
+        <div class="btn-box">
+            <a href="">
+                بیشتر
+            </a>
         </div>
     </div>
 </section>
 
-<!-- Call-to-Action Section -->
-<section>
-<div class="bg-light py-5">
-    <div class="container text-center">
-        <h2>آیا تا به حال عضو نشده اید؟?</h2>
-        <a href="/Account/Register" class="btn btn-primary btn-lg mt-3">همین حالا ثبت کنید</a>
-    </div>
-</div>
-</section>
+
+
 
 
 
