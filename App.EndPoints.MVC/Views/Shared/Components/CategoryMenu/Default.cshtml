@@ -10,11 +10,11 @@
             @foreach (var category in Model)
             {
                 <li class="dropdown-submenu">
-                    <a class="dropdown-item" asp-controller="Services" asp-action="Index" asp-route-categoryId="@category.Id">@category.Title</a>
+                    <a class="dropdown-item" asp-controller = "Services" asp-action = "Index" asp-route-categoryId = "@category.Id">@category.Title</a>
                     <ul class="dropdown-menu">
                         @foreach (var subcategory in category.Subcategories)
                         {
-                            <li><a class="dropdown-item" asp-controller="Services" asp-action="Details" asp-route-subcategoryId="@subcategory.Id">@subcategory.Title</a></li>
+                            <li><a class="dropdown-item" asp-controller = "Services" asp-action = "Details" asp-route-subcategoryId = "@subcategory.Id">@subcategory.Title</a></li>
                         }
                     </ul>
                 </li>

@@ -71,12 +71,12 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 
         public async Task Update(UpdateExpertDto expert,CancellationToken cancellation)
 		{
-			var expertToEdit = await _context.Experts.FindAsync(expert.Id, cancellation);
+			var expertToEdit = await _context.Experts.FirstOrDefaultAsync(x => x.Id == expert.Id, cancellation);
 			if (expertToEdit != null)
 			{
-				//expertToEdit.UserName = expert.Username;
-				//expertToEdit.Email = expert.Email;
-				//expertToEdit.ProfilePicture = expert.ImagePath;
+				expertToEdit.AppUser.UserName = expert.Username;
+				expertToEdit.AppUser.Email = expert.Email;
+				expertToEdit.AppUser.ProfilePicture = expert.ImagePath;
 				expertToEdit.PhoneNumber = expert.PhoneNumber;
 				expertToEdit.FullName = expert.FullName;
 				await _context.SaveChangesAsync(cancellation);

@@ -1,6 +1,7 @@
 ﻿using App.Domain.Core.Contract.AppService;
 using App.Domain.Core.Contract.Services;
 using App.Domain.Core.DTOs.ExpertDto;
+using App.Domain.Core.Entities.Services;
 using App.Domain.Core.Entities.User;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,16 @@ namespace App.Domain.Services.AppServices
     public class ExpertAppService : IExpertAppService
     {
         private readonly IExpertService _expertService;
+        private readonly IReviewService _reviewService;
+        private readonly IUtilityService _utilityService;
 
-        public ExpertAppService(IExpertService expertService)
+        public ExpertAppService(IExpertService expertService,
+                                IReviewService reviewService,
+                                IUtilityService utilityService)
         {
             _expertService = expertService;
+            _reviewService = reviewService;
+            _utilityService = utilityService;
         }
 
         public async Task ChangeStatus(int id, CancellationToken cancellationToken)
@@ -44,13 +51,27 @@ namespace App.Domain.Services.AppServices
             return await _expertService.Get(id,cancellationToken);
         }
 
+        public async Task<Expert> GetExpertByUserId(int userId, CancellationToken cancellationToken)
+        {
+            var Experts = await _expertService.GetAll(default);
+            return (Expert)Experts.Where(e => e.AppUserId == userId).FirstOrDefault();
+        }
+
         public async Task<Expert> GetExpertInfo(int id, CancellationToken cancellationToken)
         {
             return await _expertService.GetExpertInfo(id,cancellationToken);
         }
 
+        public async Task<List<Review>> GetExpertReview(int Id, CancellationToken cancellationToken)
+        {
+            var reviews = await _reviewService.GetAll(default);
+            return reviews.Where(x => x.ServiceOffering.ExpertId == Id).ToList();
+        }
+
         public async Task Update(UpdateExpertDto updateExpertDto, CancellationToken cancellationToken)
         {
+            var imagePath = await _utilityService.UploadImage(updateExpertDto.Image);
+            updateExpertDto.ImagePath = imagePath;
             await _expertService.Update(updateExpertDto,cancellationToken);
         }
     }

@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\ClientPanel\PreviousPanel\js\" />
+    <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 

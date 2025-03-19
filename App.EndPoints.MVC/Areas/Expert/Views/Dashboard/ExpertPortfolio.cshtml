@@ -1,0 +1,155 @@
+﻿@using FrameWork;
+@model List<App.Domain.Core.Entities.Services.Review>
+
+@{
+    ViewData["Title"] = "پورتفوی کارشناس";
+    Layout = "_Layout"; 
+}
+
+
+<style>
+        
+        /* Card enhancements */
+        .card {
+            border: none;
+            border-radius: 10px;
+            transition: box-shadow 0.3s ease;
+        }
+
+            .card:hover {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+        /* Header styling */
+        .card-header {
+            background-color: #e9ecef;
+            border-bottom: none;
+            font-weight: 600;
+            padding: 1rem;
+        }
+
+        /* Expert Profile Specifics */
+        .expert-profile ul li {
+            padding: 5px 0;
+            border-bottom: 1px dashed #dee2e6;
+        }
+
+            .expert-profile ul li:last-child {
+                border-bottom: none;
+            }
+
+        .profile-picture {
+            border: 3px solid #dee2e6;
+        }
+
+        /* Reviews List */
+        .list-group-item {
+            background-color: #f8f9fa;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background-color 0.2s ease;
+        }
+
+            .list-group-item:hover {
+                background-color: #e2e6ea;
+            }
+
+        .badge {
+            font-size: 0.85rem;
+        }
+
+        /* Star Rating Styles */
+        .star {
+            font-size: 1.2rem;
+            color: #ffc107; /* Golden color for stars */
+            margin-right: 2px;
+        }
+    </style>
+
+
+<div class="container my-4">
+    <div class="row">
+        <!-- Left Column: Expert Profile Summary -->
+        <div class="col-lg-4 col-md-12 mb-4">
+            <div class="card shadow-sm expert-profile">
+                <div class="card-header text-center">
+                    <h5 class="card-title">پروفایل کارشناس</h5>
+                </div>
+                <div class="card-body text-center">
+                    @if (ViewBag.Expert.AppUser.ProfilePicture == null)
+                    {
+                        <div class="rounded-circle bg-secondary mx-auto mb-3 profile-picture" style="width:120px; height:120px;"></div>
+                    }
+                    else
+                    {
+                        <img src="@ViewBag.Expert.AppUser.ProfilePicture" alt="Profile Picture" class="rounded-circle mb-3 profile-picture" style="width:120px; height:120px; object-fit:cover;" />
+                    }
+                    <h5>@ViewBag.Expert.FullName</h5>
+                    <p>جنسیت: @ViewBag.Expert.Gender</p>
+                    <hr />
+                    <h6>تخصص‌ها</h6>
+                    <ul class="list-unstyled">
+                        @foreach (var skill in ViewBag.Expert.Services)
+                        {
+                            <li>@skill.Title</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Reviews Section -->
+        <div class="col-lg-8 col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="card-title">نظرات دریافتی</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var review in Model)
+                            {
+                                <div class="list-group-item">
+                                    <div class="d-flex justify-content-between flex-wrap">
+                                        <!-- Left: Client Info and Rating -->
+                                        <div>
+                                            <h6 class="mb-1">@review.Client.FullName</h6>
+                                            <div>
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    if (i <= review.Rating)
+                                                    {
+                                                        <span class="star">&#9733;</span> 
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="star">&#9734;</span> 
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        <!-- Right: Review Date and Status -->
+                                        <div>
+                                            <small>@review.ReviewDate.ToString("yyyy/MM/dd")</small>
+                                            <br />
+                                            <span class="badge bg-primary">
+                                                @(review.IsApproved ? "تایید شده" : "در انتظار تایید")
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <p class="mb-1">"@review.Comment"</p>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">هیچ نظری ثبت نشده است.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

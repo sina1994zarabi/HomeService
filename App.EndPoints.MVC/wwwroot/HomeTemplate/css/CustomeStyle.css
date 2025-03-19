@@ -1,0 +1,30 @@
+﻿/* 1. Set the layout as RTL */
+html {
+    direction: rtl;
+}
+
+/* Optionally, ensure that text aligns to the right by default.
+   Although many elements will inherit the RTL direction,
+   you may need to adjust text alignment for specific sections. */
+body {
+    text-align: right;
+    /* 2. Apply the custom hosted font globally */
+    font-family: Vazir, Arial, sans-serif;
+}
+
+/* 3. Add hosted fonts using @font-face */
+@font-face {
+    font-family: 'Vazir';
+    src: url('../fonts/Vazir-Bold.woff2') format('woff2'),
+        url('../fonts/Vazir-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+
+/* Additional style examples (if needed) */
+.container {
+    /* Ensure that even containers respect the RTL layout */
+    direction: inherit; /* This will inherit the rtl direction from the html element */
+}

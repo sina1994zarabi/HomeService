@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - Expert Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/css/expert.css">
+    <link rel="stylesheet" href="~/css/Expert.css">
     @RenderSection("Scripts", required: false)
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Expert Dashboard</a>
+        <a class="navbar-brand" href="#">پنل کارشناس</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Home", new { area = "" })">Home</a>
+                    <a class="nav-link" asp-area = "" asp-controller = "Home" asp-action = "Index" >خانه</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Logout", "Account", new { area = "" })">Logout</a>
+                    <a class="nav-link" asp-area = "Account" asp-controller = "Account" asp-action = "LogOut">خروج</a>
                 </li>
             </ul>
         </div>
@@ -32,18 +32,18 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="@Url.Action("Index", "Dashboard", new { area = "Expert" })">
-                                Dashboard
+                            <a class="nav-link active" asp-controller = "Dashboard" asp-action = "Profile">
+                                مشخصات
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Requests", "Dashboard", new { area = "Expert" })">
-                                My Requests
+                            <a class="nav-link" asp-controller = "ServiceOfferings" asp-action = "Index">
+                                پیشنهادات من
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Profile", "Dashboard", new { area = "Expert" })">
-                                Profile
+                            <a class="nav-link" asp-controller="Dashboard" asp-action="ExpertPortfolio">
+                                پروفایل
                             </a>
                         </li>
                     </ul>

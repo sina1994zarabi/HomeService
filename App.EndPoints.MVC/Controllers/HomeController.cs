@@ -45,9 +45,9 @@ namespace App.EndPoints.MVC.Controllers
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(10));
                 _memoryCache.Set(categoriesCacheKey, categories, cacheEntryOptions);
             }
-            ViewBag.Categories = categories.Take(4).ToList();
-            var model = services.Take(3).ToList();
-            return View(model);
+            ViewBag.Services = services.Take(3);
+            var model = categories.Take(4).ToList();
+			return View(model);
         }
 
 		public async Task<IActionResult> Categories()
