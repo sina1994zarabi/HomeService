@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.Contract.AppService;
 using App.Domain.Core.Contract.Repository;
+using App.Domain.Core.DTOs.ServiceRequestDto;
 using App.Domain.Core.Entities.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,11 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             return View(model);
         }
 
-		
+		public async Task<IActionResult> SubmitRequest(int Id)
+		{
+			return View();
+		}
 
+		
     }
 }
