@@ -1,6 +1,6 @@
 ﻿@using App.Domain.Core.Entities.User;
 @using Microsoft.AspNetCore.Identity;
-@model List<App.Domain.Core.Entities.Services.Category>
+@model List<App.Domain.Core.Entities.Services.Category>;
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
@@ -15,7 +15,7 @@
 			<div class="menu-content pb-60 col-lg-10">
 				<div class="title text-center">
 					<h1 class="mb-10">دسته بندی ها</h1>
-					<p>از میان دسته بندی های زیر خدمات مورد نیاز خود را پبیدا کنید</p>
+					<p>از میان دسته بندی های زیر خدمات مورد نیاز خود را پیدا کنید</p>
 				</div>
 			</div>
 		</div>
@@ -24,55 +24,67 @@
 			{
 				<div class = "col-lg-2 col-md-4 col-sm-6">
 					<div class="single-fcat">
-						<a href = "">
-							<img src="@cat.Image" alt="" height = "50" width = "50">
+						<a asp-action = "Subcategories" asp-route-id = "@cat.Id">
+							<img src = "@cat.Image" alt="" height = "50" width = "50">
 						</a>
-						<p>@cat.Title</p>
+						<p> @cat.Title </p>
 					</div>
-				</div>
+				</div>   
 			}
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <div class="single-fcat">
+                    <a href="">
+                        <img src="~/HomeTemplate/img/o3.png" alt="" height="50" width="50">
+                    </a>
+                    <p >بیشتر</p>
+                </div>
+            </div>
 		</div>
 	</div>
 </section>
-<section class = "feature-cat-area pt-100" id = "service">
-    <div class = "container">
-        <div class = "container mt-5">
-            <div class = "row">
-                @foreach (var service in ViewBag.Services)
-                    {
-                        <div class = "col-md-4 mb-4">
-                            <div class = "card h-100">
-                            @if (!string.IsNullOrEmpty(service.Image))
-                            {
-                                <img src="@service.Image" class="card-img-top" alt="@service.Title" />
-                            }
-                            else
-                            {
-                                <img src="" class="card-img-top" alt="" />
-                            }
 
-                            <div class = "card-body">
-                                <h5 class = "card-title">@service.Title</h5>
-                                <p class = "card-text">@service.Description</p>
-                            </div>
-                            <div class="card-footer">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-muted">قیمت: @service.Price.ToString("C")</span>
-                                <a href="@Url.Action("Details", "Services", new { id = service.Id })" class="btn btn-sm btn-primary">جزییات</a>
-                            </div>
-                            </div>
-                        </div>
-                </div>
-                }
-                <div class="col-12 text-center">
-                    <a asp-controller = "" asp-action = "" class="btn btn-primary mt-3">
-                    مشاهده همه      
-                    </a>
-                </div>
-            </div>
+
+<div class = "container py-5">
+  <h1 class = "mb-10" style = "text-align:center">خدمات</h1>
+  <div class = "row">
+    @foreach(var service in ViewBag.Services)
+    {
+      <div class="col-md-4 d-flex mb-4">
+        <div class="card w-100">
+          @if(!string.IsNullOrEmpty(service.Image))
+          {
+            <img src = "@service.Image" 
+                 class = "card-img-top" 
+                 alt = "@service.Title" 
+                 style = "height: 200px; object-fit: cover;" />
+          }
+          else
+          {
+           @* <img src = "~/Uploads/Untitled.png" 
+                 class = "card-img-top" 
+                 alt = "Default Service Image" 
+                 style = "height: 200px; object-fit: cover;" />*@
+             <span class="text-muted">بدون عکس</span>
+          }
+          
+          <div class="card-body text-center">
+            <h4 class="card-title">@service.Title</h4>
+          </div>
+          
+          <div class="card-footer text-center">
+            <a asp-controller = "Service" asp-action = "Details" asp-route-id = "@service.Id" 
+               class="btn btn-primary">
+              جزییات
+            </a>
+          </div>
         </div>
-    </div>
-</section>
+      </div>
+    }
+        <a asp-controller = "Service" asp-action = "Index"><p class="btn btn-primary">مشاهده همه</p></a>
+  </div>
+</div>
+
+
 
 
 

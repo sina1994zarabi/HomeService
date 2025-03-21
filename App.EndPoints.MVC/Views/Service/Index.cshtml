@@ -1,0 +1,46 @@
+﻿@model List<App.Domain.Core.Entities.Services.Service>
+
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <h1 class="mb-10" style="text-align:center">خدمات</h1>
+    <div class="row">
+        @foreach (var service in Model)
+        {
+            <div class="col-md-4 d-flex mb-4">
+                <div class="card w-100">
+                    @if (!string.IsNullOrEmpty(service.Image))
+                    {
+                        <img src="@service.Image"
+                             class="card-img-top"
+                             alt="@service.Title"
+                             style="height: 200px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        @* <img src = "~/Uploads/Untitled.png"
+                            class = "card-img-top"
+                            alt = "Default Service Image"
+                            style = "height: 200px; object-fit: cover;" /> *@
+                        <span class="text-muted">بدون عکس</span>
+                    }
+
+                    <div class="card-body text-center">
+                        <h4 class="card-title">@service.Title</h4>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <a asp-controller="Service" asp-action="Details" asp-route-id="@service.Id"
+                           class="btn btn-primary">
+                            جزییات
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

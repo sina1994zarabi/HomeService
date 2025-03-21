@@ -69,7 +69,9 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 								 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task Update(UpdateExpertDto expert,CancellationToken cancellation)
+
+
+		public async Task Update(UpdateExpertDto expert,CancellationToken cancellation)
 		{
 			var expertToEdit = await _context.Experts.FirstOrDefaultAsync(x => x.Id == expert.Id, cancellation);
 			if (expertToEdit != null)

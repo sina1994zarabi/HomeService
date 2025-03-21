@@ -1,0 +1,56 @@
+﻿@using App.Domain.Core.Enums;
+@using FrameWork;
+@using App.Domain.Core.Entities.Services;
+@model List<App.Domain.Core.Entities.Services.ServiceRequest>
+
+@{
+    ViewData["Title"] = "خدمات تکمیل شده";
+    Layout = "_Layout"; // Ensure this matches your client/expert layout
+}
+
+@functions {
+    // Function to return a Bootstrap badge class for different statuses
+    string GetStatusBadgeClass(StatusEnum status)
+    {
+        return status == StatusEnum.Completed ? "bg-success" : "bg-secondary";
+    }
+}
+
+<div class="container my-4">
+    <h2 class="text-center mb-4">خدمات تکمیل شده</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered text-center">
+            <thead class="table-light">
+                <tr>
+                    <th>عنوان خدمت</th>
+                    <th>نام مشتری</th>
+                    <th>نام کارشناس</th>
+                    <th>تاریخ تکمیل</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    var expert = request.ServiceOfferings.FirstOrDefault()?.Expert;
+                    <tr>
+                        <td>@request.Service.Title</td>
+                        <td>@request.Client.FullName</td>
+                        <td>@(expert != null ? expert.FullName : "نامشخص")</td>
+                        <td>@request.BookingDate.ToPersianString()</td>
+                        <td>
+                            <span class="badge @GetStatusBadgeClass(request.Status)">
+                                @request.Status.ToFarsiStatus()
+                            </span>
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@request.Id" class="btn btn-info btn-sm">مشاهده</a>
+                            <a asp-action="Review" asp-route-id="@request.Id" class="btn btn-primary btn-sm">ثبت نظر</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

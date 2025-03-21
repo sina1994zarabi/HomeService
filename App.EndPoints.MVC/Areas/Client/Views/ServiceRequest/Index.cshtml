@@ -1,0 +1,79 @@
+﻿@using App.Domain.Core.Enums;
+@using FrameWork;
+@using App.Domain.Core.Entities.Services;
+@model List<App.Domain.Core.Entities.Services.ServiceRequest>
+
+@{
+    ViewData["Title"] = "درخواست‌های خدمات";
+    Layout = "_Layout"; 
+}
+
+@functions {
+    // Helper function to return a Bootstrap badge class based on the status enum
+    string GetStatusBadgeClass(StatusEnum status)
+    {
+        switch (status)
+        {
+            case StatusEnum.AwaitingOffers:
+                return "bg-info";
+            case StatusEnum.PendingClientConfirmation:
+                return "bg-warning";
+            case StatusEnum.PendingProviderConfirmation:
+                return "bg-secondary";
+            case StatusEnum.InProgress:
+                return "bg-primary";
+            case StatusEnum.Completed:
+                return "bg-success";
+            case StatusEnum.AwaitingPayment:
+                return "bg-dark";
+            case StatusEnum.Paid:
+                return "bg-success";
+            case StatusEnum.Cancelled:
+                return "bg-danger";
+            default:
+                return "bg-secondary";
+        }
+    }
+}
+
+<div class = "container my-4" dir = "rtl">
+    <h2 class="text-center mb-4">درخواست‌های خدمات</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th class="text-end">عنوان درخواست</th>
+                    <th class="text-end">توضیحات</th>
+                    <th class="text-end">تاریخ رزرو</th>
+                    <th class="text-end">وضعیت</th>
+                    <th class="text-end">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td class="text-end">@request.Title</td>
+                        <td class="text-end">@request.Description</td>
+                        <td class="text-end">@request.BookingDate.ToString("yyyy/MM/dd")</td>
+                        <td class="text-end">
+                            <span class="badge @GetStatusBadgeClass(request.Status)">
+                                @request.Status.ToFarsiStatus()
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@request.Id" class="btn btn-sm btn-primary">مشاهده جزییات</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<style>
+    /* Ensure both header and body cells are right aligned */
+    .table th,
+    .table td {
+        text-align: right;
+    }
+</style>

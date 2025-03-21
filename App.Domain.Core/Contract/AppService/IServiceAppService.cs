@@ -14,6 +14,7 @@ namespace App.Domain.Core.Contract.AppService
         Task Create(CreateServiceDto createServiceDto,CancellationToken cancellationToken,IFormFile Image);
         Task<Service> GetById(int id, CancellationToken cancellationToken);
         Task<List<Service>> GetAll(CancellationToken cancellationToken);
+        Task<List<Service>> GetServicesBySubCategory(int subCategoryId, CancellationToken cancellationToken);   
         Task Delete(int id, CancellationToken cancellationToken);
         Task Update(UpdateServiceDto updateServiceDto, CancellationToken cancellationToken,IFormFile Image);
 

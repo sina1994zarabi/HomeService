@@ -68,7 +68,8 @@ namespace App.Domain.Services.AppServices
             return reviews.Where(x => x.ServiceOffering.ExpertId == Id).ToList();
         }
 
-        public async Task Update(UpdateExpertDto updateExpertDto, CancellationToken cancellationToken)
+
+		public async Task Update(UpdateExpertDto updateExpertDto, CancellationToken cancellationToken)
         {
             var imagePath = await _utilityService.UploadImage(updateExpertDto.Image);
             updateExpertDto.ImagePath = imagePath;

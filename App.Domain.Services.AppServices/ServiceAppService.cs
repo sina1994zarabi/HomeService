@@ -45,6 +45,12 @@ namespace App.Domain.Services.AppServices
             return await _serviceService.Get(id,cancellationToken);
         }
 
+        public async Task<List<Service>> GetServicesBySubCategory(int subCategoryId, CancellationToken cancellationToken)
+        {
+            var services = await _serviceService.GetAll(cancellationToken);
+            return services.Where(x => x.SubCategoryId == subCategoryId).ToList();
+        }
+
         public async Task Update(UpdateServiceDto updateServiceDto, CancellationToken cancellationToken,IFormFile Image)
         {
             var ImagePath = await _utilityService.UploadImage(Image);

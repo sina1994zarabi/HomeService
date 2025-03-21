@@ -8,7 +8,6 @@ namespace App.EndPoints.MVC.Areas.Account.Controllers
     
     public class AccountController : Controller
     {
-
         private readonly IAccountAppService _accountAppService;
         private readonly IClientAppService _clientAppService;
         private readonly IExpertAppService _expertAppService;

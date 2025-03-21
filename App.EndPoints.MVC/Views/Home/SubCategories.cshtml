@@ -5,40 +5,20 @@
     Layout = "_Layout";
 }
 
-<section class="gray py-5">
-    <div class="container">
-        <div class="row">
-
-            <!-- Home Services Start -->
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="hotels" style="padding-left: 0;">
-                <div class="row justify-content-center gx-3">
-                    @foreach (var subcategory in Model)
-                    {
-                        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6">
-                            <div class="cats-wrap text-center" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                                <a href="/ListHomeService?category=@subcategory.Id" class="Goodup-catg-wrap">
-                                    <div class="Goodup-sng-menu-thumb">
-                                        @if (!string.IsNullOrEmpty(subcategory.ImagePath))
-                                        {
-                                            <img src="@subcategory.ImagePath" class="img-fluid" alt="Category Image" width="50" height="50" />
-                                        }
-                                        else
-                                        {
-                                            <span>بدون عکس</span>
-                                        }
-                                    </div>
-                                    <div class="Goodup-catg-caption">
-                                        <h4 class="fs-md mb-0 ft-medium m-catrio">عنوان: @subcategory.Title</h4>
-                                    </div>
-                                    <div class="Goodup-catg-caption">
-                                        <h4 class="fs-md mb-0 ft-medium m-catrio">دسته بندی: @subcategory.Category.Title</h4>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
+<section class="feature-cat-area pt-100" id="category">
+	<div class="container">
+		<div class="row">
+			@foreach (var subCat in Model)
+			{
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="single-fcat">
+						<a asp-action="Services" asp-route-id ="@subCat.Id">
+							<img src="@subCat.ImagePath" alt="" height="50" width="50">
+						</a>
+						<p> @subCat.Title </p>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
 </section>
