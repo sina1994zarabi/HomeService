@@ -73,7 +73,10 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 
 		public async Task Update(UpdateExpertDto expert,CancellationToken cancellation)
 		{
-			var expertToEdit = await _context.Experts.FirstOrDefaultAsync(x => x.Id == expert.Id, cancellation);
+			var expertToEdit = await _context.Experts.
+											  Include(x => x.AppUser).
+											  FirstOrDefaultAsync(x => x.Id == expert.Id,
+											  cancellation);
 			if (expertToEdit != null)
 			{
 				expertToEdit.AppUser.UserName = expert.Username;

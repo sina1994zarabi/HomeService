@@ -4,36 +4,27 @@
 
 
 @{
-    ViewData["Title"] = "Expert Profile";
-    Layout = "_Layout";
+	ViewData["Title"] = "پروفایل من";
+	Layout = "_Layout";
 }
 
-<h2>مشخصات پروفایل</h2>
-
-<div class="card">
-    <div class="card-header text-center">
-        @if (!string.IsNullOrEmpty(Model.ProfilePicture))
-        {
-            <img src="@Model.ProfilePicture" alt = "Profile Picture" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" />
-        }
-        else if (Model.Gender == Gender.male)
-        {
-            <img src="~/Uploads/maleProfilePicture.jpg" alt = "Male Logo" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" />
-        }
-        else
-        {
-            <img src="~/Uploads/femaleProfilePicture.png" alt = "female Logo" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" />
-        }
-        <h3>@Model.FullName</h3>
-    </div>
-    <div class="card-body">
-        <p><strong>ایمیل: </strong> @Model.Email</p>
-        <p><strong>شماره تماس: </strong> @Model.PhoneNumber</p>
-        <p><strong>نام کاربری: </strong> @Model.UserName</p>
-        <p><strong>تاریخ ثبت نام: </strong> @Model.DateRegistered.ToPersianString("MMMM dd, yyyy")</p>
-        <p><strong>موجودی حساب: </strong> @Model.AccountBalance</p>
-    </div>
+<div class="container my-5 d-flex justify-content-center">
+	<div class="card profile-card shadow-sm" style="max-width: 600px; width: 100%;">
+		<div class="card-header text-center bg-light">
+			@if (string.IsNullOrEmpty(Model.ProfilePicture))
+			{
+				<img src="~/ClientPanel/images/default-profile.png" alt="Profile Picture" class="rounded-circle" style="width:150px; height:150px; object-fit: cover;" />
+			}
+			else
+			{
+				<img src="@Model.ProfilePicture" alt="Profile Picture" class="rounded-circle" style="width:150px; height:150px; object-fit: cover;" />
+			}
+		</div>
+		<div class="card-body text-center">
+			<h3 class="mb-3">@Model.FullName</h3>
+			<p class="mb-1">ایمیل: @Model.Email</p>
+			<p class="mb-3">شماره تماس: @Model.PhoneNumber</p>
+			<a class="btn btn-primary" asp-action="EditProfile" asp-route-id="@Model.Id">ویرایش پروفایل</a>
+		</div>
+	</div>
 </div>
-
-<a asp-action = "Index" class="btn btn-secondary">بازگشت</a>
-<a asp-action = "EditProfile" class="btn btn-primary">ویرایش پروفایل</a>

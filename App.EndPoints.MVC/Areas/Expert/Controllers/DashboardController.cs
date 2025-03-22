@@ -66,6 +66,5 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             var model = await _expertAppService.GetExpertReview(expert.Id, default);
             return View(model);
         }
-
     }
 }

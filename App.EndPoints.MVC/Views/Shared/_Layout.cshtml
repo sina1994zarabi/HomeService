@@ -71,13 +71,24 @@
 						}
 						else
 						{
-							<li >
-								<a asp-area = "Client" asp-controller = "Dashboard" asp-action = "Index">
+							@if (User.IsInRole("Client"))
+							{
+								<li >
+									<a asp-area = "Client" asp-controller = "Dashboard" asp-action = "Index">
 									<span class="ticker-btn">@User.Identity.Name</span>
 								</a>
-							</li>
+								</li>
+							}
+							else if (User.IsInRole("Expert"))
+							{
+								<li>
+									<a asp-area = "Expert" asp-controller = "Dashboard" asp-action = "Index">
+										<span class="ticker-btn">@User.Identity.Name</span>
+									</a>
+								</li>
+							}
 							<li >
-								<a class="ticker-btn" asp-area="Account" asp-controller="Account" asp-action="LogOut">خروج</a>
+								<a class = "ticker-btn" asp-area = "Account" asp-controller = "Account" asp-action = "LogOut">خروج</a>
 							</li>
 						}
 					</ul>
