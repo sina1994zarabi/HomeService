@@ -43,7 +43,7 @@
 									{
 										@if (User.IsInRole("Client"))
 										{
-											<a asp-controller="ServiceRequest" asp-action="SubmitRequest" asp-route-id="@service.Id" class="btn btn-sm btn-primary">درخواست</a>
+											<a asp-area = "Client" asp-controller="ServiceRequest" asp-action="SubmitRequest" asp-route-id="@service.Id" class="btn btn-sm btn-primary">درخواست</a>
 										}
 										else if (User.IsInRole("Expert"))
 										{

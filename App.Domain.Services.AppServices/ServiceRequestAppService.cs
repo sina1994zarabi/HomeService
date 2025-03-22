@@ -20,7 +20,12 @@ namespace App.Domain.Services.AppServices
             _serviceRequestService = serviceRequestService;
         }
 
-		public async Task ChangeStatus(StatusEnum status, int id, CancellationToken cancellationToken)
+        public async Task AcceptOffer(int requestId, int offerId,CancellationToken cancellationToken)
+        {
+            await _serviceRequestService.AcceptOffer(requestId,offerId,cancellationToken);
+        }
+
+        public async Task ChangeStatus(StatusEnum status, int id, CancellationToken cancellationToken)
 		{
 			await _serviceRequestService.ChangeStatus(status,id,cancellationToken);
 		}

@@ -2,6 +2,7 @@
 using App.Domain.Core.DTOs.ServiceRequestDto;
 using App.Domain.Core.Entities.Services;
 using App.Domain.Core.Enums;
+using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,24 @@ namespace App.Infra.DataAccess.EfCore.Repositories
         public ServiceRequestRepository(AppDbContext context)
         {
 			_context = context;
+        }
+
+        public async Task AcceptOffer(int serviceRequestId, int serviceOfferingId, CancellationToken cancellationToken)
+        {
+			var request = await _context.ServiceRequests
+										.Include(r => r.ServiceOfferings)
+										.FirstOrDefaultAsync(r => r.Id == serviceRequestId);
+            var selectedOffer = request.ServiceOfferings.FirstOrDefault(o => o.Id == serviceOfferingId);
+            request.Status = StatusEnum.PendingProviderConfirmation;
+            selectedOffer.Status = StatusEnum.PendingProviderConfirmation;
+            foreach (var offer in request.ServiceOfferings)
+            {
+                if (offer.Id != serviceOfferingId)
+                {
+                    offer.Status = StatusEnum.Cancelled;
+                }
+            }
+            await _context.SaveChangesAsync();
         }
 
         public async Task Add(CreateServiceRequestDto serviceRequest,CancellationToken cancellationToken)

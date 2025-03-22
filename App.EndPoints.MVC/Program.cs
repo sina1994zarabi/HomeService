@@ -86,6 +86,7 @@ builder.Services.AddScoped<IServiceRequestAppService, ServiceRequestAppService>(
 
 builder.Services.AddScoped<IServiceOfferingRepository, ServiceOfferingRepository>();
 builder.Services.AddScoped<IServiceOfferingService, ServiceOfferingService>();
+builder.Services.AddScoped<IServiceOfferingAppService, ServiceOfferingAppService>();
 
 
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();

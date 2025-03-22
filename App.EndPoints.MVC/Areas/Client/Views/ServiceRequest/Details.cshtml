@@ -1,0 +1,62 @@
+﻿@using App.Domain.Core.Enums;
+@using FrameWork;
+@using App.Domain.Core.Entities.Services;
+@model ServiceRequest
+
+@{
+    ViewData["Title"] = "جزئیات درخواست";
+    Layout = "_Layout";
+}
+
+<div class="container my-4">
+    <h2 class="text-center mb-4">جزئیات درخواست خدمات</h2>
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+            <h5>@Model.Title</h5>
+        </div>
+        <div class = "card-body">
+            <p><strong>توضیحات:</strong> @Model.Description</p>
+            <p><strong>تاریخ رزرو:</strong> @Model.BookingDate.ToString("yyyy/MM/dd")</p>
+            <p><strong>وضعیت:</strong> <span class = "badge bg-primary">@Model.Status.ToFarsiStatus()</span></p>
+        </div>
+    </div>
+    <h4 class = "mb-3">پیشنهادهای دریافتی</h4>
+    @if (Model.ServiceOfferings != null && Model.ServiceOfferings.Any())
+    {
+        <div class = "list-group">
+            @foreach (var offer in Model.ServiceOfferings)
+            {
+                <div class = "list-group-item mb-2">
+                    <div class = "d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <h6 class="mb-1">پیشنهاد از: @offer.Expert.FullName</h6>
+                            <p class="mb-1">توضیحات: @offer.Description</p>
+                            <p class="mb-1">تاریخ پیشنهاد: @offer.CreatedAt.ToPersianString()</p>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-info">@offer.Status.ToFarsiStatus()</span>
+                        </div>
+                    </div>
+                    @if (Model.Status == StatusEnum.AwaitingOffers)
+                    {
+                        <div class="mt-2 text-center">
+                            <form asp-action = "AcceptOffer" method = "post" class="d-inline">
+                                <input type = "hidden" name = "requestId" value = "@Model.Id" />
+                                <input type = "hidden" name = "offerId" value = "@offer.Id" />
+                                <button type = "submit" class = "btn btn-success btn-sm">قبول پیشنهاد</button>
+                            </form>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class = "alert alert-warning text-center">برای این درخواست هنوز هیچ پیشنهادی ثبت نشده است.</div>
+    }
+    @if (Model.Status == StatusEnum.Completed)
+    {
+        <a asp-action = "SubmitReview" asp-route-id = "@Model.Id" class = "btn btn-primary">ثبت نظر و امتیاز</a>
+    }
+</div>

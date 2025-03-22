@@ -16,6 +16,7 @@ namespace App.Domain.Core.Contract.AppService
         Task<List<ServiceRequest>> GetAll(CancellationToken cancellationToken);
         Task Delete(int id, CancellationToken cancellationToken);
         Task Update(ServiceRequest serviceRequest, CancellationToken cancellationToken);
+        Task AcceptOffer(int requestId, int offerId,CancellationToken cancellation);
         Task ChangeStatus(StatusEnum status, int id, CancellationToken cancellationToken);
         Task MarkAsDone(int id,CancellationToken cancellationToken);
     }

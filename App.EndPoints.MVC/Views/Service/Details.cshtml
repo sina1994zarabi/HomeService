@@ -1,4 +1,5 @@
 ﻿@model App.Domain.Core.Entities.Services.Service
+
 @{
 	Layout = "_Layout";
     ViewData["Title"] = "Service Details";
@@ -27,6 +28,10 @@
                         <li class="list-group-item"><strong>توضیحات:</strong> @Model.Description</li>
                         <li class="list-group-item"><strong>قیمت:</strong> <span class="text-success">@Model.Price.ToString("N0") تومان</span></li>
                     </ul>
+                    @if (User.IsInRole("Client"))
+                    {
+                        <a asp-area = "Client" asp-controller = "ServiceRequest" asp-action = "SubmitRequest" asp-route-id = "@Model.Id">ارسال درخواست</a>
+                    }
                 </div>
             </div>
         </div>

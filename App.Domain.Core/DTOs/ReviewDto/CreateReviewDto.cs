@@ -9,9 +9,9 @@ namespace App.Domain.Core.DTOs.ReviewDto
     public class CreateReviewDto
     {
         public string Comment { get; set; }
+        public int Rating { get; set; }
         public int ClientId { get; set; }
         public int ServiceOfferingId { get; set; }
-        public DateTime CreatedAt { get; set; }
-
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }
