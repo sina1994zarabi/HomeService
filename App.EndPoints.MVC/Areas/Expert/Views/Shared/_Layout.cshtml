@@ -31,13 +31,16 @@
                     <a asp-controller = "Dashboard" asp-action = "Profile">پروفایل</a>
                 </li>
                 <li>
-                    <a asp-area = "" asp-controller = "" asp-action = "">پیشنهادات من</a>
+                    <a asp-controller = "ServiceRequest" asp-action = "Index">درخواست های مرتبط</a>
+                </li>
+                <li>
+                    <a asp-controller = "" asp-action = "">پیشنهادات من</a>
                 </li>
                 <li>
                     <a asp-controller = "Skill" asp-action = "Index">مهارت های من</a>
                 </li>
                 <li>
-                    <a asp-area = "Account" asp-controller="Account" asp-action="LogOut">خروج</a>
+                    <a asp-area = "Account" asp-controller = "Account" asp-action = "LogOut">خروج</a>
                 </li>
             </ul>
         </div>

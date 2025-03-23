@@ -15,16 +15,19 @@ namespace App.Domain.Services.AppServices
     public class ExpertAppService : IExpertAppService
     {
         private readonly IExpertService _expertService;
+        private readonly IServiceRequestAppService _serviceRequestAppService;
         private readonly IReviewService _reviewService;
         private readonly IUtilityService _utilityService;
 
         public ExpertAppService(IExpertService expertService,
                                 IReviewService reviewService,
-                                IUtilityService utilityService)
+                                IUtilityService utilityService,
+                                IServiceRequestAppService serviceRequestAppService)
         {
             _expertService = expertService;
             _reviewService = reviewService;
             _utilityService = utilityService;
+            _serviceRequestAppService = serviceRequestAppService;
         }
 
         public async Task ChangeStatus(int id, CancellationToken cancellationToken)
@@ -83,6 +86,24 @@ namespace App.Domain.Services.AppServices
                 });
             }
             return skills;
+        }
+
+        public async Task<List<ServiceRequest>> GetServiceRequests(int Id, CancellationToken cancellationToken)
+        {
+            var skills = await GetExpertSkills(Id, cancellationToken);
+            var requests = await _serviceRequestAppService.GetAll(cancellationToken);
+            var output = new List<ServiceRequest>();
+            foreach (var request in requests)
+            {
+                foreach (var skill in skills)
+                {
+                    if (request.Service.Id == skill.Id)
+                    {
+                        output.Add(request);
+                    }
+                }
+            }
+            return output;
         }
 
         public async Task RemoveSkills(int id, Service service, CancellationToken cancellationToken)

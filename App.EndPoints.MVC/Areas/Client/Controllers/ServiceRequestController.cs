@@ -55,9 +55,9 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             return View(model);
         }
 
-		public async Task<IActionResult> SubmitRequest(int id)
+		public async Task<IActionResult> SubmitRequest(int Id)
 		{
-			var service = await _serviceAppService.GetById(id, default);
+			var service = await _serviceAppService.GetById(Id, default);
 			ViewBag.Service = service;
 			return View();
 		}

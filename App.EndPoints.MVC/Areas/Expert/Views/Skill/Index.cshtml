@@ -5,18 +5,21 @@
     Layout = "_Layout";
 }
 
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Success"]
-    </div>
+
+@{
+    string message = ViewBag.Message as string;
 }
 
-<h2 class="mb-4 text-center">مهارت‌های من</h2>
-<a class="btn btn-success mb-3" asp-action = "Create">افزودن مهارت جدید</a>
+@if (!string.IsNullOrEmpty(message))
+{
+    <h1 class="btn btn-info">@message</h1>
+}
 
-<table class="table table-bordered table-striped">
-    <thead class="table-light">
+
+<h2>مهارت‌های من</h2>
+
+<table class="table table-bordered">
+    <thead>
         <tr>
             <th>عنوان مهارت</th>
             <th>عملیات</th>
@@ -28,9 +31,15 @@
             <tr>
                 <td>@skill.Title</td>
                 <td>
-                    <a class="btn btn-primary btn-sm" asp-action = "Edit" asp-route-id = "@skill.Id">ویرایش</a>
+                    <a class="btn btn-danger btn-sm" asp-action = "RemoveServiceFromSkills" asp-route-id = "@skill.Id">حذف</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<style>
+    h2, h1, .table th, .table td 
+    {
+        text-align: right;
+    }
+</style>

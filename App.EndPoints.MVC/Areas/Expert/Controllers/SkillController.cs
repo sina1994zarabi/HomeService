@@ -21,7 +21,6 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             _userManager = userManager;
         }
 
-
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -30,7 +29,6 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             ViewBag.Message = message;
             return View(model);
         }
-
 
         public async Task<IActionResult> AddServiceToSkills(int Id)
         {

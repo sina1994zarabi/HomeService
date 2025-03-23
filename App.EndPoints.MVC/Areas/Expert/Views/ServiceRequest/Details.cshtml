@@ -1,0 +1,134 @@
+﻿@using App.Domain.Core.Enums;
+@using FrameWork;
+@model App.Domain.Core.Entities.Services.ServiceRequest
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Service Request Details";
+}
+
+<h2 class="text-center mb-4">جزییات درخواست خدمات</h2>
+
+<div class="card shadow-sm p-4">
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th class="text-end">عنوان درخواست</th>
+                <td class="text-right">@Model.Title</td>
+            </tr>
+            <tr>
+                <th class="text-end">توضیحات</th>
+                <td class="text-right">@Model.Description</td>
+            </tr>
+            <tr>
+                <th class="text-end">مشتری</th>
+                <td class="text-right">@Model.Client.FullName</td>
+            </tr>
+            <tr>
+                <th class="text-end">وضعیت</th>
+                <td class="text-right">
+                    <span class="badge bg-primary">@Model.Status.ToFarsiStatus()</span>
+                </td>
+            </tr>
+            <tr>
+                <th class="text-end">قیمت</th>
+                <td class="text-right">@Model.Service.Price.ToString("N0") ریال</td>
+            </tr>
+            <tr>
+                <th class="text-end">تاریخ رزرو</th>
+                <td class="text-right">@Model.BookingDate.ToPersianString()</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center mt-4">
+        @if (Model.Status == StatusEnum.AwaitingOffers)
+        {
+            <a asp-controller="Serviceoffering" asp-action="SubmitOffer" asp-route-id="@Model.Id" class="btn btn-success btn-lg me-2">ارسال پیشنهاد</a>
+        }
+        else if (Model.Status == StatusEnum.PendingProviderConfirmation)
+        {
+            <a asp-controller="Serviceoffering" asp-action="Confirm" asp-route-id="@Model.Id" class="btn btn-success btn-lg me-2">تایید</a>
+        }
+        <a asp-action="Index" class="btn btn-secondary btn-lg">بازگشت</a>
+    </div>
+</div>
+
+<style>
+    /* Style adjustments for alignment and visual appearance */
+    .table th, .table td {
+        text-align: right;
+        padding: 12px;
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1);
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #ddd;
+        padding: 1rem;
+    }
+
+    .btn {
+        padding: 12px 25px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+    .text-end {
+        text-align: right !important;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .me-2 {
+        margin-right: 10px;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 15px;
+        border-radius: 5px;
+    }
+</style>

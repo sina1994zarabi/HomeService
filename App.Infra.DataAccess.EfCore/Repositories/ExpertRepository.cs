@@ -60,6 +60,7 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 		{
 			return await _context.Experts.
 					              Include(e => e.AppUser).
+								  Include(e => e.Services).
 								  ToListAsync(cancellation);
 		}
 
@@ -98,7 +99,9 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 
         public async Task UpdateSkills(int id, Service service, CancellationToken cancellationToken)
         {
-            var expert = await _context.Experts.Include(x => x.Services).FirstOrDefaultAsync(x => x.Id == id);
+            var expert = await _context.Experts.
+				Include(x => x.Services).
+				FirstOrDefaultAsync(x => x.Id == id);
             expert.Services.Add(service);
             await _context.SaveChangesAsync(cancellationToken);
         }
