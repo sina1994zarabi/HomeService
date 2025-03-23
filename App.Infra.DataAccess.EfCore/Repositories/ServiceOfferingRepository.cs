@@ -1,6 +1,7 @@
 ﻿using App.Domain.Core.Contract.Repository;
 using App.Domain.Core.DTOs.ServiceOfferingDto;
 using App.Domain.Core.Entities.Services;
+using App.Domain.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,20 +21,28 @@ namespace App.Infra.DataAccess.EfCore.Repositories
             _context = context;
         }
 
-        public async Task Add(CreateServiceOfferingDto serviceOffering,CancellationToken cancellationToken)
+        public async Task<int> Add(CreateServiceOfferingDto serviceOffering,CancellationToken cancellationToken)
 		{
-			var newServiceOfferin = new ServiceOffering
+			var newServiceOffering = new ServiceOffering
 			{
 				Description = serviceOffering.Description,
 				Status = serviceOffering.Status,
 				ExpertId = serviceOffering.ExpertId,
 				ServiceRequestId = serviceOffering.ServiceRequestId
 			};
-			_context.ServiceOfferings.AddAsync(newServiceOfferin,cancellationToken);
+			_context.ServiceOfferings.AddAsync(newServiceOffering,cancellationToken);
 			await _context.SaveChangesAsync(cancellationToken);
+			return newServiceOffering.Id;
 		}
 
-		public async Task Delete(int id,CancellationToken cancellationToken)
+        public async Task ChangeStatus(StatusEnum status, int id, CancellationToken cancellationToken)
+        {
+            var targetServiceOffering = await _context.ServiceOfferings.FirstOrDefaultAsync(x => x.Id == id);
+			targetServiceOffering.Status = status;
+			await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task Delete(int id,CancellationToken cancellationToken)
 		{
 			var serviceOfferingToDelete = await _context.ServiceOfferings.FindAsync(id,cancellationToken);
 			if (serviceOfferingToDelete != null)
@@ -53,7 +62,7 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 		{
 			return await _context.ServiceOfferings
 							     .Include(so => so.Expert)
-									.ThenInclude(e => e.AppUser)
+							     .ThenInclude(e => e.AppUser)
 								 .ToListAsync(cancellationToken);
 		}
 

@@ -16,7 +16,7 @@ namespace App.Domain.Core.Entities.Services
         public StatusEnum Status { get; set; } = StatusEnum.PendingClientConfirmation;
         public int ExpertId { get; set; }
         public int ServiceRequestId { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         #endregion
 
         #region Navigation Properties

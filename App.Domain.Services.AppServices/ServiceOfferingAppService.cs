@@ -2,6 +2,7 @@
 using App.Domain.Core.Contract.Services;
 using App.Domain.Core.DTOs.ServiceOfferingDto;
 using App.Domain.Core.Entities.Services;
+using App.Domain.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,14 @@ namespace App.Domain.Services.AppServices
            _serviceOfferingService = serviceOfferingService;
         }
 
-        public async Task Create(CreateServiceOfferingDto createServiceOfferingDto, CancellationToken cancellationToken)
+        public async Task ChangeStatus(int id, StatusEnum status, CancellationToken cancellationToken)
         {
-            await _serviceOfferingService.Add(createServiceOfferingDto,cancellationToken);
+            await _serviceOfferingService.ChangeStatus(status,id,cancellationToken);
+        }
+
+        public async Task<int> Create(CreateServiceOfferingDto createServiceOfferingDto, CancellationToken cancellationToken)
+        {
+            return await _serviceOfferingService.Add(createServiceOfferingDto,cancellationToken);
         }
 
         public async Task Delete(int id, CancellationToken cancellationToken)

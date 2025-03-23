@@ -16,18 +16,21 @@ namespace App.Domain.Services.AppServices
     {
         private readonly IExpertService _expertService;
         private readonly IServiceRequestAppService _serviceRequestAppService;
+        private readonly IServiceOfferingAppService _serviceOfferingAppService;
         private readonly IReviewService _reviewService;
         private readonly IUtilityService _utilityService;
 
         public ExpertAppService(IExpertService expertService,
                                 IReviewService reviewService,
                                 IUtilityService utilityService,
-                                IServiceRequestAppService serviceRequestAppService)
+                                IServiceRequestAppService serviceRequestAppService,
+                                IServiceOfferingAppService serviceOfferingAppService)
         {
             _expertService = expertService;
             _reviewService = reviewService;
             _utilityService = utilityService;
             _serviceRequestAppService = serviceRequestAppService;
+            _serviceOfferingAppService = serviceOfferingAppService;
         }
 
         public async Task ChangeStatus(int id, CancellationToken cancellationToken)
@@ -86,6 +89,13 @@ namespace App.Domain.Services.AppServices
                 });
             }
             return skills;
+        }
+
+        public async Task<List<ServiceOffering>> GetServiceOfferings(int Id, CancellationToken cancellationToken)
+        {
+            var expert = await GetExpertByUserId(Id, default);
+            var offers = await _serviceOfferingAppService.GetAll(cancellationToken);
+            return offers.Where(x => x.ExpertId == expert.Id).ToList();
         }
 
         public async Task<List<ServiceRequest>> GetServiceRequests(int Id, CancellationToken cancellationToken)
