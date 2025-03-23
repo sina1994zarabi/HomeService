@@ -1,6 +1,7 @@
 ﻿using App.Domain.Core.Contract.AppService;
 using App.Domain.Core.Contract.Services;
 using App.Domain.Core.DTOs.ExpertDto;
+using App.Domain.Core.DTOs.ServiceDto;
 using App.Domain.Core.Entities.Services;
 using App.Domain.Core.Entities.User;
 using System;
@@ -68,12 +69,37 @@ namespace App.Domain.Services.AppServices
             return reviews.Where(x => x.ServiceOffering.ExpertId == Id).ToList();
         }
 
+        public async Task<List<GetServiceDto>> GetExpertSkills(int userId, CancellationToken cancellationToken)
+        {
+            var expert = await GetExpertByUserId(userId, default);
+            var services = expert.Services;
+            var skills = new List<GetServiceDto>();
+            foreach (var service in services)
+            {
+                skills.Add(new GetServiceDto
+                {
+                    Id = service.Id,
+                    Title = service.Title
+                });
+            }
+            return skills;
+        }
 
-		public async Task Update(UpdateExpertDto updateExpertDto, CancellationToken cancellationToken)
+        public async Task RemoveSkills(int id, Service service, CancellationToken cancellationToken)
+        {
+            await _expertService.RemoveSkill(id,service,cancellationToken);
+        }
+
+        public async Task Update(UpdateExpertDto updateExpertDto, CancellationToken cancellationToken)
         {
             var imagePath = await _utilityService.UploadImage(updateExpertDto.Image);
             updateExpertDto.ImagePath = imagePath;
             await _expertService.Update(updateExpertDto,cancellationToken);
+        }
+
+        public async Task UpdateSkills(int id, Service service, CancellationToken cancellation)
+        {
+            await _expertService.UpdateSkills(id,service,cancellation);
         }
     }
 }

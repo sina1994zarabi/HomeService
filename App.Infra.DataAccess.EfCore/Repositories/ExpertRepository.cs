@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.Contract.Repository;
 using App.Domain.Core.DTOs.ExpertDto;
+using App.Domain.Core.Entities.Services;
 using App.Domain.Core.Entities.User;
 using App.Domain.Core.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -69,9 +70,16 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 								 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task RemoveSkill(int id, Service service, CancellationToken cancellation)
+        {
+            var expert = await _context.Experts.Include(x => x.Services).FirstOrDefaultAsync(x => x.Id == id);
+            expert.Services.Remove(service);
+            await _context.SaveChangesAsync(cancellation);
+        }
 
 
-		public async Task Update(UpdateExpertDto expert,CancellationToken cancellation)
+
+        public async Task Update(UpdateExpertDto expert,CancellationToken cancellation)
 		{
 			var expertToEdit = await _context.Experts.
 											  Include(x => x.AppUser).
@@ -87,5 +95,12 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 				await _context.SaveChangesAsync(cancellation);
 			}
 		}
-	}
+
+        public async Task UpdateSkills(int id, Service service, CancellationToken cancellationToken)
+        {
+            var expert = await _context.Experts.Include(x => x.Services).FirstOrDefaultAsync(x => x.Id == id);
+            expert.Services.Add(service);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using App.Domain.Core.Contract.Repository;
 using App.Domain.Core.Contract.Services;
 using App.Domain.Core.DTOs.ExpertDto;
+using App.Domain.Core.Entities.Services;
 using App.Domain.Core.Entities.User;
 using System;
 using System.Collections.Generic;
@@ -50,9 +51,19 @@ namespace App.Domain.Services.Services
             return await _expertRepository.GetExpertInfo(id,cancellation);
         }
 
-		public async Task Update(UpdateExpertDto expert, CancellationToken cancellation)
+        public async Task RemoveSkill(int id, Service service, CancellationToken cancellation)
+        {
+            await _expertRepository.RemoveSkill(id,service,cancellation);
+        }
+
+        public async Task Update(UpdateExpertDto expert, CancellationToken cancellation)
         {
             await _expertRepository.Update(expert, cancellation);
+        }
+
+        public async Task UpdateSkills(int id, Service service, CancellationToken cancellation)
+        {
+            await _expertRepository.UpdateSkills(id,service,cancellation);
         }
     }
 }

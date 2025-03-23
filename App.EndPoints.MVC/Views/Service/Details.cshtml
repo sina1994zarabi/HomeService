@@ -32,6 +32,10 @@
                     {
                         <a asp-area = "Client" asp-controller = "ServiceRequest" asp-action = "SubmitRequest" asp-route-id = "@Model.Id">ارسال درخواست</a>
                     }
+                    else if (User.IsInRole("Expert"))
+                    {
+                        <a asp-area="Expert" asp-controller="Skill" asp-action="AddServiceToSkills" asp-route-id = "@Model.Id">افزودن به لیست مهارت ها</a>
+                    }
                 </div>
             </div>
         </div>

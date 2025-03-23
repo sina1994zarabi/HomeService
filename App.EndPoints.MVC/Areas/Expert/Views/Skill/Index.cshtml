@@ -1,0 +1,36 @@
+﻿@model List<App.Domain.Core.DTOs.ServiceDto.GetServiceDto>
+
+@{
+    ViewData["Title"] = "مهارت‌های من";
+    Layout = "_Layout";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<h2 class="mb-4 text-center">مهارت‌های من</h2>
+<a class="btn btn-success mb-3" asp-action = "Create">افزودن مهارت جدید</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>عنوان مهارت</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var skill in Model)
+        {
+            <tr>
+                <td>@skill.Title</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-action = "Edit" asp-route-id = "@skill.Id">ویرایش</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
