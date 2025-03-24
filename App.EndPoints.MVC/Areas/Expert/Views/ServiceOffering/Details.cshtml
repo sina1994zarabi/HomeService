@@ -1,0 +1,95 @@
+﻿@using App.Domain.Core.Enums;
+@using FrameWork;
+@model App.Domain.Core.Entities.Services.ServiceOffering
+
+@{
+    Layout = "_Layout";
+}
+
+@functions {
+    string GetStatusBadgeClass(StatusEnum status)
+    {
+        switch (status)
+        {
+            case StatusEnum.AwaitingOffers:
+                return "bg-info";
+            case StatusEnum.PendingClientConfirmation:
+                return "bg-warning";
+            case StatusEnum.PendingProviderConfirmation:
+                return "bg-secondary";
+            case StatusEnum.InProgress:
+                return "bg-primary";
+            case StatusEnum.Completed:
+                return "bg-success";
+            case StatusEnum.AwaitingPayment:
+                return "bg-dark";
+            case StatusEnum.Paid:
+                return "bg-success";
+            case StatusEnum.Cancelled:
+                return "bg-danger";
+            default:
+                return "bg-secondary";
+        }
+    }
+}
+
+<div class = "container" dir = "rtl" style = "text-align: right;">
+    <h2>جزئیات پیشنهاد</h2>
+
+    <!-- Image Carousel -->
+    @if (Model.ServiceRequest.Images != null && Model.ServiceRequest.Images.Any())
+    {
+        <div id = "imageCarousel" class = "carousel slide" data-ride = "carousel">
+            <div class="carousel-inner">
+                @for (int i = 0; i < Model.ServiceRequest.Images.Count; i++)
+                {
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <img src="@Model.ServiceRequest.Images[i]" class="d-block w-100" alt="تصویر پیشنهاد">
+                    </div>
+                }
+            </div>
+            <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">قبلی</span>
+            </a>
+            <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">بعدی</span>
+            </a>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">تصویری موجود نیست.</p>
+    }
+
+    <!-- Offering Details -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h3>مشخصات پیشنهاد</h3>
+            <p>
+                <strong>وضعیت: </strong>
+                <span class="badge @GetStatusBadgeClass(Model.Status) text-white">@Model.Status.ToFarsiStatus()</span>
+            </p>
+            <p><strong>توضیحات: </strong> @Model.Description</p>
+            <p><strong>تاریخ ایجاد: </strong> @Model.CreatedAt.ToString()</p>
+        </div>
+        <div class="col-md-6">
+            <h3>مشخصات سرویس</h3>
+            <p><strong>عنوان: </strong> @Model.ServiceRequest.Service.Title</p>
+            <p><strong>توضیحات: </strong> @Model.ServiceRequest.Service.Description</p>
+        </div>
+    </div>
+
+    <!-- Client Details -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h3>مشخصات مشتری</h3>
+            <p><strong>نام: </strong> @Model.ServiceRequest.Client.FullName</p>
+            <!-- Additional client details can be added here if needed -->
+        </div>
+    </div>
+
+    <!-- Back to List Button -->
+    <a asp-action = "Index" class = "btn btn-secondary mt-4">بازگشت به لیست</a>
+</div>

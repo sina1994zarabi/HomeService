@@ -54,15 +54,19 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 
 		public async Task<ServiceOffering> Get(int id,CancellationToken cancellationToken)
 		{
-			return await _context.ServiceOfferings.
-						FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
-		}
+            return await _context.ServiceOfferings
+								 .Include(x => x.ServiceRequest)
+										.ThenInclude(x => x.Client)
+								 .Include(x => x.ServiceRequest.Service)
+								 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        }
 
 		public async Task<List<ServiceOffering>> GetAll(CancellationToken cancellationToken)
 		{
 			return await _context.ServiceOfferings
 							     .Include(so => so.Expert)
 							     .ThenInclude(e => e.AppUser)
+								 .Include(e => e.ServiceRequest)
 								 .ToListAsync(cancellationToken);
 		}
 

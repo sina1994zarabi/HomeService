@@ -1,0 +1,99 @@
+﻿@using App.Domain.Core.Enums;
+@using FrameWork;
+@model List<App.Domain.Core.Entities.Services.ServiceOffering>
+
+@{
+    Layout = "_Layout";
+}
+
+@functions {
+    string GetStatusBadgeClass(StatusEnum status)
+    {
+        switch (status)
+        {
+            case StatusEnum.AwaitingOffers:
+                return "bg-info";
+            case StatusEnum.PendingClientConfirmation:
+                return "bg-warning";
+            case StatusEnum.PendingProviderConfirmation:
+                return "bg-secondary";
+            case StatusEnum.InProgress:
+                return "bg-primary";
+            case StatusEnum.Completed:
+                return "bg-success";
+            case StatusEnum.AwaitingPayment:
+                return "bg-dark";
+            case StatusEnum.Paid:
+                return "bg-success";
+            case StatusEnum.Cancelled:
+                return "bg-danger";
+            default:
+                return "bg-secondary";
+        }
+    }
+}
+
+<div class = "container" dir = "rtl">
+    <h2>پیشنهادات من</h2>
+    <!-- Success or error messages -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" style="text-align: right;">
+            @TempData["Message"]
+            <span class="close" onclick="this.parentElement.style.display='none';">×</span>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" style="text-align: right;">
+            @TempData["ErrorMessage"]
+            <span class="close" onclick="this.parentElement.style.display='none';">×</span>
+        </div>
+    }
+    <!-- Display offers or a no-offers message -->
+    @if (Model.Count == 0)
+    {
+        <div class="text-right mt-5">
+            <p class="text-muted">پیشنهادی برای شما موجود نیست.</p>
+        </div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="text-align: right;">عنوان خدمت</th>
+                    <th style="text-align: right;">وضعیت</th>
+                    <th style="text-align: right;">عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var offer in Model)
+                {
+                    <tr>
+                        <td style = "text-align: right;">@offer.ServiceRequest.Service.Title</td>
+                        <td style = "text-align: right;">
+                            <span class = "badge @GetStatusBadgeClass(offer.Status) text-white">@offer.Status.ToFarsiStatus()</span>
+                        </td>
+                        <td style = "text-align: right;">
+                            @if (offer.Status == StatusEnum.PendingProviderConfirmation)
+                            {
+                                <a  asp-action = "Confirm"
+                                    asp-route-OfferId = "@offer.Id"
+                                    asp-route-RequestId="@offer.ServiceRequest.Id"
+                                    class="btn btn-primary">
+                                    تایید کردن
+                                </a>
+                            }
+                            <a asp-action = "Details"
+                               asp-route-id = "@offer.Id"
+                               class = "btn btn-info">
+                                جزئیات
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

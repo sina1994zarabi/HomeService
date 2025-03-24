@@ -26,7 +26,6 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             _expertAppService = expertAppService;
             _userManager = userManager;
             _serviceRequestAppService = serviceRequestAppService;
-
         }
 
         // View All Offerings
@@ -35,6 +34,20 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             var user = await _userManager.GetUserAsync(User);
             var model = await _expertAppService.GetServiceOfferings(user.Id,default);
             return View(model);
+        }
+
+        public async Task<IActionResult> Details(int Id)
+        {
+            var model = await _serviceOfferingAppService.GetById(Id, default);
+            return View(model);
+        }
+
+        public async Task<IActionResult> Confirm(int OfferId,int RequestId)
+        {
+            await _serviceOfferingAppService.ChangeStatus(OfferId, StatusEnum.InProgress, default);
+            await _serviceRequestAppService.ChangeStatus(StatusEnum.InProgress, RequestId, default);
+            TempData["Message"] = "با موفقیت تایید شد";
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> SubmitOffer(int Id)

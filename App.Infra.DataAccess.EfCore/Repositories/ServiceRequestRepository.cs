@@ -96,8 +96,10 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 
 		public async Task MarkAsDone(int id, CancellationToken cancellationToken)
 		{
-			var serviceRequest = await _context.ServiceRequests.FindAsync(id,cancellationToken);
-			serviceRequest.IsCompleted = true;
+			var serviceRequest = await _context.
+									ServiceRequests.
+									FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
+			serviceRequest.Status = StatusEnum.Completed;
 			await _context.SaveChangesAsync(cancellationToken);
 		}
 

@@ -43,17 +43,17 @@
                 </div>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Title" class="form-label">عنوان درخواست</label>
-                <input asp-for="Title" class="form-control" placeholder="عنوان درخواست را وارد کنید" required />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for = "Title" class="form-label">عنوان درخواست</label>
+                <input asp-for = "Title" class="form-control" placeholder="عنوان درخواست را وارد کنید" required />
+                <span asp-validation-for = "Title" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Description" class="form-label">توضیحات</label>
-                <textarea asp-for="Description" class="form-control" rows="3" placeholder="توضیحات بیشتر" required></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for = "Description" class="form-label">توضیحات</label>
+                <textarea asp-for = "Description" class="form-control" rows="3" placeholder="توضیحات بیشتر" required></textarea>
+                <span asp-validation-for = "Description" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="BookingDate" class="form-label">تاریخ رزرو</label>
+                <label asp-for = "BookingDate" class="form-label">تاریخ رزرو</label>
                 <input asp-for="BookingDate" class="form-control" type="datetime-local" required />
                 <span asp-validation-for="BookingDate" class="text-danger"></span>
             </div>

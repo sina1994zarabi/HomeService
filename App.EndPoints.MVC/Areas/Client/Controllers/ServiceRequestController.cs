@@ -112,5 +112,12 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             ViewBag.Offering = offer;
             return View();
         }
+
+        public async Task<IActionResult> MarkAsDone(int requestId)
+        {
+            await _serviceRequestAppService.MarkAsDone(requestId,default);
+            TempData["Message"] = "خدمات با موفقیت تکمیل شد. در انتظار پرداخت می‌باشد.";
+            return RedirectToAction("Details", new { id = requestId });
+        }
     }
 }
