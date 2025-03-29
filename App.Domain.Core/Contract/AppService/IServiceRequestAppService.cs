@@ -18,6 +18,5 @@ namespace App.Domain.Core.Contract.AppService
         Task Update(ServiceRequest serviceRequest, CancellationToken cancellationToken);
         Task AcceptOffer(int requestId, int offerId,CancellationToken cancellation);
         Task ChangeStatus(StatusEnum status, int id, CancellationToken cancellationToken);
-        Task MarkAsDone(int id,CancellationToken cancellationToken);
     }
 }

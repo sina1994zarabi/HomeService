@@ -3,6 +3,7 @@ using App.Domain.Core.Contract.Repository;
 using App.Domain.Core.DTOs.ReviewDto;
 using App.Domain.Core.DTOs.ServiceRequestDto;
 using App.Domain.Core.Entities.User;
+using App.Domain.Core.Enums;
 using Azure.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -113,11 +114,14 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             return View();
         }
 
-        public async Task<IActionResult> MarkAsDone(int requestId)
+        public async Task<IActionResult> MarkAsDone(int Id)
         {
-            await _serviceRequestAppService.MarkAsDone(requestId,default);
-            TempData["Message"] = "خدمات با موفقیت تکمیل شد. در انتظار پرداخت می‌باشد.";
-            return RedirectToAction("Details", new { id = requestId });
+            await _serviceRequestAppService.ChangeStatus(StatusEnum.AwaitingPayment,Id,default);
+            var allOffers = await _serviceOfferingAppService.GetAll(default);
+            var targetOffer = allOffers.FirstOrDefault(x => (x.ServiceRequestId == Id && x.Status == StatusEnum.InProgress));
+            await _serviceOfferingAppService.ChangeStatus(targetOffer.Id,StatusEnum.AwaitingOffers ,default);
+            TempData["Message"] = "خدمات با موفقیت تکمیل شد. در انتظار پرداخت می‌باشد";
+            return RedirectToAction("Details", new { id = Id });
         }
     }
 }

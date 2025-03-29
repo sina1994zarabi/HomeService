@@ -25,9 +25,6 @@ namespace App.Domain.Core.Contract.AppService
         Task<List<ServiceRequest>> GetServiceRequests(int clientId,CancellationToken cancellationToken);
         Task SubmitServiceRequest(CreateServiceRequestDto createServiceRequestDto,CancellationToken cancellationToken);
         Task<List<ServiceOffering>> GetServicesOffering(int serviceRequestId,CancellationToken cancellationToken);
-        Task SelectServiceOffering(int serviceOfferingId,CancellationToken cancellationToken);
-        Task CancelServiceOffering(int serviceOfferingId,CancellationToken cancellationToken);
-        Task UpdateServiceOfferingStatus(int serviceOfferingId,StatusEnum statusEnum ,CancellationToken cancellationToken);
         Task ProcessPayment(int serviceRequestId, CancellationToken cancellationToken);
         Task UpdateBalance(int userId,decimal balance,CancellationToken cancellationToken);
         Task SubmitReview(CreateReviewDto createReviewDto,CancellationToken cancellationToken);

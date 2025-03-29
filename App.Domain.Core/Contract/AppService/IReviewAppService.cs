@@ -12,6 +12,7 @@ namespace App.Domain.Core.Contract.AppService
     {
         Task Create(CreateReviewDto createReviewDto, CancellationToken cancellation);
         Task<Review> GetById(int id,CancellationToken cancellation);
+        Task<List<Review>> GetByExpertId(int id,CancellationToken cancellationToken);
         Task<List<Review>> GetAll(CancellationToken cancellation);
         Task Delete(int id, CancellationToken cancellation);
         Task Update(Review reiew, CancellationToken cancellation);

@@ -80,14 +80,14 @@
                             {
                                 <a  asp-action = "Confirm"
                                     asp-route-OfferId = "@offer.Id"
-                                    asp-route-RequestId="@offer.ServiceRequest.Id"
+                                    asp-route-RequestId = "@offer.ServiceRequest.Id"
                                     class="btn btn-primary">
                                     تایید کردن
                                 </a>
                             }
                             <a asp-action = "Details"
                                asp-route-id = "@offer.Id"
-                               class = "btn btn-info">
+                               class = "btn btn-info" >
                                 جزئیات
                             </a>
                         </td>

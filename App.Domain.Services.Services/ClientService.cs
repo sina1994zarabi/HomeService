@@ -50,7 +50,12 @@ namespace App.Domain.Services.Services
             return await _clientRepository.GetClientInfo(id,cancellation);
         }
 
-        public async Task Update(UpdateClientprofileDto client, CancellationToken cancellation,IFormFile Image)
+		public async Task MakeTransaction(int clientId, decimal amount,CancellationToken cancellation)
+		{
+			await _clientRepository.MakeTransaction(clientId,amount,cancellation);
+		}
+
+		public async Task Update(UpdateClientprofileDto client, CancellationToken cancellation,IFormFile Image)
         {
             await _clientRepository.Update(client, cancellation,Image);
         }

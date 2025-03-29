@@ -64,8 +64,8 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 		public async Task<List<Client>> GetAll(CancellationToken cancellation)
 		{
 			return await _context.Clients.
-				Include(c => c.AppUser).
-				ToListAsync(cancellation);
+								  Include(c => c.AppUser).
+								  ToListAsync(cancellation);
 		}
 
         public async Task<Client> GetClientInfo(int id, CancellationToken cancellation)
@@ -76,7 +76,21 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 				.FirstAsync(x => x.Id == id);
         }
 
-        public async Task Update(UpdateClientprofileDto client,CancellationToken cancellation,IFormFile Image)
+		public async Task MakeTransaction(int clientId, decimal amount, CancellationToken cancellationToken)
+		{
+			var client = await _context.
+								Clients.
+								Include(x => x.AppUser).
+								FirstOrDefaultAsync(x => x.Id == clientId);
+			var admin = await _context.Admins
+									.Include(x => x.AppUser)
+									.FirstOrDefaultAsync();
+			client.AppUser.AccountBalance -= amount;
+			admin.AppUser.AccountBalance += amount;
+			await _context.SaveChangesAsync(default);
+		}
+
+		public async Task Update(UpdateClientprofileDto client,CancellationToken cancellation,IFormFile Image)
 		{
 		    var clientToUpdate = await _context.Clients
 				.Include(c => c.AppUser)

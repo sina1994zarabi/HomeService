@@ -1,95 +1,162 @@
 ﻿@using App.Domain.Core.Enums;
 @using FrameWork;
-@model App.Domain.Core.Entities.Services.ServiceOffering
+@using App.Domain.Core.Entities.Services;
+@model ServiceOffering
 
 @{
     Layout = "_Layout";
+    ViewData["Title"] = "جزئیات پیشنهاد";
 }
+
+<div class="container py-5">
+    <div class="card offer-detail-card shadow-lg">
+        <!-- Card Header with Gradient Background -->
+        <div class="card-header bg-gradient text-white text-center py-4">
+            <h2 class="mb-0">جزئیات پیشنهاد</h2>
+        </div>
+
+        <div class="card-body">
+            <!-- Image Carousel Section -->
+            <div class="mb-4">
+                @if (Model.ServiceRequest.Images != null && Model.ServiceRequest.Images.Any())
+                {
+                    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @for (int i = 0; i < Model.ServiceRequest.Images.Count; i++)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <img src="@Model.ServiceRequest.Images[i]" class="d-block w-100 carousel-img" alt="تصویر پیشنهاد">
+                                </div>
+                            }
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">قبلی</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">بعدی</span>
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center text-muted">تصویری موجود نیست.</div>
+                }
+            </div>
+
+            <!-- Two-Column Layout for Details -->
+            <div class="row">
+                <!-- Left Column: Offer Details -->
+                <div class="col-md-6">
+                    <h4 class="text-primary mb-3"><i class="fas fa-user-tie me-2"></i>مشخصات پیشنهاد</h4>
+                    <p>
+                        <strong>وضعیت:</strong>
+                        <span class="badge @GetStatusBadgeClass(Model.Status) fs-6">
+                            @Model.Status.ToFarsiStatus()
+                        </span>
+                    </p>
+                    <p><strong>توضیحات: </strong> @Model.Description</p>
+                    <p><strong>تاریخ ایجاد: </strong> @Model.CreatedAt.ToString("yyyy/MM/dd HH:mm")</p>
+                </div>
+
+                <!-- Right Column: Service & Client Details -->
+                <div class="col-md-6">
+                    <h4 class="text-primary mb-3"><i class="fas fa-info-circle me-2"></i>مشخصات سرویس</h4>
+                    <p><strong>عنوان سرویس:</strong> @Model.ServiceRequest.Service.Title</p>
+                    <p><strong>توضیحات سرویس:</strong> @Model.ServiceRequest.Service.Description</p>
+                    <hr />
+                    <h4 class="text-primary mb-3"><i class="fas fa-user me-2"></i>مشخصات مشتری</h4>
+                    <p><strong>نام مشتری:</strong> @Model.ServiceRequest.Client.FullName</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="card-footer bg-light text-center py-3">
+            <a asp-action="Index" class="btn btn-secondary px-4">بازگشت به لیست</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Container & Card Layout */
+    .container {
+        direction: rtl;
+        font-family: 'IRANSans', sans-serif;
+    }
+
+    .offer-detail-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .card-header.bg-gradient {
+        background: linear-gradient(45deg, #007bff, #00aaff);
+    }
+
+    .card-header, .card-footer {
+        font-weight: bold;
+    }
+
+    .card-body {
+        font-size: 1rem;
+        padding: 30px;
+    }
+
+    /* Carousel Styling */
+    .carousel-img {
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    /* Headings & Text */
+    h4 {
+        margin-bottom: 15px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    strong {
+        color: #333;
+    }
+
+    /* Badges */
+    .badge {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+        border-radius: 20px;
+    }
+
+    /* Buttons */
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+</style>
 
 @functions {
     string GetStatusBadgeClass(StatusEnum status)
     {
-        switch (status)
+        return status switch
         {
-            case StatusEnum.AwaitingOffers:
-                return "bg-info";
-            case StatusEnum.PendingClientConfirmation:
-                return "bg-warning";
-            case StatusEnum.PendingProviderConfirmation:
-                return "bg-secondary";
-            case StatusEnum.InProgress:
-                return "bg-primary";
-            case StatusEnum.Completed:
-                return "bg-success";
-            case StatusEnum.AwaitingPayment:
-                return "bg-dark";
-            case StatusEnum.Paid:
-                return "bg-success";
-            case StatusEnum.Cancelled:
-                return "bg-danger";
-            default:
-                return "bg-secondary";
-        }
+            StatusEnum.AwaitingOffers => "bg-secondary",
+            StatusEnum.PendingClientConfirmation => "bg-warning",
+            StatusEnum.PendingProviderConfirmation => "bg-info",
+            StatusEnum.InProgress => "bg-primary",
+            StatusEnum.Completed => "bg-success",
+            StatusEnum.AwaitingPayment => "bg-dark",
+            StatusEnum.Paid => "bg-success",
+            StatusEnum.Cancelled => "bg-danger",
+            _ => "bg-light text-dark"
+        };
     }
 }
-
-<div class = "container" dir = "rtl" style = "text-align: right;">
-    <h2>جزئیات پیشنهاد</h2>
-
-    <!-- Image Carousel -->
-    @if (Model.ServiceRequest.Images != null && Model.ServiceRequest.Images.Any())
-    {
-        <div id = "imageCarousel" class = "carousel slide" data-ride = "carousel">
-            <div class="carousel-inner">
-                @for (int i = 0; i < Model.ServiceRequest.Images.Count; i++)
-                {
-                    <div class="carousel-item @(i == 0 ? "active" : "")">
-                        <img src="@Model.ServiceRequest.Images[i]" class="d-block w-100" alt="تصویر پیشنهاد">
-                    </div>
-                }
-            </div>
-            <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">قبلی</span>
-            </a>
-            <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">بعدی</span>
-            </a>
-        </div>
-    }
-    else
-    {
-        <p class="text-muted">تصویری موجود نیست.</p>
-    }
-
-    <!-- Offering Details -->
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <h3>مشخصات پیشنهاد</h3>
-            <p>
-                <strong>وضعیت: </strong>
-                <span class="badge @GetStatusBadgeClass(Model.Status) text-white">@Model.Status.ToFarsiStatus()</span>
-            </p>
-            <p><strong>توضیحات: </strong> @Model.Description</p>
-            <p><strong>تاریخ ایجاد: </strong> @Model.CreatedAt.ToString()</p>
-        </div>
-        <div class="col-md-6">
-            <h3>مشخصات سرویس</h3>
-            <p><strong>عنوان: </strong> @Model.ServiceRequest.Service.Title</p>
-            <p><strong>توضیحات: </strong> @Model.ServiceRequest.Service.Description</p>
-        </div>
-    </div>
-
-    <!-- Client Details -->
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <h3>مشخصات مشتری</h3>
-            <p><strong>نام: </strong> @Model.ServiceRequest.Client.FullName</p>
-            <!-- Additional client details can be added here if needed -->
-        </div>
-    </div>
-
-    <!-- Back to List Button -->
-    <a asp-action = "Index" class = "btn btn-secondary mt-4">بازگشت به لیست</a>
-</div>

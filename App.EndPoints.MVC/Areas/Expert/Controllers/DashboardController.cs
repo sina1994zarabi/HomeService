@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.Contract.AppService;
 using App.Domain.Core.DTOs.ExpertDto;
+using App.Domain.Core.Entities.Services;
 using App.Domain.Core.Entities.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +11,16 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
     public class DashboardController : Controller
     {
         private readonly IExpertAppService _expertAppService;
+        private readonly IReviewAppService _reviewAppService;
         private readonly UserManager<AppUser> _userManager;
 
         public DashboardController(IExpertAppService expertAppService,
-                                   UserManager<AppUser> userManager)
+                                   UserManager<AppUser> userManager,
+                                   IReviewAppService reviewAppService)
         {
             _expertAppService = expertAppService;
             _userManager = userManager;
+            _reviewAppService = reviewAppService;
         }
 
         public IActionResult Index(string username)
@@ -65,6 +69,26 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             ViewBag.Expert = expert;
             var model = await _expertAppService.GetExpertReview(expert.Id, default);
             return View(model);
+        }
+
+
+        public async Task<IActionResult> Portfolio()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var expert = await _expertAppService.GetExpertByUserId(user.Id, default);
+            var reviews = await _reviewAppService.GetByExpertId(expert.Id,default);
+            var averageRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
+            var Model = new ExpertPortfolioDto
+            {
+                FullName = expert.FullName,
+                ProfilePicture = expert.AppUser.ProfilePicture,
+                Gender = expert.Gender,
+                PhoneNumber = expert.PhoneNumber,
+                Skills = expert.Services.ToList(),
+                AverageRating = averageRating,
+                Reviews = reviews
+            };
+            return View(Model);
         }
     }
 }

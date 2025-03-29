@@ -88,7 +88,7 @@ namespace App.Domain.Services.AppServices
         public async Task ProcessPayment(int serviceRequestId,CancellationToken cancellationToken)
         {
             var request = await _requestAppService.GetById(serviceRequestId,cancellationToken);
-            if (request == null || request.Status != StatusEnum.Completed)
+            if (request == null)
             {
                 throw new InvalidOperationException("سرویس مورد نظر یافت نشد.");
             }
@@ -102,18 +102,7 @@ namespace App.Domain.Services.AppServices
             {
                 throw new InvalidOperationException("موجودی کافی نیست.");
             }
-            await _clientService.ChangeAccountBalance(client.Id, (-1) * servicePrice, cancellationToken);
-            //await UpdateServiceOfferingStatus(serviceRequestId,StatusEnum.Paid,cancellationToken);
-        }
-
-        public async Task SelectServiceOffering(int serviceOfferingId, CancellationToken cancellationToken)
-        {
-            await UpdateServiceOfferingStatus(serviceOfferingId, StatusEnum.PendingProviderConfirmation, cancellationToken);
-        }
-
-        public async Task CancelServiceOffering(int serviceOfferingId, CancellationToken cancellationToken)
-        {
-            await UpdateServiceOfferingStatus(serviceOfferingId, StatusEnum.Cancelled, cancellationToken);;
+            await _clientService.MakeTransaction(client.Id,servicePrice,cancellationToken);
         }
 
         public async Task SubmitReview(CreateReviewDto createReviewDto, CancellationToken cancellationToken)
@@ -129,40 +118,6 @@ namespace App.Domain.Services.AppServices
         public async Task Update(UpdateClientprofileDto updateClientDto, CancellationToken cancellation,IFormFile Image)
         {
             await _clientService.Update(updateClientDto, cancellation,Image);
-        }
-
-        public async Task UpdateServiceOfferingStatus(int serviceOfferingId, StatusEnum status, CancellationToken cancellationToken)
-        {
-            var offerring = await _serviceOfferingService.Get(serviceOfferingId, cancellationToken);
-            offerring.Status = status;
-            await _serviceOfferingService.Update(offerring, cancellationToken);
-            var request = await _requestAppService.GetById(offerring.ServiceRequestId, cancellationToken);
-            switch (status)
-            {
-                case StatusEnum.PendingClientConfirmation:
-                    request.Status = StatusEnum.PendingClientConfirmation;
-                    break;
-                case StatusEnum.PendingProviderConfirmation:
-                    request.Status = StatusEnum.PendingProviderConfirmation;
-                    break;
-                case StatusEnum.InProgress:
-                    request.Status = StatusEnum.InProgress;
-                    break;
-                case StatusEnum.Completed:
-                    request.Status = StatusEnum.Completed;
-                    request.IsCompleted = true;
-                    break;
-                case StatusEnum.AwaitingPayment:
-                    request.Status = StatusEnum.AwaitingPayment;
-                    break;
-                case StatusEnum.Paid:
-                    request.Status = StatusEnum.Paid;
-                    break;
-                case StatusEnum.Cancelled:
-                    request.Status = StatusEnum.Cancelled;
-                    break;
-            }
-            await _requestAppService.Update(request, cancellationToken);
         }
 
         public async Task UpdateBalance(int clientId,decimal balance, CancellationToken cancellationToken)

@@ -1,0 +1,154 @@
+﻿@model App.Domain.Core.DTOs.ExpertDto.ExpertPortfolioDto;
+
+@{
+    ViewData["Title"] = "Expert Portfolio";
+    Layout = "_Layout";
+}
+
+<div class = "container" dir = "rtl" style = "text-align: right;">
+    <!-- Profile Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2>پروفایل</h2>
+        </div>
+        <div class="card-body text-center">
+            <img src = "@Model.ProfilePicture" alt="Profile Picture" class="profile-picture mb-3" />
+            <h3>@Model.FullName</h3>
+            <p>Gender: @Model.Gender</p>
+            <p>Phone: @Model.PhoneNumber</p>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2>مهارت ها</h2>
+        </div>
+        <div class="card-body">
+            <ul class="skills-list">
+                @foreach (var skill in Model.Skills)
+                {
+                    <li class="skill-tag">@skill.Title</li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2>نظرات</h2>
+        </div>
+        <div class="card-body">
+            <p>
+                <strong>امتیاز میانگین: </strong>
+                <span class="star-rating">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= Math.Floor(Model.AverageRating))
+                        {
+                            <i class="fas fa-star text-warning"></i>
+                        }
+                        else if (i == Math.Ceiling(Model.AverageRating) && Model.AverageRating % 1 != 0)
+                        {
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                        }
+                        else
+                        {
+                            <i class="far fa-star text-warning"></i>
+                        }
+                    }
+                </span>
+                <span class="rating-number">@Model.AverageRating.ToString("0.0")</span>
+            </p>
+            @foreach (var review in Model.Reviews)
+            {
+                <div class="review-card mb-3 p-3">
+                    <p><strong>@review.Client.FullName</strong></p>
+                    <div class="star-rating">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= review.Rating)
+                            {
+                                <i class="fas fa-star text-warning"></i>
+                            }
+                            else
+                            {
+                                <i class="far fa-star text-warning"></i>
+                            }
+                        }
+                    </div>
+                    <p>@review.Comment</p>
+                    <p><em>@review.ReviewDate.ToString("yyyy/MM/dd")</em></p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        max-width: 800px; /* Keeps the cards from stretching too wide */
+        margin: 0 auto; /* Centers the cards horizontally */
+    }
+
+    .profile-picture {
+        width: 120px; /* Smaller size */
+        height: 120px; /* Keeps it proportional */
+        border-radius: 50%; /* Optional: makes it circular */
+    }
+
+/* Profile Picture */
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+}
+
+/* Skills Tags */
+.skills-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-tag {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.skill-tag:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Review Cards */
+.review-card {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    transition: box-shadow 0.3s;
+}
+
+.review-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Star Ratings */
+.star-rating {
+    margin-bottom: 10px;
+}
+
+/* Call-to-Action Button */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+}
+</style>

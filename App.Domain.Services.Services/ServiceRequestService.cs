@@ -50,11 +50,6 @@ namespace App.Domain.Services.Services
             await _serviceRequestRepository.ChangeStatus(status, id, cancellationToken);
         }
 
-		public async Task MarkAsDone(int id, CancellationToken cancellationToken)
-		{
-			await _serviceRequestRepository.MarkAsDone(id,cancellationToken);
-		}
-
         public async Task AcceptOffer(int serviceRequestId, int serviceOfferingId, CancellationToken cancellationToken)
         {
             await _serviceRequestRepository.AcceptOffer(serviceRequestId,serviceOfferingId,cancellationToken);

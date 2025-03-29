@@ -18,6 +18,5 @@ namespace App.Domain.Core.Contract.Repository
 		Task Update(ServiceRequest serviceRequest, CancellationToken cancellationToken);
 		Task AcceptOffer(int serviceRequestId, int serviceOfferingId, CancellationToken cancellationToken);
 		Task ChangeStatus(StatusEnum status, int id, CancellationToken cancellationToken);
-		Task MarkAsDone(int id,CancellationToken cancellationToken);
 	}
 }

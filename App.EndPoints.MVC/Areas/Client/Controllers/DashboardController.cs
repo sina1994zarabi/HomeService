@@ -156,21 +156,6 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SelectServiceOffer(int id)
-        {
-            await _clientAppService.SelectServiceOffering(id, default);
-            return RedirectToAction("ViewServiceRequests");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CancelServiceOffering(int Id)
-        {
-            await _clientAppService.CancelServiceOffering(Id, default);
-            TempData["SuccessMessage"] = "سفارش با موفقیت لغو شد";
-            return RedirectToAction("ViewServiceRequests");
-        } 
-
         public async Task<IActionResult> LeaveReview(int Id)
         {
             var request = await _requestAppService.GetById(Id,default);

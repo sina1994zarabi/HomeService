@@ -39,6 +39,12 @@ namespace App.Domain.Services.AppServices
             return await _reviewService.GetAll(cancellation);
         }
 
+        public async Task<List<Review>> GetByExpertId(int id, CancellationToken cancellationToken)
+        {
+            var reviews = await _reviewService.GetAll(cancellationToken);
+            return reviews.Where(x => x.ServiceOffering.Expert.Id == id).ToList();
+        }
+
         public async Task<Review> GetById(int id, CancellationToken cancellation)
         {
             return await _reviewService.Get(id,cancellation);

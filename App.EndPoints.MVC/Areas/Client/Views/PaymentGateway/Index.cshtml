@@ -1,0 +1,145 @@
+﻿@using FrameWork;
+@model App.Domain.Core.Entities.Services.ServiceRequest;
+
+@{
+	Layout = "_Layout";
+	ViewData["Title"] = "تایید پرداخت";
+}
+
+<div class = "container py-5">
+	<div class = "row justify-content-center">
+		<div class = "col-md-8">
+			<!-- Bill Summary Card -->
+			<div class = "card shadow-lg mb-4">
+				<div class = "card-header bg-primary text-white">
+					<h4 class = "mb-0"><i class = "fas fa-receipt me-2"></i>صورتحساب خدمات</h4>
+				</div>
+				<div class = "card-body">
+					<dl class = "row fs-5">
+						<!-- Service Details -->
+						<dt class = "col-sm-5 text-muted">نام سرویس: </dt>
+						<dd class = "col-sm-7 fw-bold">@Model.Service.Title </dd>
+
+						<dt class = "col-sm-5 text-muted">مبلغ قابل پرداخت: </dt>
+						<dd class = "col-sm-7 text-success fw-bold">
+							@Model.Service.Price.ToString("N0") ریال
+						</dd>
+						<!-- Dates -->
+						<dt class = "col-sm-5 text-muted">تاریخ درخواست: </dt>
+						<dd class = "col-sm-7">@Model.BookingDate.ToPersianString()</dd>
+						<dt class = "col-sm-5 text-muted">تاریخ تکمیل: </dt>
+						<dd class = "col-sm-7">@DateTime.Now.ToPersianString()</dd>
+						<!-- Client Info -->
+						<dt class = "col-sm-5 text-muted">مشتری: </dt>
+						<dd class = "col-sm-7">@Model.Client.AppUser.FullName</dd>
+						<dt class = "col-sm-5 text-muted">موجودی فعلی: </dt>
+						<dd class = "col-sm-7">
+							@Model.Client.AppUser.AccountBalance.ToString("N0") ریال
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<!-- Payment Confirmation -->
+			<div class = "card shadow">
+				<div class = "card-body">
+					<h5 class = "mb-4"><i class = "fas fa-shield-alt text-success me-2"></i>پرداخت</h5>
+					<div class = "alert alert-warning">
+						<i class = "fas fa-exclamation-triangle me-2"></i>
+						پس از تایید، مبلغ از حساب شما کسر و به حساب سایت واریز خواهد شد
+					</div>
+					<form asp-action = "Pay" method="post" id="paymentForm">
+						<input type = "hidden" asp-for="Id" />
+						<div class = "d-grid gap-2">
+							<button type = "submit" class="btn btn-success btn-lg py-3"
+									id = "submitButton" >
+								<i class = "fas fa-lock me-2"></i>
+								تایید و پرداخت نهایی
+							</button>
+							<a asp-action = "Details" asp-route-id = "@Model.Id"
+								class="btn btn-outline-secondary">
+								<i class="fas fa-arrow-left me-2"></i>
+								بازگشت
+							</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Status Messages -->
+@if (TempData["PaymentSuccess"] != null)
+{
+	<div class="toast-container position-fixed bottom-0 end-0 p-3">
+		<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header bg-success text-white">
+				<strong class="me-auto"><i class="fas fa-check-circle"></i> موفقیت آمیز</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class="toast-body">
+				@TempData["PaymentSuccess"]
+			</div>
+		</div>
+	</div>
+}
+@if (TempData["PaymentError"] != null)
+{
+	<div class="toast-container position-fixed bottom-0 end-0 p-3">
+		<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header bg-danger text-white">
+				<strong class="me-auto"><i class="fas fa-times-circle"></i> خطا</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class = "toast-body">
+				@TempData["PaymentError"]
+			</div>
+		</div>
+	</div>
+}
+<script>
+	// Enable submit button when checkbox is checked
+	document.getElementById('confirmPayment').addEventListener('change', function () {
+		document.getElementById('submitButton').disabled = !this.checked;
+	});
+	// Form submission handling
+	document.getElementById('paymentForm').addEventListener('submit', function (e) {
+		const btn = document.getElementById('submitButton');
+		btn.disabled = true;
+		btn.innerHTML = `<div class="spinner-border spinner-border-sm" role="status">
+												<span class="visually-hidden">Loading...</span>
+											 </div> در حال پرداخت...`;
+	});
+</script>
+<style>
+	.card
+	{
+		border-radius: 15px;
+		border: none;
+	}
+	.card-header
+	{
+		border-radius: 15px 15px 0 0 !important;
+	}
+	dt
+	{
+		font-weight: 500;
+	}
+	.form-check-input
+	{
+		margin-left: 0.5em;
+		margin-right: -1.5em;
+	}
+	.toast
+	{
+		direction: rtl;
+		text-align: right;
+	}
+	.btn-success{
+		transition: all 0.3s ease;
+	}
+	.btn-success:hover
+	{
+		transform: translateY(-2px);
+		box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
+	}
+</style>

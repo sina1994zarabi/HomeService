@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.Contract.AppService;
 using App.Domain.Core.DTOs.ServiceRequestDto;
+using App.Domain.Core.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.MVC.Areas.Admin.Controllers
@@ -37,7 +38,7 @@ namespace App.EndPoints.MVC.Areas.Admin.Controllers
 
         public async Task<IActionResult> MarkAsDone(int id,CancellationToken cancellationToken)
         {
-            await _serviceRequestAppService.MarkAsDone(id, cancellationToken);
+            await _serviceRequestAppService.ChangeStatus(StatusEnum.AwaitingOffers,id,cancellationToken);
             return RedirectToAction("Index");
         }
 

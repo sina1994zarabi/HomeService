@@ -19,5 +19,6 @@ namespace App.Domain.Core.Contract.Repository
 		Task Update(UpdateClientprofileDto client, CancellationToken cancellation,IFormFile Image);
 		Task UpdateBalance(int id,decimal amount,CancellationToken cancellation);
 		Task ChangeAccountBalance(int clientId ,decimal amount, CancellationToken cancellation);
+		Task MakeTransaction(int clientId, decimal amount, CancellationToken cancellationToken);
 	}
 }

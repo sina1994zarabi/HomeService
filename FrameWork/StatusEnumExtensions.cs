@@ -12,6 +12,7 @@ namespace FrameWork
             { StatusEnum.Completed, "انجام شده" },
             { StatusEnum.Cancelled, "لغو شده" },
             { StatusEnum.AwaitingPayment, "پرداخت نشده" },
+            { StatusEnum.AwaitingAdminApprovalForTransaction, "در انتظار تایید ادمین" },
             { StatusEnum.Paid, "پرداخت شده" },
             { StatusEnum.InProgress, "در حال انجام" }
         };

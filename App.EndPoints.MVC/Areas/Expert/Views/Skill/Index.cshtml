@@ -3,43 +3,74 @@
 @{
     ViewData["Title"] = "مهارت‌های من";
     Layout = "_Layout";
-}
-
-
-@{
     string message = ViewBag.Message as string;
 }
 
-@if (!string.IsNullOrEmpty(message))
-{
-    <h1 class="btn btn-info">@message</h1>
-}
+<div class="container my-5">
+    <h2 class="text-center mb-4 fw-bold text-primary">مهارت‌های من</h2>
 
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <div class="alert alert-info text-center">
+            @message
+        </div>
+    }
 
-<h2>مهارت‌های من</h2>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>عنوان مهارت</th>
-            <th>عملیات</th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="row g-4">
         @foreach (var skill in Model)
         {
-            <tr>
-                <td>@skill.Title</td>
-                <td>
-                    <a class="btn btn-danger btn-sm" asp-action = "RemoveServiceFromSkills" asp-route-id = "@skill.Id">حذف</a>
-                </td>
-            </tr>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card skill-card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-3">@skill.Title</h5>
+                        <a asp-action="RemoveServiceFromSkills" asp-route-id="@skill.Id"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('آیا مطمئن هستید که می‌خواهید این مهارت را حذف کنید؟');">
+                            <i class="fas fa-trash-alt me-1"></i> حذف
+                        </a>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+
+    </div>
+</div>
+
 <style>
-    h2, h1, .table th, .table td 
-    {
-        text-align: right;
+    /* Overall container styling */
+    .container {
+        direction: rtl;
+        font-family: 'IRANSans', sans-serif;
+    }
+
+    /* Skill Card Styling */
+    .skill-card {
+        border: none;
+        border-radius: 10px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .skill-card .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+    /* Table/Heading text alignment */
+    h2, .alert {
+        text-align: center;
     }
 </style>

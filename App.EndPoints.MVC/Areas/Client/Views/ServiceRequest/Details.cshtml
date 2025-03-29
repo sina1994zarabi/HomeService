@@ -8,121 +8,228 @@
     ViewData["Title"] = "جزئیات درخواست";
 }
 
-<style>
-    /* Container must support RTL for Persian content */
-    [dir="rtl"] {
-        direction: rtl;
-        text-align: right;
-    }
+<div class="container my-5">
+    <h2 class="text-center mb-4 fw-bold text-primary">درخواست خدمات: @Model.Title</h2>
 
-    /* Main request card styling */
-    .request-details {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
+    <div class="row g-4">
+        <!-- Request Details Card -->
+        <div class="col-lg-5">
+            <div class="card border-primary shadow-lg h-100">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>مشخصات درخواست</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row fs-5">
+                        <dt class = "col-sm-4 text-muted">توضیحات :</dt>
+                        <dd class = "col-sm-8">@Model.Description</dd>
 
-        .request-details .header {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-        }
+                        <dt class = "col-sm-4 text-muted">تاریخ رزرو:</dt>
+                        <dd class = "col-sm-8">@Model.BookingDate.ToString("yyyy/MM/dd")</dd>
 
-        .request-details .body {
-            padding: 20px;
-        }
+                        <dt class = "col-sm-4 text-muted">وضعیت:</dt>
+                        <dd class = "col-sm-8">
+                            <span class="badge @GetStatusBadge(Model.Status) fs-6">
+                                @Model.Status.ToFarsiStatus()
+                            </span>
+                        </dd>
 
-    /* Offer card styling */
-    .offer-card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #fff;
-        padding: 15px;
-        margin-bottom: 15px;
-    }
-
-        .offer-card .offer-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .offer-card .offer-details {
-            margin-top: 10px;
-        }
-
-    /* Button overrides */
-    .btn-lg {
-        padding: 10px 25px;
-        font-size: 1.1rem;
-    }
-</style>
-
-<div class="container my-4" dir="rtl">
-    <h2 class="text-center mb-4">جزئیات درخواست خدمات</h2>
-
-    <!-- Request Details Card -->
-    <div class="request-details">
-        <div class="header">
-            <h4 class="mb-0">@Model.Title</h4>
+                        <dt class = "col-sm-4 text-muted">هزینه خدمات:</dt>
+                        <dd class = "col-sm-8 fw-bold text-success">
+                            @Model.Service.Price.ToString("N0") ریال
+                        </dd>
+                    </dl>
+                </div>
+            </div>
         </div>
-        <div class="body">
-            <p><strong>توضیحات: </strong>@Model.Description</p>
-            <p><strong>تاریخ رزرو: </strong>@Model.BookingDate.ToString("yyyy/MM/dd")</p>
-            <p>
-                <strong>وضعیت: </strong>
-                <span class="badge bg-primary">@Model.Status.ToFarsiStatus()</span>
-            </p>
+
+        <!-- Offers Section -->
+        <div class="col-lg-7">
+            <div class="card shadow-lg h-100">
+                <div class="card-header bg-info text-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-handshake me-2"></i>پیشنهادهای دریافتی</h5>
+                </div>
+
+                <div class="card-body p-0">
+                    @if (Model.ServiceOfferings?.Any() == true)
+                    {
+                        <div class="p-4">
+                            <div class="vstack gap-3">
+                                @foreach (var offer in Model.ServiceOfferings)
+                                {
+                                    <div class="card offer-card @(offer.Status == StatusEnum.PendingClientConfirmation ? "border-warning" : "")">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h5 class="mb-0">
+                                                    <i class="fas fa-user-tie text-secondary me-2"></i>
+                                                    @offer.Expert.FullName
+                                                    <span class="badge bg-secondary fs-6">کارشناس</span>
+                                                </h5>
+                                                <span class="badge @GetStatusBadge(offer.Status) fs-6">
+                                                    @offer.Status.ToFarsiStatus()
+                                                </span>
+                                            </div>
+
+                                            <div class="mb-3 text-muted">
+                                                <i class="fas fa-clock me-2"></i>
+                                                @offer.CreatedAt.ToString("yyyy/MM/dd - HH:mm")
+                                            </div>
+
+                                            <div class="bg-light p-3 rounded-2 mb-3">
+                                                <p class="mb-0 fw-medium">@offer.Description</p>
+                                            </div>
+
+                                            <form asp-action="AcceptOffer" method="post" class="mt-3">
+                                                <input type="hidden" name="offerId" value="@offer.Id" />
+                                                <input type="hidden" name="requestId" value="@Model.Id" />
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="text-muted small">
+                                                        @if (offer.Status == StatusEnum.PendingClientConfirmation)
+                                                        {
+                                                            <span class="text-warning">
+                                                                <i class="fas fa-exclamation-circle me-2"></i>
+                                                                نیاز به تایید شما
+                                                            </span>
+                                                        }
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary @GetButtonState(offer.Status)">
+                                                        <i class="fas fa-check me-2"></i>
+                                                        انتخاب پیشنهاد
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class = "text-center p-5">
+                            <div class = "alert alert-warning fs-5 py-4">
+                                <i class = "fas fa-comment-slash fa-2x mb-3"></i>
+                                <div> هنوز هیچ پیشنهادی ثبت نشده است</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- Offers Section -->
-    <h4 class="mb-3">پیشنهادهای دریافتی</h4>
-    @if (Model.ServiceOfferings != null && Model.ServiceOfferings.Any())
-    {
-        <form asp-action="AcceptOffer" method="post">
-            <input type="hidden" name="requestId" value="@Model.Id" />
-            @foreach (var offer in Model.ServiceOfferings)
-            {
-                <div class="offer-card">
-                    <div class="offer-header">
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" name="offerId" id="offer_@offer.Id" value="@offer.Id" required />
-                            <label class="form-check-label" for="offer_@offer.Id">
-                                <strong>پیشنهاد از: @offer.Expert.FullName</strong>
-                            </label>
-                        </div>
-                        <span class="badge bg-secondary">کارشناس</span>
-                    </div>
-                    <div class="offer-details">
-                        <p class="mb-1"><strong>توضیحات: </strong>@offer.Description</p>
-                        <p class="mb-1"><strong>تاریخ پیشنهاد: </strong>@offer.CreatedAt.ToString("yyyy/MM/dd HH:mm")</p>
-                        <span class="badge bg-info">@offer.Status.ToFarsiStatus()</span>
-                    </div>
-                </div>
-            }
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-success btn-lg">قبول پیشنهاد انتخاب شده</button>
-            </div>
-        </form>
-    }
-    else
-    {
-        <div class="alert alert-warning text-center">برای این درخواست هنوز هیچ پیشنهادی ثبت نشده است.</div>
-    }
-
     @if (Model.Status == StatusEnum.InProgress)
     {
-        <div class="text-center mt-4">
+        <div class = "text-center mt-4">
             <a asp-action = "MarkAsDone" 
-               asp-route-RequestId = "@Model.Id"
-               class="btn btn-primary btn-lg">
-                علامت گذاری به عنوان تکمیل شده
+               asp-route-id = "@Model.Id"
+               class = "btn btn-primary btn-lg px-5 py-3">
+               <i class = "fas fa-flag-checkered me-2"></i>
+                تکمیل سرویس
+            </a>
+        </div>
+    }
+    else if (Model.Status == StatusEnum.AwaitingPayment)
+    {
+        <div class="text-center mt-4">
+            <a asp-controller ="PaymentGateway"
+               asp-action = "Index"
+               asp-route-id = "@Model.Id"
+               class="btn btn-success btn-lg px-5 py-3 payment-button">
+                <i class="fas fa-credit-card fa-shake me-2"></i>
+                پرداخت اینترنتی
             </a>
         </div>
     }
 </div>
+
+<style>
+    .container {
+        direction: rtl;
+    }
+
+    .offer-card {
+        border: 2px solid transparent;
+        transition: all 0.2s ease;
+    }
+
+        .offer-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+    .form-check-input {
+        width: 1.2em;
+        height: 1.2em;
+        margin-top: 0.3em;
+    }
+
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+
+    .offer-card .btn-primary {
+        min-width: 140px;
+        transition: all 0.2s ease;
+    }
+
+        .offer-card .btn-primary:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3);
+        }
+
+    .offer-card .btn-disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .payment-button {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+        .payment-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
+        }
+
+            .payment-button:hover i {
+                animation: cardSlide 0.5s ease-in-out;
+            }
+
+    @@keyframes cardSlide {
+        0% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(5px);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+</style>
+
+@functions {
+    string GetStatusBadge(StatusEnum status)
+    {
+        return status switch
+        {
+            StatusEnum.AwaitingOffers => "bg-secondary",
+            StatusEnum.PendingClientConfirmation => "bg-warning",
+            StatusEnum.PendingProviderConfirmation => "bg-info",
+            StatusEnum.InProgress => "bg-primary",
+            StatusEnum.Completed => "bg-success",
+            StatusEnum.AwaitingPayment => "bg-danger",
+            StatusEnum.Paid => "bg-success",
+            StatusEnum.Cancelled => "bg-dark",
+            _ => "bg-light text-dark"
+        };
+    }
+
+    string GetButtonState(StatusEnum status)
+    {
+        return status == StatusEnum.PendingClientConfirmation ? "" : "disabled btn-disabled";
+    }
+}

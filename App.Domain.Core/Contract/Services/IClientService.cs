@@ -18,6 +18,7 @@ namespace App.Domain.Core.Contract.Services
         Task Delete(int id, CancellationToken cancellation);
         Task Update(UpdateClientprofileDto client, CancellationToken cancellation,IFormFile Image);
         Task UpdateBalance(int  id,decimal amount ,CancellationToken cancellation);
-        Task ChangeAccountBalance(int id,decimal  balance,CancellationToken cancellation);
+        Task ChangeAccountBalance(int id,decimal balance,CancellationToken cancellation);
+        Task MakeTransaction(int clientId,decimal amount,CancellationToken cancellation);
     }
 }

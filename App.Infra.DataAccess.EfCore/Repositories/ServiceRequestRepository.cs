@@ -94,15 +94,6 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 								  .ToListAsync(cancellationToken);
 		}
 
-		public async Task MarkAsDone(int id, CancellationToken cancellationToken)
-		{
-			var serviceRequest = await _context.
-									ServiceRequests.
-									FirstOrDefaultAsync(x => x.Id == id,cancellationToken);
-			serviceRequest.Status = StatusEnum.Completed;
-			await _context.SaveChangesAsync(cancellationToken);
-		}
-
 		public async Task Update(ServiceRequest serviceRequest,CancellationToken cancellationToken)
 		{
 			var serviceRequestToEdit = await _context.ServiceRequests.FindAsync(serviceRequest.Id,cancellationToken);

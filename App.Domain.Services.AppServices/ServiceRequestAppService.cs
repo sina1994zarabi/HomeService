@@ -30,7 +30,7 @@ namespace App.Domain.Services.AppServices
 			await _serviceRequestService.ChangeStatus(status,id,cancellationToken);
 		}
 
-		public async Task Create(CreateServiceRequestDto createServiceRequestDto, CancellationToken cancellationToken)
+		public async Task Create(CreateServiceRequestDto createServiceRequestDto,CancellationToken cancellationToken)
         {
             await _serviceRequestService.Add(createServiceRequestDto,cancellationToken);
         }
@@ -49,11 +49,6 @@ namespace App.Domain.Services.AppServices
         {
             return await _serviceRequestService.Get(id,CancellationToken);
         }
-
-		public async Task MarkAsDone(int id, CancellationToken cancellationToken)
-		{
-			await _serviceRequestService.MarkAsDone(id,cancellationToken);
-		}
 
 		public async Task Update(ServiceRequest serviceRequest, CancellationToken cancellationToken)
         {
