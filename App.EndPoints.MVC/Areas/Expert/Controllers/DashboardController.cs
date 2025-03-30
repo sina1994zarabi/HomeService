@@ -23,9 +23,10 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             _reviewAppService = reviewAppService;
         }
 
-        public IActionResult Index(string username)
+        public async Task<IActionResult> Index()
         {
-            ViewData["Username"] = username;
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewBag.CurrentUser = currentUser;
             return View();
         }
 
@@ -70,7 +71,6 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             var model = await _expertAppService.GetExpertReview(expert.Id, default);
             return View(model);
         }
-
 
         public async Task<IActionResult> Portfolio()
         {

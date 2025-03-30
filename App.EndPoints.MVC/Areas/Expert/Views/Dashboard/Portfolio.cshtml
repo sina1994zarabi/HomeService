@@ -7,12 +7,12 @@
 
 <div class = "container" dir = "rtl" style = "text-align: right;">
     <!-- Profile Section -->
-    <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
+    <div class = "card mb-4">
+        <div class = "card-header bg-primary text-white">
             <h2>پروفایل</h2>
         </div>
-        <div class="card-body text-center">
-            <img src = "@Model.ProfilePicture" alt="Profile Picture" class="profile-picture mb-3" />
+        <div class = "card-body text-center">
+            <img src = "@Model.ProfilePicture" alt = "Profile Picture" class = "profile-picture mb-3" />
             <h3>@Model.FullName</h3>
             <p>Gender: @Model.Gender</p>
             <p>Phone: @Model.PhoneNumber</p>
@@ -20,29 +20,29 @@
     </div>
 
     <!-- Skills Section -->
-    <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
+    <div class = "card mb-4">
+        <div class = "card-header bg-primary text-white">
             <h2>مهارت ها</h2>
         </div>
-        <div class="card-body">
-            <ul class="skills-list">
+        <div class = "card-body">
+            <ul class = "skills-list">
                 @foreach (var skill in Model.Skills)
                 {
-                    <li class="skill-tag">@skill.Title</li>
+                    <li class = "skill-tag">@skill.Title</li>
                 }
             </ul>
         </div>
     </div>
 
     <!-- Reviews Section -->
-    <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
+    <div class = "card mb-4">
+        <div class = "card-header bg-primary text-white">
             <h2>نظرات</h2>
         </div>
-        <div class="card-body">
+        <div class = "card-body">
             <p>
                 <strong>امتیاز میانگین: </strong>
-                <span class="star-rating">
+                <span class = "star-rating">
                     @for (int i = 1; i <= 5; i++)
                     {
                         if (i <= Math.Floor(Model.AverageRating))
@@ -59,7 +59,7 @@
                         }
                     }
                 </span>
-                <span class="rating-number">@Model.AverageRating.ToString("0.0")</span>
+                <span class = "rating-number">@Model.AverageRating.ToString("0.0")</span>
             </p>
             @foreach (var review in Model.Reviews)
             {

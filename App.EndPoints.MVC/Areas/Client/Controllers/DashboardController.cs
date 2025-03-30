@@ -35,7 +35,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             _memoryCache = memoryCache;
         }
 
-        public async Task<IActionResult> Index(string username)
+        public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);
             ViewBag.CurrentUser = currentUser;
