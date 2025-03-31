@@ -106,6 +106,7 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IReviewAppService, ReviewAppService>();
 
 builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<ICityService, CityService>();
 
 
 builder.Services.AddScoped<IUtilityService, UtilityService>();

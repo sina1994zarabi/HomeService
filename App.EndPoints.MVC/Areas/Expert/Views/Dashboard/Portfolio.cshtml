@@ -1,4 +1,5 @@
-﻿@model App.Domain.Core.DTOs.ExpertDto.ExpertPortfolioDto;
+﻿@using FrameWork;
+@model App.Domain.Core.DTOs.ExpertDto.ExpertPortfolioDto;
 
 @{
     ViewData["Title"] = "Expert Portfolio";
@@ -18,7 +19,6 @@
             <p>Phone: @Model.PhoneNumber</p>
         </div>
     </div>
-
     <!-- Skills Section -->
     <div class = "card mb-4">
         <div class = "card-header bg-primary text-white">
@@ -33,7 +33,6 @@
             </ul>
         </div>
     </div>
-
     <!-- Reviews Section -->
     <div class = "card mb-4">
         <div class = "card-header bg-primary text-white">
@@ -79,7 +78,7 @@
                         }
                     </div>
                     <p>@review.Comment</p>
-                    <p><em>@review.ReviewDate.ToString("yyyy/MM/dd")</em></p>
+                    <p><em>@review.ReviewDate.ToPersianString("")</em></p>
                 </div>
             }
         </div>

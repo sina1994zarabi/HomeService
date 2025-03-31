@@ -114,28 +114,7 @@
 								<div class="col-lg-4 form-cols">
 									<input type="text" class="form-control" name="search" placeholder="دنبال چه می گردید؟">
 								</div>
-								<div class="col-lg-3 form-cols">
-									<div class = "default-select" id = "default-selects">
-										<select>
-											<option value="1">انتخاب شهر</option>
-											<option value="2">تهران</option>
-											<option value="3">اصفهان</option>
-											<option value="4">تبریز</option>
-											<option value="5">مشهد</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-3 form-cols">
-									<div class="default-select" id="default-selects2">
-										<select>
-											<option value="1">همه دسته بندی ها</option>
-											<option value="2">ساختمان</option>
-											<option value="3">تمیز کاری</option>
-											<option value="4">تعمیرات</option>
-											<option value="5">لوله کشی</option>
-										</select>
-									</div>
-								</div>
+								@await Component.InvokeAsync("CityCategory")
 								<div class="col-lg-2 form-cols">
 									<button type="button" class="btn btn-info">
 										<span class="lnr lnr-magnifier"></span> جستجو

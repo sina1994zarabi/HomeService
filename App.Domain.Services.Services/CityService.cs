@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Services.Services
 {
-    public class CityService : ICityRepository
+    public class CityService : ICityService
     {
 
         private readonly ICityRepository _cityRepository;
