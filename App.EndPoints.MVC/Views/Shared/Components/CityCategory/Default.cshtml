@@ -1,9 +1,7 @@
 ﻿@model App.EndPoints.MVC.Models.SearchViewModel
 
-
-
 <div class="col-lg-3 form-cols">
-    <div class="default-select">
+    <div class="default-select" id = "default-selects">
         <select name="cityId">
             <option value="">انتخاب شهر</option>
             @foreach (var city in Model.Cities)
@@ -14,12 +12,12 @@
     </div>
 </div>
 <div class="col-lg-3 form-cols">
-    <div class="default-select">
+    <div class="default-select" id = "default-selects2">
         <select name="categoryId">
             <option value="">دسته بندی ها</option>
             @foreach (var category in Model.Categories)
             {
-                <option value="@category.Id">@category.Title</option>
+                <option value = "@category.Id">@category.Title</option>
             }
         </select>
     </div>

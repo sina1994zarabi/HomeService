@@ -72,19 +72,37 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Portfolio()
+        public async Task<IActionResult> Portfolio(int? expertId = null)
         {
-            var user = await _userManager.GetUserAsync(User);
-            var expert = await _expertAppService.GetExpertByUserId(user.Id, default);
-            var reviews = await _reviewAppService.GetByExpertId(expert.Id,default);
+            int idToUse;
+            if (expertId.HasValue)
+                idToUse = expertId.Value;
+            else
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var expert = await _expertAppService.GetExpertByUserId(user.Id, default);
+                if (expert == null)
+                {
+                    return NotFound();
+                }
+                idToUse = expert.Id;
+            }
+            var expertToDisplay = await _expertAppService.GetById(idToUse, default);
+
+            if (expertToDisplay == null)
+            {
+                return NotFound(); 
+            }
+
+            var reviews = await _reviewAppService.GetByExpertId(expertToDisplay.Id, default);
             var averageRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
             var Model = new ExpertPortfolioDto
             {
-                FullName = expert.FullName,
-                ProfilePicture = expert.AppUser.ProfilePicture,
-                Gender = expert.Gender,
-                PhoneNumber = expert.PhoneNumber,
-                Skills = expert.Services.ToList(),
+                FullName = expertToDisplay.FullName,
+                ProfilePicture = expertToDisplay.AppUser.ProfilePicture,
+                Gender = expertToDisplay.Gender,
+                PhoneNumber = expertToDisplay.PhoneNumber,
+                Skills = expertToDisplay.Services.ToList(),
                 AverageRating = averageRating,
                 Reviews = reviews
             };
