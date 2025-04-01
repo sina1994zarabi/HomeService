@@ -10,7 +10,6 @@
 
 <div class="container my-5">
     <h2 class="text-center mb-4 fw-bold text-primary">درخواست خدمات: @Model.Title</h2>
-
     <div class="row g-4">
         <!-- Request Details Card -->
         <div class="col-lg-5">
@@ -24,7 +23,7 @@
                         <dd class = "col-sm-8">@Model.Description</dd>
 
                         <dt class = "col-sm-4 text-muted">تاریخ رزرو:</dt>
-                        <dd class = "col-sm-8">@Model.BookingDate.ToString("yyyy/MM/dd")</dd>
+                        <dd class = "col-sm-8">@Model.BookingDate.ToPersianString()</dd>
 
                         <dt class = "col-sm-4 text-muted">وضعیت:</dt>
                         <dd class = "col-sm-8">
@@ -63,7 +62,11 @@
                                                     <i class="fas fa-user-tie text-secondary me-2"></i>
                                                     @offer.Expert.FullName
                                                     <span class="badge bg-secondary fs-6">کارشناس</span>
-                                                    <a asp-area = "Expert" asp-controller = "Expert" asp-action = "Portfolio" asp-route-expertId="@offer.Expert.Id" class="btn btn-sm btn-outline-primary ms-2">
+                                                    <a asp-area = "Expert"
+                                                       asp-controller = "Dashboard"
+                                                       asp-action = "Portfolio"
+                                                       asp-route-expertId = "@offer.Expert.Id"
+                                                       class="btn btn-sm btn-outline-primary ms-2">
                                                         مشاهده کارشناس
                                                     </a>
                                                 </h5>

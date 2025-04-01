@@ -1,4 +1,5 @@
 ﻿@using App.Domain.Core.Enums;
+@using FrameWork;
 @model App.Domain.Core.DTOs.ServiceRequestDto.ChangeStatusDto
 @{
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -13,11 +14,11 @@
                     <label class="col-sm-2 col-form-label" asp-for="@Model.Status">نام</label>
                     <div class="col-sm-10">
                         <select asp-for="@Model.Status" class="select2 form-select form-select-lg" data-allow-clear="true">
-                            <option value="@StatusEnum.PendingClientConfirmation"> در انتظار تایید مشتری</option>
-                            <option value="@StatusEnum.PendingProviderConfirmation"> در انتظار تایید متخصص</option>
-                            <option value="@StatusEnum.AwaitingOffers">در انتظار دریافت پیشنهاد</option>
-                            <option value="@StatusEnum.Completed"> تایید ادمین</option>
-                            <option value="@StatusEnum.Cancelled">لغو شد</option>
+                            <option value="@StatusEnum.PendingClientConfirmation"> @StatusEnum.PendingClientConfirmation.ToFarsiStatus()</option>
+                            <option value="@StatusEnum.PendingProviderConfirmation"> @StatusEnum.PendingProviderConfirmation.ToFarsiStatus()</option>
+                            <option value="@StatusEnum.AwaitingOffers">@StatusEnum.AwaitingOffers.ToFarsiStatus()</option>
+                            <option value="@StatusEnum.Completed"> @StatusEnum.Completed.ToFarsiStatus()</option>
+                            <option value="@StatusEnum.Cancelled">@StatusEnum.Cancelled.ToFarsiStatus()</option>
                         </select>
                     </div>
                 </div>

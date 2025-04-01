@@ -2,52 +2,58 @@
 @using FrameWork;
 @model List<App.Domain.Core.Entities.Services.ServiceRequest>
 
-
 @{
-	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-	ViewData["Title"] = "سفارشات";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "سفارشات";
 }
 
-<table class="table table-bordered">
-	<thead>
-		<tr>
-			<th>عنوان</th>
-			<th>توضیحات</th>
-			<th>نام سفارش دهنده</th>
-			<th>وضعیت سفارش</th>
-			<th>تعداد پیشنهادات</th>
-			<th>عملیات</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var serviceRequest in Model)
-		{
-			<tr>
-				<td>@serviceRequest.Title</td>
-				<td>@serviceRequest.Description</td>
-				<td>@serviceRequest.Client.FullName</td>
-				<td>@serviceRequest.Status.ToFarsiStatus()</td>
-				<td>@(serviceRequest.ServiceOfferings?.Count() ?? 0)</td>
-				<td>
-					<a class = "btn btn-success" asp-action = "Changestatus" asp-route-id = "@serviceRequest.Id">تغییر وضعیت</a>
-					<a  asp-action="MarkAsDone" asp-route-id = "@serviceRequest.Id" class="btn @(serviceRequest.IsCompleted ? "btn-danger" : "btn-primary")">
-						@(serviceRequest.IsCompleted ? "انجام شده" : "انجام نشده")
-					</a>
-					<a asp-action = "Details" asp-route-id="@serviceRequest.Id" class="btn btn-info">مشاهده جزییات</a>
-					<a asp-action = "Delete" asp-route-id="@serviceRequest.Id" class="btn btn-danger" onclick="return confirm('مطمینید میخواهید ادامه دهید؟')"> حذف</a>
-				</td>
-			</tr>
-		}
-	</tbody>
+
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>عنوان</th>
+            <th>توضیحات</th>
+            <th>نام سفارش دهنده</th>
+            <th>وضعیت سفارش</th>
+            <th>تعداد پیشنهادات</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var serviceRequest in Model)
+        {
+            <tr>
+                <td>@serviceRequest.Title</td>
+                <td>@serviceRequest.Description</td>
+                <td>@serviceRequest.Client.FullName</td>
+                <td>@serviceRequest.Status.ToFarsiStatus()</td>
+                <td>@(serviceRequest.ServiceOfferings?.Count() ?? 0)</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-success btn-sm" asp-action = "Changestatus" asp-route-id="@serviceRequest.Id" title="تغییر وضعیت">
+                            <i class="fas fa-sync-alt"></i>
+                        </a>
+                        <a class="btn btn-sm @(serviceRequest.IsCompleted ? "btn-danger" : "btn-primary")" asp-action="MarkAsDone" asp-route-id="@serviceRequest.Id" title="@(serviceRequest.IsCompleted ? "لغو انجام شده" : "علامت‌گذاری به عنوان انجام شده")">
+                            <i class="fas @(serviceRequest.IsCompleted ? "fa-times" : "fa-check")"></i>
+                        </a>
+                        <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@serviceRequest.Id" title="مشاهده جزییات">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@serviceRequest.Id" onclick="return confirm('مطمینید میخواهید ادامه دهید؟')" title="حذف">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
 <a asp-action="Index" asp-controller="Dashboard" class="btn btn-secondary">
-	<i class="fas fa-arrow-left"></i> بازگشت
+    <i class="fas fa-arrow-left"></i> بازگشت
 </a>
 
 @section Scripts {
-	<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }
-
-
-
-

@@ -53,7 +53,9 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 
 		public async Task<Expert> Get(int id,CancellationToken cancellation)
 		{
-			return await _context.Experts.FindAsync(id, cancellation);
+			return await _context.Experts.
+						 Include(x => x.AppUser).
+						 FirstOrDefaultAsync(x => x.Id == id, cancellation);
 		}
 
 		public async Task<List<Expert>> GetAll(CancellationToken cancellation)
