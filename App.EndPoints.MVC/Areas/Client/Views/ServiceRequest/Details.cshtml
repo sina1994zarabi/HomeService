@@ -21,17 +21,14 @@
                     <dl class="row fs-5">
                         <dt class = "col-sm-4 text-muted">توضیحات :</dt>
                         <dd class = "col-sm-8">@Model.Description</dd>
-
                         <dt class = "col-sm-4 text-muted">تاریخ رزرو:</dt>
                         <dd class = "col-sm-8">@Model.BookingDate.ToPersianString()</dd>
-
                         <dt class = "col-sm-4 text-muted">وضعیت:</dt>
                         <dd class = "col-sm-8">
                             <span class="badge @GetStatusBadge(Model.Status) fs-6">
                                 @Model.Status.ToFarsiStatus()
                             </span>
                         </dd>
-
                         <dt class = "col-sm-4 text-muted">هزینه خدمات:</dt>
                         <dd class = "col-sm-8 fw-bold text-success">
                             @Model.Service.Price.ToString("N0") ریال
@@ -40,14 +37,12 @@
                 </div>
             </div>
         </div>
-
         <!-- Offers Section -->
         <div class="col-lg-7">
             <div class="card shadow-lg h-100">
                 <div class="card-header bg-info text-white py-3">
                     <h5 class="mb-0"><i class="fas fa-handshake me-2"></i>پیشنهادهای دریافتی</h5>
                 </div>
-
                 <div class="card-body p-0">
                     @if (Model.ServiceOfferings?.Any() == true)
                     {
@@ -133,7 +128,7 @@
     else if (Model.Status == StatusEnum.AwaitingPayment)
     {
         <div class="text-center mt-4">
-            <a asp-controller ="PaymentGateway"
+            <a asp-controller = "PaymentGateway"
                asp-action = "Index"
                asp-route-id = "@Model.Id"
                class="btn btn-success btn-lg px-5 py-3 payment-button">
