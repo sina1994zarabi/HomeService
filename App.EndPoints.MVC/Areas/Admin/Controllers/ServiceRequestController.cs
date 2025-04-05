@@ -25,9 +25,14 @@ namespace App.EndPoints.MVC.Areas.Admin.Controllers
             var model = await _serviceRequestAppService.GetAll(default);
             return View(model);
         }
-        public IActionResult ChangeStatus(int id)
+        public async Task<IActionResult> ChangeStatus(int id)
         {
-            return View(new ChangeStatusDto() { ServiceRequestId = id});
+            var serviceRequest = await _serviceRequestAppService.GetById(id, default);
+            var model = new ChangeStatusDto { 
+                          ServiceRequestId = id ,
+                          CurrentStatus = serviceRequest.Status
+            };
+            return View(model);
         }
 
         [HttpPost]

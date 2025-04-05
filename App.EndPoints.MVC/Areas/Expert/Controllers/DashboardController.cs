@@ -32,7 +32,9 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
 
         public async Task<IActionResult> Profile()
         {
-            var model = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User);
+            var expert = await _expertAppService.GetExpertByUserId(user.Id, default);
+            var model = await _expertAppService.GetExpertProfile(expert.Id, default);
             return View(model);
         }
 

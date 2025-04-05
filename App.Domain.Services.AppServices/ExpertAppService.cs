@@ -69,6 +69,21 @@ namespace App.Domain.Services.AppServices
             return await _expertService.GetExpertInfo(id,cancellationToken);
         }
 
+        public async Task<ExpertProfileDto> GetExpertProfile(int id, CancellationToken cancellationToken)
+        {
+            var expert = await _expertService.Get(id,cancellationToken);
+            return new ExpertProfileDto
+            {
+                Id = expert.Id,
+                FullName = expert.FullName,
+                ProfilePicture = expert.AppUser.ProfilePicture,
+                Email = expert.AppUser.Email,
+                PhoneNumber = expert.PhoneNumber,
+                AccountBalance = expert.AppUser.AccountBalance,
+                IsActive = expert.IsApproved
+            };
+        }
+
         public async Task<List<Review>> GetExpertReview(int Id, CancellationToken cancellationToken)
         {
             var reviews = await _reviewService.GetAll(default);

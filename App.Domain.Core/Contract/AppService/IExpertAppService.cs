@@ -15,6 +15,7 @@ namespace App.Domain.Core.Contract.AppService
         Task Create(CreateExpertDto createExpertDto,CancellationToken cancellationToken);
         Task<Expert> GetById(int id, CancellationToken cancellationToken);
         Task<Expert> GetExpertByUserId(int id,CancellationToken cancellationToken);
+        Task<ExpertProfileDto> GetExpertProfile(int id,CancellationToken cancellationToken);
         Task<List<Expert>> GetAll(CancellationToken cancellationToken);
         Task<Expert> GetExpertInfo(int id, CancellationToken cancellation);
         Task<List<Review>> GetExpertReview(int Id, CancellationToken cancellationToken);

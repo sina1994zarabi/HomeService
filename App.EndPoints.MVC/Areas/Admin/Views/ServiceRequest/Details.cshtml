@@ -13,7 +13,7 @@
     <h3>@Model.Title</h3>
     <p>@Model.Description</p>
     <p><strong>مشتری: </strong> @Model.Client.FullName</p>
-    <p><strong>زمان رزو شده: </strong> @Model.BookingDate.ToPersianString("yyyy/MM/dd")</p>
+    <p><strong>زمان رزو شده: </strong> @Model.BookingDate.ToString()</p>
     <p><strong>وضعیت: </strong> @Model.Status.ToFarsiStatus()</p>
 
     <h4>عکس ها</h4>
@@ -50,7 +50,7 @@
                         <td>@offering.Description</td>
                         <td>@(offering.Expert?.FullName ?? "کارشناسی یافت نشد")</td>
                         <td>@offering.Status.ToFarsiStatus()</td>
-                        <td>@offering.CreatedAt.ToPersianString("yyyy/MM/dd")</td>
+                        <td>@offering.CreatedAt.ToString()</td>
                     </tr>
                 }
             </tbody>

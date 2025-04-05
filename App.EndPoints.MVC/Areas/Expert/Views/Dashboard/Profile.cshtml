@@ -1,30 +1,59 @@
-﻿@using App.Domain.Core.Enums;
-@using FrameWork;
-@model App.Domain.Core.Entities.User.AppUser;
-
+﻿@model App.Domain.Core.DTOs.ExpertDto.ExpertProfileDto
 
 @{
-	ViewData["Title"] = "پروفایل من";
+	ViewData["Title"] = "پروفایل متخصص";
 	Layout = "_Layout";
 }
 
-<div class="container my-5 d-flex justify-content-center">
-	<div class="card profile-card shadow-sm" style="max-width: 600px; width: 100%;">
-		<div class="card-header text-center bg-light">
-			@if (string.IsNullOrEmpty(Model.ProfilePicture))
-			{
-				<img src="~/ClientPanel/images/default-profile.png" alt="Profile Picture" class="rounded-circle" style="width:150px; height:150px; object-fit: cover;" />
-			}
-			else
-			{
-				<img src="@Model.ProfilePicture" alt="Profile Picture" class="rounded-circle" style="width:150px; height:150px; object-fit: cover;" />
-			}
-		</div>
-		<div class="card-body text-center">
-			<h3 class="mb-3">@Model.FullName</h3>
-			<p class="mb-1">ایمیل: @Model.Email</p>
-			<p class="mb-3">شماره تماس: @Model.PhoneNumber</p>
-			<a class="btn btn-primary" asp-action="EditProfile" asp-route-id="@Model.Id">ویرایش پروفایل</a>
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<div class="card border-primary shadow-lg">
+				<div class="card-header bg-primary text-white text-center">
+					<h4 class="mb-0">اطلاعات پروفایل متخصص</h4>
+				</div>
+				<div class="card-body">
+					<dl class="row">
+						<div class="text-center mb-4">
+							<img src="@(!string.IsNullOrEmpty(Model.ProfilePicture) ? Model.ProfilePicture : "~/ClientPanel/images/default-profile.png")"
+								 class="rounded-circle"
+								 alt="Profile Picture"
+								 style="width: 150px; height: 150px; object-fit: cover;" />
+						</div>
+						<dt class="col-sm-4">نام کامل:</dt>
+						<dd class="col-sm-8">@Model.FullName</dd>
+
+						<dt class="col-sm-4">شماره تلفن:</dt>
+						<dd class="col-sm-8">@Model.PhoneNumber</dd>
+
+						<dt class="col-sm-4">ایمیل:</dt>
+						<dd class="col-sm-8">@Model.Email</dd>
+
+						<dt class="col-sm-4">موجودی حساب:</dt>
+						<dd class="col-sm-8">@Model.AccountBalance.ToString("N0") تومان</dd>
+
+						<dt class="col-sm-4">وضعیت:</dt>
+						<dd class="col-sm-8">
+							@if (Model.IsActive)
+							{
+								<span class="badge bg-success">فعال</span>
+							}
+							else
+							{
+								<span class="badge bg-danger">غیرفعال</span>
+							}
+						</dd>
+					</dl>
+				</div>
+				<div class="card-footer text-end">
+					<a asp-action="EditProfile" asp-route-id="@Model.Id" class="btn btn-warning">
+						<i class="fas fa-edit"></i> ویرایش پروفایل
+					</a>
+					<a asp-action="Index" class="btn btn-secondary">
+						<i class="fas fa-arrow-left"></i> بازگشت
+					</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
