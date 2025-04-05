@@ -11,5 +11,6 @@ namespace App.Domain.Core.DTOs.ServiceRequestDto
     {
         public int ServiceRequestId { get; set; }
         public StatusEnum Status { get; set; }
+        public StatusEnum CurrentStatus { get; set; }
     }
 }

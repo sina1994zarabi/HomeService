@@ -94,7 +94,18 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 								  .ToListAsync(cancellationToken);
 		}
 
-		public async Task Update(ServiceRequest serviceRequest,CancellationToken cancellationToken)
+        public async Task<ServiceOffering> GetApprovedOffer(int id, CancellationToken cancellationToken)
+        {
+			var requests = await _context.
+								 ServiceRequests.
+								 Include(x => x.ServiceOfferings).
+								 ToListAsync(cancellationToken);
+            var serviceOffering = requests.SelectMany(r => r.ServiceOfferings)
+									.FirstOrDefault(s => s.Status == StatusEnum.AwaitingAdminApprovalForTransaction);
+			return serviceOffering;
+        }
+
+        public async Task Update(ServiceRequest serviceRequest,CancellationToken cancellationToken)
 		{
 			var serviceRequestToEdit = await _context.ServiceRequests.FindAsync(serviceRequest.Id,cancellationToken);
 			if (serviceRequestToEdit != null)

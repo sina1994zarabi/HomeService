@@ -116,6 +116,11 @@ namespace App.Domain.Services.AppServices
             return output;
         }
 
+        public async Task ProccessPayment(int id, decimal amount, CancellationToken cancellationToken)
+        {
+            await _expertService.ProccessPayment(id,amount,cancellationToken);
+        }
+
         public async Task RemoveSkills(int id, Service service, CancellationToken cancellationToken)
         {
             await _expertService.RemoveSkill(id,service,cancellationToken);

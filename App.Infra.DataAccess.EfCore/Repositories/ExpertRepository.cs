@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -71,6 +72,14 @@ namespace App.Infra.DataAccess.EfCore.Repositories
             return await _context.Experts
 								 .Include(x => x.AppUser)
 								 .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task ProccessPayment(int id, decimal amount, CancellationToken cancellation)
+        {
+            var expert = await _context.Experts.Include(x => x.AppUser).
+				FirstOrDefaultAsync(x => x.Id == id);
+			expert.AppUser.AccountBalance += amount;
+			await _context.SaveChangesAsync(cancellation);
         }
 
         public async Task RemoveSkill(int id, Service service, CancellationToken cancellation)

@@ -45,6 +45,11 @@ namespace App.Domain.Services.AppServices
             return await _serviceRequestService.GetAll(cancellationToken);
         }
 
+        public async Task<ServiceOffering> GetApprovedOffer(int id, CancellationToken cancellationToken)
+        {
+            return await _serviceRequestService.GetApprovedOffer(id,cancellationToken);
+        }
+
         public async Task<ServiceRequest> GetById(int id, CancellationToken CancellationToken)
         {
             return await _serviceRequestService.Get(id,CancellationToken);

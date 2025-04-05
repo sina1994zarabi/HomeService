@@ -13,6 +13,7 @@ namespace App.Domain.Core.Contract.AppService
     {
         Task Create(CreateServiceRequestDto createServiceRequestDto, CancellationToken cancellationToken);
         Task<ServiceRequest> GetById(int id, CancellationToken CancellationToken);
+        Task<ServiceOffering> GetApprovedOffer(int id, CancellationToken cancellationToken);
         Task<List<ServiceRequest>> GetAll(CancellationToken cancellationToken);
         Task Delete(int id, CancellationToken cancellationToken);
         Task Update(ServiceRequest serviceRequest, CancellationToken cancellationToken);

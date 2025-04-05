@@ -51,6 +51,11 @@ namespace App.Domain.Services.Services
             return await _expertRepository.GetExpertInfo(id,cancellation);
         }
 
+        public async Task ProccessPayment(int id, decimal amount, CancellationToken cancellation)
+        {
+            await _expertRepository.ProccessPayment(id,amount,cancellation);
+        }
+
         public async Task RemoveSkill(int id, Service service, CancellationToken cancellation)
         {
             await _expertRepository.RemoveSkill(id,service,cancellation);

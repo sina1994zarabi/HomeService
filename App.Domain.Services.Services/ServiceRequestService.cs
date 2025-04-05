@@ -54,5 +54,10 @@ namespace App.Domain.Services.Services
         {
             await _serviceRequestRepository.AcceptOffer(serviceRequestId,serviceOfferingId,cancellationToken);
         }
+
+        public async Task<ServiceOffering> GetApprovedOffer(int id, CancellationToken cancellationToken)
+        {
+            return await _serviceRequestRepository.GetApprovedOffer(id,cancellationToken);
+        }
     }
 }

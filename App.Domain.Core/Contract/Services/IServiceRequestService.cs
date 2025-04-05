@@ -15,6 +15,7 @@ namespace App.Domain.Core.Contract.Services
         Task Add(CreateServiceRequestDto serviceRequest, CancellationToken cancellationToken);
         Task<ServiceRequest> Get(int id, CancellationToken cancellationToken);
         Task<List<ServiceRequest>> GetAll(CancellationToken cancellationToken);
+        Task<ServiceOffering> GetApprovedOffer(int id, CancellationToken cancellationToken);
         Task Delete(int id, CancellationToken cancellationToken);
         Task Update(ServiceRequest serviceRequest, CancellationToken cancellationToken);
         Task AcceptOffer(int serviceRequestId, int serviceOfferingId, CancellationToken cancellationToken);

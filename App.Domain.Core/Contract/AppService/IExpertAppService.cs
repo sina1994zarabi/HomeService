@@ -26,5 +26,6 @@ namespace App.Domain.Core.Contract.AppService
         Task Delete(int id, CancellationToken cancellationToken);
         Task Update(UpdateExpertDto updateExpertDto, CancellationToken cancellationToken);
         Task ChangeStatus(int id, CancellationToken cancellationToken);
+        Task ProccessPayment(int id,decimal amount,CancellationToken cancellationToken);
     }
 }

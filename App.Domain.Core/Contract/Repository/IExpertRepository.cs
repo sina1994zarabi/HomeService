@@ -20,5 +20,7 @@ namespace App.Domain.Core.Contract.Repository
 		Task Delete(int id, CancellationToken cancellation);
 		Task Update(UpdateExpertDto expert, CancellationToken cancellation);
 		Task ChangeStatus(int id, CancellationToken cancellation);
-	}
+		Task ProccessPayment(int id,decimal amount,CancellationToken cancellation);
+
+    }
 }
