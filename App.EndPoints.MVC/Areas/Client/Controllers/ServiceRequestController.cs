@@ -118,7 +118,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
         {
             await _serviceRequestAppService.ChangeStatus(StatusEnum.AwaitingPayment,Id,default);
             var allOffers = await _serviceOfferingAppService.GetAll(default);
-            var targetOffer = allOffers.FirstOrDefault(x => (x.ServiceRequestId == Id && x.Status == StatusEnum.InProgress));
+            var targetOffer = allOffers.FirstOrDefault(x => (x.ServiceRequestId == Id && x.Status == StatusEnum.AwaitingPayment));
             await _serviceOfferingAppService.ChangeStatus(targetOffer.Id,StatusEnum.AwaitingOffers ,default);
             TempData["Message"] = "خدمات با موفقیت تکمیل شد. در انتظار پرداخت می‌باشد";
             return RedirectToAction("Details", new { id = Id });

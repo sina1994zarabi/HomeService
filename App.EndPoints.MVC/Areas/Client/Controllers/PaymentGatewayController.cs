@@ -18,7 +18,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             _serviceRequestAppService = serviceRequestAppService;
             _clientAppService = clientAppService;
             _serviceOfferingAppService = serviceOfferingAppService;
-         }
+        }
 
         public async Task<IActionResult> Index(int Id)
         {
@@ -40,7 +40,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             TempData["SuccessMessage"] = "پرداخت با موفقیت انجام شد";
             await _serviceRequestAppService.ChangeStatus(StatusEnum.AwaitingAdminApprovalForTransaction, Id, default);
             var allOffers = await _serviceOfferingAppService.GetAll(default);
-            var targetOffer = allOffers.FirstOrDefault(x => ( x.Id == Id && x.Status == StatusEnum.AwaitingAdminApprovalForTransaction));
+            var targetOffer = allOffers.FirstOrDefault(x => ( x.ServiceRequestId == Id && x.Status == StatusEnum.AwaitingAdminApprovalForTransaction));
             await _serviceOfferingAppService.ChangeStatus(targetOffer.Id, StatusEnum.AwaitingAdminApprovalForTransaction, default);
             return RedirectToAction("Index");
         }

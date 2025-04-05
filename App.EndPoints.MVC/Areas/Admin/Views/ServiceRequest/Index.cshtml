@@ -7,6 +7,19 @@
     ViewData["Title"] = "سفارشات";
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">
+        @TempData["Error"]
+    </div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["Success"]
+    </div>
+}
+
 <table class="table table-bordered table-responsive">
     <thead>
         <tr>
@@ -58,8 +71,8 @@
                             <i class="fas fa-eye"></i>
                         </a>
                         <a class="btn btn-danger btn-sm"
-                       asp-action="Delete"
-                       asp-route-id="@serviceRequest.Id"
+                            asp-action="Delete"
+                            asp-route-id="@serviceRequest.Id"
                            onclick="return confirm('مطمینید میخواهید ادامه دهید؟')"
                            title="حذف">
                             <i class="fas fa-trash-alt"></i>
