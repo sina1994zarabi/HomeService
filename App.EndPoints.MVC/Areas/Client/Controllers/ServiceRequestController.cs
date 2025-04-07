@@ -48,7 +48,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
 		}
 
         // View Completed ServiceRequests
-        public async Task<IActionResult> ViewCompletedServiceRequests()
+        public async Task<IActionResult> CompletedServiceRequests()
         {
             var user = await _userManager.GetUserAsync(User);
             var client = await _clientAppService.GetById(user.Id, default);
@@ -119,7 +119,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             await _serviceRequestAppService.ChangeStatus(StatusEnum.AwaitingPayment,Id,default);
             var allOffers = await _serviceOfferingAppService.GetAll(default);
             var targetOffer = allOffers.FirstOrDefault(x => (x.ServiceRequestId == Id && x.Status == StatusEnum.AwaitingPayment));
-            await _serviceOfferingAppService.ChangeStatus(targetOffer.Id,StatusEnum.AwaitingOffers ,default);
+            await _serviceOfferingAppService.ChangeStatus(targetOffer.Id,StatusEnum.AwaitingPayment, default);
             TempData["Message"] = "خدمات با موفقیت تکمیل شد. در انتظار پرداخت می‌باشد";
             return RedirectToAction("Details", new { id = Id });
         }

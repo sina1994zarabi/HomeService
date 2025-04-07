@@ -31,10 +31,10 @@
                     <a asp-controller = "Dashboard" asp-action = "ViewProfile">پروفایل</a>
                 </li>
                 <li >
-                    <a asp-area = "Client" asp-controller = "ServiceRequest" asp-action="Index">سفارشات من</a>
+                    <a asp-area = "Client" asp-controller = "ServiceRequest" asp-action = "Index">سفارشات من</a>
                 </li>
                 <li >
-                    <a asp-action = "ServiceOffering" asp-action = "ViewCompletedServiceOfferings">سفارشات انجام شده</a>
+                    <a asp-controller = "ServiceRequest" asp-action = "CompletedServiceRequests">سفارشات انجام شده</a>
                 </li>
                 <li>
                     <a asp-area = "Account" asp-controller = "Account" asp-action="LogOut">خروج</a>

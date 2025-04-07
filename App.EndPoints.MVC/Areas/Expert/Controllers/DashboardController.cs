@@ -90,12 +90,10 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
                 idToUse = expert.Id;
             }
             var expertToDisplay = await _expertAppService.GetById(idToUse, default);
-
             if (expertToDisplay == null)
             {
                 return NotFound(); 
             }
-
             var reviews = await _reviewAppService.GetByExpertId(expertToDisplay.Id, default);
             var averageRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
             var Model = new ExpertPortfolioDto

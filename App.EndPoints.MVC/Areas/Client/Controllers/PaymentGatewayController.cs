@@ -42,7 +42,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             var allOffers = await _serviceOfferingAppService.GetAll(default);
             var targetOffer = allOffers.FirstOrDefault(x => ( x.ServiceRequestId == Id && x.Status == StatusEnum.AwaitingAdminApprovalForTransaction));
             await _serviceOfferingAppService.ChangeStatus(targetOffer.Id, StatusEnum.AwaitingAdminApprovalForTransaction, default);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new {Id = Id});
         }
     }
 }
