@@ -1,0 +1,24 @@
+﻿@model List<App.Domain.Core.Entities.Services.Category>
+
+@{
+	ViewData["Title"] = "Categories";
+	Layout = "_Layout";
+}
+
+<section class="feature-cat-area pt-100" id="category">
+	<div class="container">
+		<div class="row">
+			@foreach (var Cat in Model)
+			{
+				<div class="col-lg-2 col-md-4 col-sm-6">
+					<div class="single-fcat">
+						<a asp-action="Services" asp-route-id="@Cat.Id">
+							<img src="@Cat.Image" alt="" height="50" width="50">
+						</a>
+						<p> @Cat.Title </p>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</section>
