@@ -1,36 +1,184 @@
 ﻿@model App.Domain.Core.DTOs.ReviewDto.CreateReviewDto;
 
-
 @{
-    ViewData["Title"] = "Submit Review";
+    ViewData["Title"] = "ثبت نظر";
     Layout = "_Layout";
 }
 
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Message"]
-    </div>
-}
-<div class = "card shadow-sm mb-4">
-    <div class = "card-body">
-        <form asp-action = "SubmitReview" method = "post">
-            <input type = "hidden" name = "ServiceOfferingId" value = "@ViewBag.Offering.Id"/>
-            <div class="form-group mb-3">
-                <label for="Rating" class="form-label">امتیاز (1 تا 5)</label>
-                <select class = "form-select" name = "Rating" required>
-                    <option value = "">انتخاب کنید</option>
-                    @for (int i = 1; i <= 5; i++)
-                    {
-                        <option value="@i">@i</option>
-                    }
-                </select>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-success d-flex align-items-center mb-4">
+                    <i class="fas fa-check-circle me-2 fa-lg"></i>
+                    <div>@TempData["Message"]</div>
+                </div>
+            }
+
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-primary text-white py-3">
+                    <h4 class="mb-0 text-center">
+                        <i class="fas fa-comment-medical me-2"></i>
+                        فرم ثبت نظر
+                    </h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <form asp-action="SubmitReview" method="post" class="needs-validation" novalidate>
+                        <input type="hidden" name="ServiceOfferingId" value="@ViewBag.Offering.Id" />
+
+                        <!-- Rating Input -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-secondary d-block mb-3">
+                                <i class="fas fa-star me-2 text-warning"></i>
+                                امتیازدهی (۱ تا ۵)
+                            </label>
+                            <div class="rating-stars">
+                                @for (int i = 5; i >= 1; i--)
+                                {
+                                    <input type="radio"
+                                           id="star@(i)"
+                                           name="Rating"
+                                           value="@i"
+                                           class="visually-hidden" />
+                                    <label for="star@(i)"
+                                           class="star-label"
+                                           data-tooltip="@i ستاره">
+                                        <i class="far fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Comment Input -->
+                        <div class="mb-4">
+                            <label for="Comment" class="form-label fw-bold text-secondary">
+                                <i class="fas fa-comment-dots me-2 text-primary"></i>
+                                نظر شما
+                            </label>
+                            <textarea asp-for="Comment"
+                                      class="form-control form-control-lg comment-input"
+                                      rows="4"
+                                      placeholder="نظرات خود را به طور کامل بیان کنید..."
+                                      required></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-lg btn-primary rounded-pill py-3">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                ارسال نظر
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group mb-3">
-                <label for = "Comment" class = "form-label">نظر شما</label>
-                <textarea class = "form-control" asp-for = "Comment" rows = "3" required></textarea>
-            </div>
-            <button type = "submit" class = "btn btn-primary">ارسال نظر</button>
-        </form>
+        </div>
     </div>
 </div>
+
+<style>
+    .card {
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+
+    .card-header.bg-gradient-primary {
+        background: linear-gradient(135deg, #4f46e5, #6366f1);
+    }
+
+    .rating-select option {
+        padding: 0.75rem;
+        font-size: 1.1rem;
+    }
+
+    .comment-input {
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+
+        .comment-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+    .form-label {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .btn-primary {
+        background: #4f46e5;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+
+    .alert-success {
+        background: #f0fdf4;
+        border: 1px solid #86efac;
+        color: #15803d;
+        border-radius: 0.75rem;
+    }
+
+    .rating-stars {
+        display: flex;
+        gap: 0.5rem;
+        direction: rtl; /* RTL direction for container */
+        justify-content: flex-end; /* Align to right side */
+    }
+
+    .star-label {
+        cursor: pointer;
+        position: relative;
+        font-size: 2rem;
+        color: #e4e5e9;
+        transition: all 0.2s ease;
+        transform: scale(1); /* Reset transform */
+    }
+
+        .star-label .fas {
+            position: absolute;
+            right: 0; /* RTL adjustment */
+            opacity: 0;
+            color: #ffd700;
+        }
+
+    /* Correct hover/selected state for RTL */
+    input[type="radio"]:checked ~ .star-label .fas,
+    input[type="radio"]:checked ~ .star-label:hover .fas {
+        opacity: 1;
+    }
+
+    /* Highlight stars to the LEFT of selected star */
+    input[type="radio"]:checked ~ .star-label .fas {
+        opacity: 1;
+    }
+
+    input[type="radio"]:hover ~ .star-label .fas {
+        opacity: 0.6;
+    }
+
+    [data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        right: 50%; /* RTL adjustment */
+        transform: translateX(50%);
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+    }
+</style>
