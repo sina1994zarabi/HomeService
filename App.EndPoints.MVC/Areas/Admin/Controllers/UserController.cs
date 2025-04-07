@@ -15,7 +15,6 @@ namespace App.EndPoints.MVC.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
-
         #region Dependencies
         private readonly IClientAppService _clientAppService;
         private readonly IExpertAppService _expertAppService;

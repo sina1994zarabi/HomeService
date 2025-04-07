@@ -7,9 +7,7 @@
 
 <h2>خدمات</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">ایجاد خدمات جدید</a>
-</p>
+
 
 <table class="table table-bordered">
     <thead>
@@ -40,9 +38,12 @@
         }
     </tbody>
 </table>
+
+<a asp-action = "Create" class="btn btn-primary">ایجاد خدمات جدید</a>
 <a asp-action="Index" asp-controller = "Dashboard" class="btn btn-secondary">
     <i class="fas fa-arrow-left"></i> بازگشت
 </a>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

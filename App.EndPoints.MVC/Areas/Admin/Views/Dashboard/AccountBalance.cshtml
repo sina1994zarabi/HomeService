@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "موجودی حساب";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+    <!-- Account Balance Card -->
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow-sm border-primary">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">موجودی حساب</h5>
+            </div>
+            <div class="card-body">
+                <h3 class="text-center">@ViewBag.AccountBalance.ToString("N0") تومان</h3>
+            </div>
+        </div>
+    </div>
+</div>
