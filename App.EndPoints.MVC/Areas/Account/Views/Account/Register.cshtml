@@ -17,21 +17,44 @@
                         </div>
                         <form asp-action="Register" class="submit-form" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger p-3" role="alert"></div>
+
+                            <!-- Full Name -->
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="form-group">
-                                        <label asp-for="FullName" class="mb-1"> نام و نام خانوادگی: </label>
-                                        <input type="text" asp-for = "FullName" class="form-control rounded">
-                                        <span asp-validation-for = "FullName" class="text-danger"></span>
+                                        <label asp-for="FullName" class="mb-1">نام و نام خانوادگی:</label>
+                                        <input type="text" asp-for="FullName" class="form-control rounded">
+                                        <span asp-validation-for="FullName" class="text-danger"></span>
                                     </div>
                                 </div>
-                              
                             </div>
+
+                            <!-- Username and Phone Number -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Username" class="mb-1">نام کاربری</label>
+                                        <input type="text" asp-for="Username" class="form-control rounded">
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="PhoneNumber" class="mb-1">شماره تماس</label>
+                                        <input type="text" asp-for="PhoneNumber" class="form-control rounded">
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
                             <div class="form-group">
                                 <label asp-for="Email" class="mb-1">ایمیل</label>
                                 <input type="email" asp-for="Email" class="form-control rounded">
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
+
+                            <!-- Password and Confirmed Password -->
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -47,6 +70,10 @@
                                         <span asp-validation-for="ConfirmedPassword" class="text-danger"></span>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label asp-for="Gender" class="mb-1">جنسیت</label>
@@ -57,20 +84,24 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Role Selection -->
                             <div class="form-group">
-                                <label class="mb-1">ثبت نام به عنوان: </label><br>
-                                <input type="radio" id="client" name="Role" asp-for="Role" value="Client" checked> 
+                                <label class="mb-1">ثبت نام به عنوان:</label><br>
+                                <input type="radio" id="client" name="Role" asp-for="Role" value="Client" checked>
                                 <label for="client" class="ft-medium">مشتری</label><br>
-                                <input type="radio" id="expert" name="Role" asp-for="Role" value="Expert"> 
+                                <input type="radio" id="expert" name="Role" asp-for="Role" value="Expert">
                                 <label for="expert" class="ft-medium">کارشناس</label><br>
                                 <span asp-validation-for="Role" class="text-danger"></span>
                             </div>
+
+                            <!-- Submit Button -->
                             <div class="form-group">
                                 <button type="submit" class="btn btn-md full-width theme-bg text-light rounded ft-medium">ثبت نام</button>
                             </div>
 
                             <div class="form-group text-center mt-4 mb-0">
-                                <p class="mb-0">آیا قبلا ثبت نام کرده اید؟ <a asp-action = "Login" class="ft-medium text-success">ورود به حساب کاربری</a></p>
+                                <p class="mb-0">آیا قبلا ثبت نام کرده اید؟ <a asp-action="Login" class="ft-medium text-success">ورود به حساب کاربری</a></p>
                             </div>
                         </form>
                     </div>
@@ -81,115 +112,115 @@
 </section>
 
 <style>
-.gray {
-    background-color: #f9f9f9;
-    padding: 40px 0;
-}
+    .gray {
+        background-color: #f9f9f9;
+        padding: 40px 0;
+    }
 
-.signup-screen-wrap {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    .signup-screen-wrap {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-.signup-screen-single {
-    padding: 20px;
-}
+    .signup-screen-single {
+        padding: 20px;
+    }
 
-.text-center {
-    text-align: center;
-}
+    .text-center {
+        text-align: center;
+    }
 
-.mb-4 {
-    margin-bottom: 1.5rem;
-}
+    .mb-4 {
+        margin-bottom: 1.5rem;
+    }
 
-.ft-medium {
-    font-weight: 500;
-}
+    .ft-medium {
+        font-weight: 500;
+    }
 
-.form-group {
-    margin-bottom: 15px;
-}
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: #333;
-}
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #333;
+    }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-select:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
 
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.5;
-    text-align: center;
-    text-decoration: none;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    user-select: none;
-    transition: background-color 0.3s, border-color 0.3s;
-}
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        text-align: center;
+        text-decoration: none;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        user-select: none;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
 
-.btn-md {
-    padding: 10px 16px;
-    font-size: 16px;
-}
+    .btn-md {
+        padding: 10px 16px;
+        font-size: 16px;
+    }
 
-.full-width {
-    width: 100%;
-}
+    .full-width {
+        width: 100%;
+    }
 
-.theme-bg {
-    background-color: #007bff;
-    color: #ffffff;
-}
+    .theme-bg {
+        background-color: #007bff;
+        color: #ffffff;
+    }
 
-.text-light {
-    color: #ffffff;
-}
+    .text-light {
+        color: #ffffff;
+    }
 
-.btn:hover {
-    background-color: #0056b3;
-    color: #ffffff;
-}
+    .btn:hover {
+        background-color: #0056b3;
+        color: #ffffff;
+    }
 
-.text-success {
-    color: #28a745;
-}
+    .text-success {
+        color: #28a745;
+    }
 
-.text-success:hover {
-    color: #218838;
-}
+        .text-success:hover {
+            color: #218838;
+        }
 
-.text-danger {
-    color: #dc3545;
-}
+    .text-danger {
+        color: #dc3545;
+    }
 </style>

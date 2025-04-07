@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace App.Domain.Core.DTOs.AccountDto
@@ -27,6 +28,7 @@ namespace App.Domain.Core.DTOs.AccountDto
         [Compare("Password", ErrorMessage = "رمز عبور یکی نیست")]
         public string ConfirmedPassword { get; set; }
         public string? Role { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public Gender Gender { get; set; }
     }
 }

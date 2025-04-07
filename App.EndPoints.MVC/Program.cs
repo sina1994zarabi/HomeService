@@ -14,6 +14,7 @@ using Serilog.Events;
 using System.Drawing;
 using Serilog.Sinks.MSSqlServer;
 using App.EndPoints.MVC.MiddleWare;
+using App.Domain.Infra.Repos.Dapper.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,15 +90,15 @@ builder.Services.AddScoped<IServiceOfferingService, ServiceOfferingService>();
 builder.Services.AddScoped<IServiceOfferingAppService, ServiceOfferingAppService>();
 
 
-builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+//builder.Services.AddScoped<IServiceRepository, ServiceDapperRepository>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IServiceAppService, ServiceAppService>();
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
 
-builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+//builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
 builder.Services.AddScoped<ISubCategoryAppService, SubCategoryAppService>();
 
@@ -105,11 +106,19 @@ builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IReviewAppService, ReviewAppService>();
 
-builder.Services.AddScoped<ICityRepository, CityRepository>();
+//builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<ICityService, CityService>();
 
 
 builder.Services.AddScoped<IUtilityService, UtilityService>();
+
+#region DapperDependencies
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddScoped<ICityRepository>(provider => new CityDapperRepository(connectionString));
+builder.Services.AddScoped<ICategoryRepository>(provider => new CategoryDapperRepository(connectionString));
+builder.Services.AddScoped<ISubCategoryRepository>(provider => new SubCategoryDapperRepository(connectionString));
+builder.Services.AddScoped<IServiceRepository>(provider => new ServiceDapperRepository(connectionString));
+#endregion
 
 //Add Identity 
 builder.Services.AddIdentity<AppUser, IdentityRole<int>>()
