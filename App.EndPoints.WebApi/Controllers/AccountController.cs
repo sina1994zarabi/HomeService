@@ -20,7 +20,6 @@ namespace App.EndPoints.WebApi.Controllers
             _userManager = userManager;
         }
 
-
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] AccountRegisterDto? account)
         {

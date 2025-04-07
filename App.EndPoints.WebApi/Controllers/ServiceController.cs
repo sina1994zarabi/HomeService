@@ -12,7 +12,6 @@ namespace App.EndPoints.WebApi.Controllers
         private readonly ISubCategoryAppService _subCategoryAppService;
         private readonly IServiceAppService _serviceAppService;
 
-
         public ServiceController(ICategoryAppService categoryAppService,
                                  ISubCategoryAppService subCategoryAppService,
                                  IServiceAppService serviceAppService)
@@ -21,7 +20,6 @@ namespace App.EndPoints.WebApi.Controllers
             _subCategoryAppService = subCategoryAppService;
             _serviceAppService = serviceAppService;
         }
-
 
         [HttpGet("Categories")]
         public async Task<IActionResult> GetCategories()

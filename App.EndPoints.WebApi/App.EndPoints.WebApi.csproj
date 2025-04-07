@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\App.Domain.Services.AppServices\App.Domain.Services.AppServices.csproj" />
+    <ProjectReference Include="..\App.Domain.Services.Services\App.Domain.Services.Services.csproj" />
+    <ProjectReference Include="..\App.Infra.DataAccess.EfCore\App.Infra.DataAccess.EfCore.csproj" />
   </ItemGroup>
 
 </Project>
