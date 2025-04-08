@@ -39,9 +39,10 @@
                                 {
                                     <input type="radio"
                                            id="star@(i)"
-                                           name="Rating"
-                                           value="@i"
-                                           class="visually-hidden" />
+                                       name="@nameof(Model.Rating)"
+                                       value="@i"
+                                           class="visually-hidden"
+                                       asp-for="Rating" />
                                     <label for="star@(i)"
                                            class="star-label"
                                            data-tooltip="@i ستاره">
@@ -50,6 +51,7 @@
                                     </label>
                                 }
                             </div>
+                            <span asp-validation-for="Rating" class="text-danger"></span>
                         </div>
 
                         <!-- Comment Input -->

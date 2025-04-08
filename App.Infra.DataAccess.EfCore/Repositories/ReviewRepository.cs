@@ -29,7 +29,8 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 				ClientId = review.ClientId,
 				ServiceOfferingId = review.ServiceOfferingId,
 				Comment = review.Comment,
-				ReviewDate = review.CreatedAt
+				ReviewDate = review.CreatedAt,
+				Rating = review.Rating
 			};
 			_context.Reviews.Add(newReview);
 			await _context.SaveChangesAsync(cancellation);
