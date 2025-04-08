@@ -28,16 +28,19 @@
                     <a asp-area = "" asp-controller = "Home" asp-action = "Index" >خانه</a>
                 </li>
                 <li>
-                    <a asp-controller = "Dashboard" asp-action = "ViewProfile">پروفایل</a>
-                </li>
-                <li >
-                    <a asp-area = "Client" asp-controller = "ServiceRequest" asp-action = "Index">سفارشات من</a>
-                </li>
-                <li >
-                    <a asp-controller = "ServiceRequest" asp-action = "CompletedServiceRequests">سفارشات انجام شده</a>
+                    <a asp-controller = "Dashboard" asp-action = "ViewProfile" >پروفایل</a>
                 </li>
                 <li>
-                    <a asp-area = "Account" asp-controller = "Account" asp-action="LogOut">خروج</a>
+                    <a asp-controller = "Dashboard" asp-action = "UpdateBalance">افزایش موجودی</a>
+                </li>
+                <li >
+                    <a asp-area = "Client" asp-controller = "ServiceRequest" asp-action = "Index" >سفارشات من</a>
+                </li>
+                <li >
+                    <a asp-controller = "ServiceRequest" asp-action = "CompletedServiceRequests" >سفارشات انجام شده</a>
+                </li>
+                <li>
+                    <a asp-area = "Account" asp-controller = "Account" asp-action = "LogOut">خروج</a>
                 </li>
             </ul>
         </div>
