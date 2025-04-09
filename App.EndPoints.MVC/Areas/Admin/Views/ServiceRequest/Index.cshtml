@@ -7,16 +7,16 @@
     ViewData["Title"] = "سفارشات";
 }
 
-@if (TempData["Error"] != null)
+@if (TempData["ErrorMessage"] != null)
 {
-    <div class="alert alert-danger text-center">
-        @TempData["Error"]
+    <div class = "alert alert-danger text-center">
+        @TempData["ErrorMessage"]
     </div>
 }
-@if (TempData["Success"] != null)
+@if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success text-center">
-        @TempData["Success"]
+    <div class = "alert alert-success text-center">
+        @TempData["SuccessMessage"]
     </div>
 }
 

@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Expert\Models\" />
     <Folder Include="wwwroot\ClientPanel\PreviousPanel\js\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\Uploads\" />

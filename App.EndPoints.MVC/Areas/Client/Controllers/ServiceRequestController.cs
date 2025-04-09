@@ -86,7 +86,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
         public async Task<IActionResult> AcceptOffer(int requestId, int offerId)
         {
             await _serviceRequestAppService.AcceptOffer(requestId, offerId,default);
-            TempData["Message"] = "پیشنهاد با موفقیت انتخاب شد";
+            TempData["SuccessMessage"] = "پیشنهاد با موفقیت انتخاب شد";
             return RedirectToAction("Details", new { id = requestId });
         }
 

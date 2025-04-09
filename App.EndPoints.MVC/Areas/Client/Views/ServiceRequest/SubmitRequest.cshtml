@@ -1,67 +1,143 @@
 ﻿@model App.Domain.Core.DTOs.ServiceRequestDto.CreateServiceRequestDto
 
 @{
-    ViewData["Title"] = "Submit Service Request";
-    Layout = "_Layout";
+	ViewData["Title"] = "Submit Service Request";
+	Layout = "_Layout";
 }
 
-<h2 class="text-center mb-4">ارسال درخواست خدمات</h2>
+<div class="container my-5 d-flex justify-content-center">
+	<div class="card form-card shadow-lg">
+		<div class="card-header bg-primary text-white text-center py-3">
+			<h4 class="mb-0">مشخصات درخواست</h4>
+		</div>
+		<div class="card-body p-4">
+			<form asp-action="SubmitRequest" method="post">
+				<input asp-for="ServiceId" type="hidden" value="@ViewBag.Service.Id" />
 
-<div class="card shadow-sm mb-4">
-    <div class="card-header">
-        <h5 class="card-title">مشخصات درخواست</h5>
-    </div>
-    <div class="card-body">
-        <form asp-action = "SubmitRequest" method="post">
-            <input asp-for = "ServiceId" type="hidden" value= "@ViewBag.Service.Id">
-            <div class="form-group mb-3">
-                <label class="form-label">خدمت انتخابی</label>
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">@ViewBag.Service.Title</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <!-- Service Image Placeholder -->
-                            <div class="service-image rounded-circle bg-secondary d-flex justify-content-center align-items-center" style="width: 100px; height: 100px; overflow: hidden; margin-right: 20px;">
-                                @if (!string.IsNullOrEmpty(ViewBag.Service.Image))
-                                {
-                                    <img src="@ViewBag.Service.Image" alt="Service Image" class="img-fluid" />
-                                }
-                                else
-                                {
-                                    <i class="fas fa-cogs text-white" style="font-size: 36px;"></i>
-                                }
-                            </div>
-                            <!-- Service Details -->
-                            <div>
-                                <p><strong>توضیحات: </strong> @ViewBag.Service.Description</p>
-                                <p><strong>قیمت :</strong> @ViewBag.Service.Price.ToString("N0") ریال</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for = "Title" class="form-label">عنوان درخواست</label>
-                <input asp-for = "Title" class="form-control" placeholder="عنوان درخواست را وارد کنید" required />
-                <span asp-validation-for = "Title" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for = "Description" class="form-label">توضیحات</label>
-                <textarea asp-for = "Description" class="form-control" rows="3" placeholder="توضیحات بیشتر" required></textarea>
-                <span asp-validation-for = "Description" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for = "BookingDate" class="form-label">تاریخ رزرو</label>
-                <input asp-for="BookingDate" class="form-control" type="datetime-local" required />
-                <span asp-validation-for="BookingDate" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">ارسال درخواست</button>
-        </form>
-    </div>
+				
+				<div class="form-group mb-4">
+					<label class="form-label fw-bold">خدمت انتخابی</label>
+					<div class="service-info card">
+						<div class="card-header bg-info text-white">
+							<h5 class="mb-0">@ViewBag.Service.Title</h5>
+						</div>
+						<div class="card-body">
+							<div class="d-flex align-items-center">
+								
+								<div class="service-image rounded-circle bg-secondary d-flex justify-content-center align-items-center me-3">
+									@if (!string.IsNullOrEmpty(ViewBag.Service.Image))
+									{
+										<img src="@ViewBag.Service.Image" alt="Service Image" class="img-fluid" />
+									}
+									else
+									{
+										<i class="fas fa-cogs text-white" style="font-size: 36px;"></i>
+									}
+								</div>
+								
+								<div>
+									<p class="mb-1"><strong>توضیحات:</strong> @ViewBag.Service.Description</p>
+									<p class="mb-0"><strong>قیمت:</strong> @ViewBag.Service.Price.ToString("N0") ریال</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+				<div class="form-group mb-3">
+					<label asp-for="Title" class="form-label fw-bold">عنوان درخواست</label>
+					<input asp-for="Title" class="form-control" placeholder="عنوان درخواست را وارد کنید" required />
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+
+				
+				<div class="form-group mb-3">
+					<label asp-for="Description" class="form-label fw-bold">توضیحات</label>
+					<textarea asp-for="Description" class="form-control" rows="3" placeholder="توضیحات بیشتر" required></textarea>
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+
+				
+				<div class="form-group mb-3">
+					<label asp-for="BookingDate" class="form-label fw-bold">تاریخ رزرو</label>
+					<input asp-for="BookingDate" class="form-control" type="datetime-local" required />
+					<span asp-validation-for="BookingDate" class="text-danger"></span>
+				</div>
+
+				<button type="submit" class="btn btn-primary w-100 py-2">ارسال درخواست</button>
+			</form>
+		</div>
+	</div>
 </div>
 
-<a asp-area = "" asp-controller = "Home" asp-action = "Index" class="btn btn-secondary">بازگشت به صفحه اصلی</a>
+<div class="text-center mb-5">
+	<a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+		<i class="fas fa-arrow-left"></i> بازگشت به صفحه اصلی
+	</a>
+</div>
 
 
+<style>
+
+
+	.form-card {
+		max-width: 600px;
+		width: 100%;
+		border: none;
+		border-radius: 15px;
+		overflow: hidden;
+	}
+
+	.card-header {
+		font-size: 1.2rem;
+		font-weight: bold;
+	}
+
+	.service-info {
+		border: 1px solid #e0e0e0;
+		border-radius: 10px;
+		overflow: hidden;
+	}
+
+		.service-info .card-header {
+			font-size: 1rem;
+		}
+
+	.service-image {
+		width: 80px;
+		height: 80px;
+		overflow: hidden;
+	}
+
+		.service-image img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+	.form-control {
+		font-size: 1rem;
+		padding: 10px;
+		border-radius: 0.375rem;
+	}
+
+	.form-label {
+		margin-bottom: 0.5rem;
+	}
+
+	.btn {
+		font-size: 1rem;
+		transition: background-color 0.3s ease, transform 0.3s ease;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border-color: #007bff;
+	}
+
+		.btn-primary:hover {
+			background-color: #0056b3;
+			transform: translateY(-2px);
+		}
+</style>

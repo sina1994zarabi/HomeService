@@ -56,6 +56,7 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 		{
 			return await _context.Experts.
 						 Include(x => x.AppUser).
+						 Include(x => x.Services).
 						 FirstOrDefaultAsync(x => x.Id == id, cancellation);
 		}
 
@@ -88,8 +89,6 @@ namespace App.Infra.DataAccess.EfCore.Repositories
             expert.Services.Remove(service);
             await _context.SaveChangesAsync(cancellation);
         }
-
-
 
         public async Task Update(UpdateExpertDto expert,CancellationToken cancellation)
 		{

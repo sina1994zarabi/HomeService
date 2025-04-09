@@ -34,7 +34,7 @@ else
                 {
                     <tr>
                         <td>@request.Title</td>
-                        <td>@request.BookingDate.ToString("yyyy/MM/dd")</td>
+                        <td>@request.BookingDate.ToPersianString()</td>
                         <td>@request.Status.ToFarsiStatus()</td>
                         <td>
                             <a class="btn btn-success btn-sm"

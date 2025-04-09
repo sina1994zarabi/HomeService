@@ -9,14 +9,14 @@
 <div class = "container py-5">
 	<div class = "row justify-content-center">
 		<div class = "col-md-8">
-			<!-- Bill Summary Card -->
+			
 			<div class = "card shadow-lg mb-4">
 				<div class = "card-header bg-primary text-white">
 					<h4 class = "mb-0"><i class = "fas fa-receipt me-2"></i>صورتحساب خدمات</h4>
 				</div>
 				<div class = "card-body">
 					<dl class = "row fs-5">
-						<!-- Service Details -->
+						
 						<dt class = "col-sm-5 text-muted">نام سرویس: </dt>
 						<dd class = "col-sm-7 fw-bold">@Model.Service.Title </dd>
 
@@ -24,12 +24,12 @@
 						<dd class = "col-sm-7 text-success fw-bold">
 							@Model.Service.Price.ToString("N0") ریال
 						</dd>
-						<!-- Dates -->
+						
 						<dt class = "col-sm-5 text-muted">تاریخ درخواست: </dt>
 						<dd class = "col-sm-7">@Model.BookingDate.ToPersianString()</dd>
 						<dt class = "col-sm-5 text-muted">تاریخ تکمیل: </dt>
 						<dd class = "col-sm-7">@DateTime.Now.ToPersianString()</dd>
-						<!-- Client Info -->
+						
 						<dt class = "col-sm-5 text-muted">مشتری: </dt>
 						<dd class = "col-sm-7">@Model.Client.AppUser.FullName</dd>
 						<dt class = "col-sm-5 text-muted">موجودی فعلی: </dt>
@@ -39,7 +39,7 @@
 					</dl>
 				</div>
 			</div>
-			<!-- Payment Confirmation -->
+			
 			<div class = "card shadow">
 				<div class = "card-body">
 					<h5 class = "mb-4"><i class = "fas fa-shield-alt text-success me-2"></i>پرداخت</h5>
@@ -67,8 +67,8 @@
 		</div>
 	</div>
 </div>
-<!-- Status Messages -->
-@if (TempData["PaymentSuccess"] != null)
+
+@if (TempData["SuccessMessage"] != null)
 {
 	<div class="toast-container position-fixed bottom-0 end-0 p-3">
 		<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -77,12 +77,12 @@
 				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 			</div>
 			<div class="toast-body">
-				@TempData["PaymentSuccess"]
+				@TempData["SuccessMessage"]
 			</div>
 		</div>
 	</div>
 }
-@if (TempData["PaymentError"] != null)
+@if (TempData["ErrorMessage"] != null)
 {
 	<div class="toast-container position-fixed bottom-0 end-0 p-3">
 		<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -91,25 +91,12 @@
 				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 			</div>
 			<div class = "toast-body">
-				@TempData["PaymentError"]
+				@TempData["ErrorMessage"]
 			</div>
 		</div>
 	</div>
 }
-<script>
-	// Enable submit button when checkbox is checked
-	document.getElementById('confirmPayment').addEventListener('change', function () {
-		document.getElementById('submitButton').disabled = !this.checked;
-	});
-	// Form submission handling
-	document.getElementById('paymentForm').addEventListener('submit', function (e) {
-		const btn = document.getElementById('submitButton');
-		btn.disabled = true;
-		btn.innerHTML = `<div class="spinner-border spinner-border-sm" role="status">
-												<span class="visually-hidden">Loading...</span>
-											 </div> در حال پرداخت...`;
-	});
-</script>
+
 <style>
 	.card
 	{

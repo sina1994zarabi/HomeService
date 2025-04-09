@@ -84,6 +84,7 @@ namespace App.EndPoints.MVC.Areas.Admin.Controllers
             await _expertAppService.ProccessPayment(offer.Expert.Id,paymentAmount,default);
             await _serviceRequestAppService.ChangeStatus(StatusEnum.Paid,request.Id, default);
             await _serviceOfferingAppService.ChangeStatus(offer.Id,StatusEnum.Paid,default);
+            TempData["SuccessMessage"] = "پرداخت با موفقیت تایید شد";
             return RedirectToAction("Index");
         }
 

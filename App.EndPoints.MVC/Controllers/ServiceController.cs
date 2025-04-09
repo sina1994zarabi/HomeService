@@ -21,7 +21,7 @@ namespace App.EndPoints.MVC.Controllers
             _serviceAppService = serviceAppService;
         }
 
-        // View All Services
+        
         public async Task<IActionResult> Index()
         {
             string servicesCacheKey = "ServicesCachKey";
@@ -34,7 +34,7 @@ namespace App.EndPoints.MVC.Controllers
             return View(model);
         }
 
-        // View Details Of A Service
+        
         public async Task<IActionResult> Details(int Id)
         {
             var model = await _serviceAppService.GetById(Id, default);
