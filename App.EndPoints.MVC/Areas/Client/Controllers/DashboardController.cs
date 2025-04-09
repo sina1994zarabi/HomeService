@@ -70,7 +70,8 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
         {
             if (!ModelState.IsValid) { return View(model); }
             await _clientAppService.Update(model, default,model.Image);
-            return RedirectToAction("ViewProfile");
+            TempData["SuccessMessage"] = "ویرایش پروفایل با موفقیت انجام شد";
+            return RedirectToAction("EditProfile");
         }
 
 

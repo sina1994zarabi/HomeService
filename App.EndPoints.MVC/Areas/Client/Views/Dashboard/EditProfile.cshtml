@@ -3,15 +3,29 @@
 @{
 	ViewData["Title"] = "ویرایش پروفایل";
 	Layout = "_Layout";
-	// Define a default image URL if no profile picture is provided.
 	var profilePicUrl = !string.IsNullOrEmpty(Model.ImagePath)
 						? Model.ImagePath
-						: "/images/default-avatar.png"; // Ensure this default image exists in your wwwroot/images folder.
+						: "/images/default-avatar.png"; 
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		@TempData["SuccessMessage"]
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		@TempData["ErrorMessage"]
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
 }
 
 <div class="container my-5 d-flex justify-content-center">
 	<div class="card profile-card shadow-sm" style="max-width: 600px; width: 100%;">
-		<!-- Profile Picture Section -->
+		
 		<div class="card-header bg-light text-center position-relative">
 			<div class="profile-pic-container">
 				<img src="@profilePicUrl" alt="Profile Picture" class="profile-pic img-fluid rounded-circle" />
@@ -61,8 +75,7 @@
 
 
 <style>
-
-	/* Card styling for profile editing */
+	
 	.profile-card {
 		border: none;
 		border-radius: 15px;
@@ -70,11 +83,10 @@
 
 	.card-header {
 		border-radius: 15px 15px 0 0;
-		padding-top: 50px; /* Provide extra space for the profile image overlap */
+		padding-top: 50px; 
 		position: relative;
 	}
-
-	/* Profile Picture Styling */
+	
 	.profile-pic-container {
 		position: absolute;
 		left: 50%;
@@ -94,7 +106,6 @@
 		object-fit: cover;
 	}
 
-	/* Form controls */
 	.form-control {
 		font-size: 1rem;
 		padding: 10px;
@@ -106,7 +117,6 @@
 		margin-bottom: 0.5rem;
 	}
 
-	/* Button Styling */
 	.btn-primary {
 		background-color: #007bff;
 		border-color: #007bff;
@@ -115,9 +125,9 @@
 		font-size: 1rem;
 	}
 
-		.btn-primary:hover {
-			background-color: #0056b3;
-			transform: translateY(-2px);
+	.btn-primary:hover {
+		background-color: #0056b3;
+		transform: translateY(-2px);
 		}
 </style>
 

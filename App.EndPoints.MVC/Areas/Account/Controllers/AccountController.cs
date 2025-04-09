@@ -75,7 +75,6 @@ namespace App.EndPoints.MVC.Areas.Account.Controllers
             return View(model);
         }
 
-
         public async Task<IActionResult> LogOut()
         {
             var timestamp = DateTime.Now;

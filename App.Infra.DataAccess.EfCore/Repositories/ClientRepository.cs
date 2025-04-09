@@ -96,6 +96,7 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 				.Include(c => c.AppUser)
 				.FirstOrDefaultAsync(c => c.Id == client.Id, cancellation);
 			var ImagePath = await _utilityService.UploadImage(Image);
+			client.ImagePath = ImagePath;
 			if (clientToUpdate != null)
 			{
 				clientToUpdate.AppUser.Email = client.Email;
@@ -104,7 +105,8 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 				clientToUpdate.FullName = client.FullName;
 				clientToUpdate.AppUser.FullName = client.FullName;
 				clientToUpdate.AppUser.UserName = client.Username;
-				clientToUpdate.AppUser.ProfilePicture = ImagePath;
+                if (!string.IsNullOrWhiteSpace(client.ImagePath))
+                    clientToUpdate.AppUser.ProfilePicture = client.ImagePath;
 				await _context.SaveChangesAsync(cancellation);
 			}
 		}

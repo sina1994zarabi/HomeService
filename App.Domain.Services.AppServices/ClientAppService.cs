@@ -1,6 +1,7 @@
 ﻿using App.Domain.Core.Contract.AppService;
 using App.Domain.Core.Contract.Services;
 using App.Domain.Core.DTOs.ClientDto;
+using App.Domain.Core.DTOs.ExpertDto;
 using App.Domain.Core.DTOs.ReviewDto;
 using App.Domain.Core.DTOs.ServiceRequestDto;
 using App.Domain.Core.Entities;
@@ -27,6 +28,7 @@ namespace App.Domain.Services.AppServices
         private readonly IServiceOfferingService _serviceOfferingService;
         private readonly IServiceRequestAppService _requestAppService;
         private readonly IReviewService _reviewService;
+
 
         public ClientAppService(IClientService clientService,
                                 IServiceService serviceService,
@@ -117,7 +119,7 @@ namespace App.Domain.Services.AppServices
 
         public async Task Update(UpdateClientprofileDto updateClientDto, CancellationToken cancellation,IFormFile Image)
         {
-            await _clientService.Update(updateClientDto, cancellation,Image);
+			await _clientService.Update(updateClientDto, cancellation,Image);
         }
 
         public async Task UpdateBalance(int clientId,decimal balance, CancellationToken cancellationToken)

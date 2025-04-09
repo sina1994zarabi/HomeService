@@ -15,8 +15,7 @@ namespace App.Domain.Core.DTOs.ClientDto
         public string Email { get; set; }
         public string Username { get; set; }
         public string PhoneNumber { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
         public string? ImagePath { get; set; }
-        
     }
 }

@@ -100,8 +100,9 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 			{
 				expertToEdit.AppUser.UserName = expert.Username;
 				expertToEdit.AppUser.Email = expert.Email;
-				expertToEdit.AppUser.ProfilePicture = expert.ImagePath;
-				expertToEdit.PhoneNumber = expert.PhoneNumber;
+                if (!string.IsNullOrWhiteSpace(expert.ImagePath))
+                    expertToEdit.AppUser.ProfilePicture = expert.ImagePath;
+                expertToEdit.PhoneNumber = expert.PhoneNumber;
 				expertToEdit.FullName = expert.FullName;
 				await _context.SaveChangesAsync(cancellation);
 			}

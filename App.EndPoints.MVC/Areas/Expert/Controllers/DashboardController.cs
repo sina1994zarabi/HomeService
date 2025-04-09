@@ -61,7 +61,7 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             if (!ModelState.IsValid)
                 return View(model);
             await _expertAppService.Update(model, default);
-            TempData["Message"] = "ویرایش با موفقیت انجام شد";
+            TempData["SuccessMessage"] = "ویرایش با موفقیت انجام شد";
             return RedirectToAction("EditProfile");   
         }
 
