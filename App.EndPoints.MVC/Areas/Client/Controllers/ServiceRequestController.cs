@@ -91,7 +91,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
         public async Task<IActionResult> SubmitReview(int Id)
         {
             var servieOfferings = await _serviceOfferingAppService.GetAll(default);
-            var offering = servieOfferings.FirstOrDefault(x => x.Id == Id);
+            var offering = servieOfferings.FirstOrDefault(x => x.ServiceRequestId == Id);
             ViewBag.Offering = offering;
             return View();
         }
