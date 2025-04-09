@@ -45,17 +45,6 @@
 				</div>
 				<nav id="nav-menu-container">
 					<ul class="nav-menu" dir="auto">
-						@*<li class="menu-active"><a href="">خانه</a></li>
-						<li><a href="category.html">دسته بندی ها</a></li>
-						<li><a href="price.html">خدمات</a></li>
-						<li class="menu-has-children">
-							<a href="">Pages</a>
-							<ul>
-								<li><a href="elements.html">elements</a></li>
-								<li><a href="search.html">search</a></li>
-								<li><a href="single.html">single</a></li>
-							</ul>
-						</li>*@
 						@if (!User.Identity.IsAuthenticated)
 						{
 							<li>
@@ -88,7 +77,7 @@
 							</li>
 						}
 					</ul>
-				</nav><!-- #nav-menu-container -->
+				</nav>
 			</div>
 		</div>
 	</header>
@@ -105,7 +94,7 @@
 						<h1 class="text-white">
 							<span></span> راحت پیدا میشه!
 						</h1>
-						<form asp-action="search" class="serach-form-area">
+						<form asp-action = "search" class="serach-form-area">
 							<div class="row justify-content-center form-wrap">
 								<div class="col-lg-4 form-cols">
 									<input type="text" class="form-control" name="search" placeholder="دنبال چه می گردید؟">
@@ -118,17 +107,15 @@
 								</div>
 							</div>
 						</form>
-						@*<p class="text-white"> <span>Search by tags:</span> Tecnology, Business, Consulting, IT Company, Design, Development</p>
-*@				</div>
+				</div>
 				</div>
 			</div>
 		</section>
-		<!-- End banner Area -->
 	}
 	<main>
 		@RenderBody()
 	</main>>
-	<!-- Start callto-action Area -->
+	
 	<section class="callto-action-area section-gap" id="join">
 		<div class="container">
 			<div class="row d-flex justify-content-center">
@@ -141,12 +128,12 @@
 			</div>
 		</div>
 	</section>
-	<!-- End calto-action Area -->
-	<!-- start footer Area -->
+	
+	
 	<footer class="footer-area section-gap">
 		<div class="container">
 			<div class="row">
-				<!-- Services Section -->
+				
 				<div class="col-lg-3 col-md-12">
 					<div class="single-footer-widget">
 						<h6>خدمات برتر ما</h6>
@@ -158,7 +145,7 @@
 						</ul>
 					</div>
 				</div>
-				<!-- Newsletter / Contact Section -->
+				
 				<div class="col-lg-6 col-md-12">
 					<div class="single-footer-widget newsletter">
 						<h6>خبرنامه</h6>
