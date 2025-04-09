@@ -68,7 +68,7 @@ namespace App.Domain.Services.AppServices
         {
            var clients = await _clientService.GetAll(cancellationToken);
            return (Client)clients.Where(c => c.AppUserId == userId).Single();
-        }
+        } 
 
         public async Task<Client> GetClientInfo(int id, CancellationToken cancellationToken)
         {

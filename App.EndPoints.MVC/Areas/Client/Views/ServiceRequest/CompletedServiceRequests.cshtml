@@ -8,72 +8,6 @@
     Layout = "_Layout";
 }
 
-<style>
-    /* Icon Button Styling */
-    .btn-icon {
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-        .btn-icon i {
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-    /* Details Button */
-    .btn-details {
-        background-color: #17a2b8;
-        color: white;
-    }
-
-        .btn-details:hover {
-            background-color: #138496;
-        }
-
-    /* Review Button */
-    .btn-review {
-        background-color: #28a745;
-        color: white;
-    }
-
-        .btn-review:hover {
-            background-color: #218838;
-        }
-
-    /* Hover Tooltip */
-    .btn-icon:hover::after {
-        content: attr(data-title);
-        position: absolute;
-        background: rgba(0,0,0,0.8);
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.9rem;
-        white-space: nowrap;
-        top: 50%;
-        right: 100%;
-        transform: translateY(-50%);
-        margin-right: 8px;
-    }
-
-    /* Table Header Alignment */
-    .table thead th {
-        text-align: right !important;
-    }
-
-    .table tbody td {
-        text-align: right !important;
-    }
-</style>
-
 
 <div class="container my-4">
     <h2 class="text-center mb-4">خدمات تکمیل شده</h2>
@@ -106,7 +40,7 @@
                         <td>
                             <div class="d-flex gap-2 justify-content-center">
                                 <a asp-action="Details"
-                                   asp-route-id="@request.Id"
+                                   asp-route-id = "@request.Id"
                                    class="btn btn-icon btn-details"
                                    title="مشاهده جزییات"><i class="fas fa-eye"></i></a>
                                 <a asp-action="SubmitReview"
@@ -128,3 +62,69 @@
         return status == StatusEnum.Completed ? "bg-success" : "bg-secondary";
     }
 }
+
+<style>
+
+    .btn-icon {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-icon i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+
+    .btn-details {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+        .btn-details:hover {
+            background-color: #138496;
+        }
+
+
+    .btn-review {
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-review:hover {
+            background-color: #218838;
+        }
+
+
+    .btn-icon:hover::after {
+        content: attr(data-title);
+        position: absolute;
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        top: 50%;
+        right: 100%;
+        transform: translateY(-50%);
+        margin-right: 8px;
+    }
+
+
+    .table thead th {
+        text-align: right !important;
+    }
+
+    .table tbody td {
+        text-align: right !important;
+    }
+</style>

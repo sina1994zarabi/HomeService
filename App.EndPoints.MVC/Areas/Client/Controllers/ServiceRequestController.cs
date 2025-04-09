@@ -38,7 +38,6 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
             _serviceOfferingAppService = serviceOfferingAppService;
         }
 
-        // View All ServceRequests
         public async Task<IActionResult> Index()
 		{
 			var user = await _userManager.GetUserAsync(User);
@@ -46,12 +45,11 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
 			var model = await _clientAppService.GetServiceRequests(client.Id,default);
 			return View(model);
 		}
-
-        // View Completed ServiceRequests
+        
         public async Task<IActionResult> CompletedServiceRequests()
         {
             var user = await _userManager.GetUserAsync(User);
-            var client = await _clientAppService.GetById(user.Id, default);
+            var client = await _clientAppService.GetClientByUserId(user.Id, default);
             var model = await _clientAppService.GetServiceRequests(client.Id, default);
             return View(model);
         }
