@@ -44,12 +44,7 @@ namespace App.EndPoints.MVC.Areas.Client.Controllers
 
         public async Task<IActionResult> ViewProfile()
         {
-            //string cachKey = "CurrentUser";
-            //if (!_memoryCache.TryGetValue(cachKey, out AppUser model))
-            //{
-                var model = await _userManager.GetUserAsync(User);
-                //_memoryCache.Set(cachKey, model,TimeSpan.FromMinutes(30));
-            //}
+            var model = await _userManager.GetUserAsync(User);
             return View(model);
         }
 

@@ -14,7 +14,7 @@ namespace App.Domain.Core.DTOs.AccountDto
         [Required(ErrorMessage = "لطفا نام و نام خانوادگی خود را وارد کنید")]
         public string FullName { get; set; }
         [Required(ErrorMessage = "لطفا ایمیل خود را وارد کنید")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "آدرس ایمیل معتبر وارد کنید")]
         public string Email { get; set; }
         [Required(ErrorMessage = "لطفا نام کاربری خود را وارد کنید ")]
         public string Username { get; set; }

@@ -100,7 +100,9 @@ namespace App.Infra.DataAccess.EfCore.Repositories
 			{
 				clientToUpdate.AppUser.Email = client.Email;
 				clientToUpdate.PhoneNumber  = client.PhoneNumber;
+				clientToUpdate.AppUser.PhoneNumber  = client.PhoneNumber;
 				clientToUpdate.FullName = client.FullName;
+				clientToUpdate.AppUser.FullName = client.FullName;
 				clientToUpdate.AppUser.UserName = client.Username;
 				clientToUpdate.AppUser.ProfilePicture = ImagePath;
 				await _context.SaveChangesAsync(cancellation);
