@@ -72,6 +72,14 @@
 									</a>
 								</li>
 							}
+							else if (User.IsInRole("Admin"))
+							{
+								<li>
+									<a asp-area = "Admin" asp-controller = "Dashboard" asp-action = "Index">
+										<span class="ticker-btn">بازگشت به پنل ادمین</span>
+									</a>
+								</li>
+							}
 							<li >
 								<a class = "ticker-btn" asp-area = "Account" asp-controller = "Account" asp-action = "LogOut">خروج</a>
 							</li>

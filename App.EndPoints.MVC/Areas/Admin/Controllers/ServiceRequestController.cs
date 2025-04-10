@@ -97,7 +97,7 @@ namespace App.EndPoints.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _serviceRequestAppService.Delete(id,default);
-            TempData["Success"] = "سفارش با موفقیت پاک شد";
+            TempData["SuccessMessage"] = "سفارش با موفقیت پاک شد";
             return RedirectToAction("Index");
         }
     }
