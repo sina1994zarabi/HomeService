@@ -42,7 +42,7 @@
     </table>
 
     <div class="text-center mt-4">
-        @if (Model.Status == StatusEnum.AwaitingOffers)
+        @if (Model.Status == StatusEnum.AwaitingOffers || Model.Status == StatusEnum.PendingClientConfirmation)
         {
             <a asp-controller="Serviceoffering" asp-action="SubmitOffer" asp-route-id="@Model.Id" class="btn btn-success btn-lg me-2">ارسال پیشنهاد</a>
         }

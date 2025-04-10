@@ -77,7 +77,7 @@ namespace App.Domain.Services.AppServices
         {
             var user = CreateUser();
             user.Email = accountRegisterDto.Email;
-            user.UserName = accountRegisterDto.Email;
+            user.UserName = accountRegisterDto.Username;
             user.FullName = accountRegisterDto.FullName;     
             user.Gender = accountRegisterDto.Gender;           
             user.PhoneNumber = accountRegisterDto.PhoneNumber; 

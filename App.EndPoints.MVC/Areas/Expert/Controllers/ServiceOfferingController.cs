@@ -28,7 +28,6 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
             _serviceRequestAppService = serviceRequestAppService;
         }
 
-        // View All Offerings
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
