@@ -7,7 +7,6 @@
 }
 
 <h2>ایجاد مشتری جدید</h2>
-<div asp-validation-summary = "All" class = "text-danger"></div>
 <form asp-action = "CreateClient"  method = "post">
     <div class="form-group">
         <label asp-for = "FullName">نام و نام خانوادگی </label>
@@ -32,6 +31,7 @@
         <input asp-for = "Password" type="password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
+
     <div class="col-6">
         <div class="form-group">
             <label asp-for="ConfirmedPassword" class="mb-1"> تکرار رمز عبور </label>
@@ -39,6 +39,7 @@
             <span asp-validation-for="ConfirmedPassword" class="text-danger"></span>
         </div>
     </div>
+
     <div class="form-group">
         <label asp-for="PhoneNumber"> شماره تلفن </label>
         <input asp-for="PhoneNumber" class="form-control" />

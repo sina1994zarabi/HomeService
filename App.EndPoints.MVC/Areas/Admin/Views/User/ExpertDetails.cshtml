@@ -1,4 +1,5 @@
-﻿@model App.Domain.Core.Entities.User.Expert
+﻿@using FrameWork;
+@model App.Domain.Core.Entities.User.Expert
 
 @{
     ViewData["Title"] = "Expert Details";
@@ -15,11 +16,11 @@
         <p><strong>ایمیل: </strong> @Model.AppUser.Email</p>
         <p><strong>شماره تماس: </strong> @Model.PhoneNumber</p>
         <p><strong>نام کاربری: </strong> @Model.AppUser.UserName</p>
-        <p><strong>تاریخ ثبت نام: </strong> @Model.AppUser.DateRegistered.ToString("MMMM dd, yyyy")</p>
+        <p><strong>تاریخ ثبت نام: </strong> @Model.AppUser.DateRegistered.ToPersianString()</p>
     </div>
 </div>
 
-<a asp-action="Clients" class="btn btn-secondary">بازگشت</a>
+<a asp-action="Experts" class="btn btn-secondary">بازگشت</a>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

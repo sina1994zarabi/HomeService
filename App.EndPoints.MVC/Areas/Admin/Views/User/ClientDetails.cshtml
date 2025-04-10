@@ -1,4 +1,5 @@
-﻿@model App.Domain.Core.Entities.User.Client
+﻿@using FrameWork;
+@model App.Domain.Core.Entities.User.Client
 
 @{
     ViewData["Title"] = "Client Details";
@@ -15,7 +16,7 @@
         <p><strong>ایمیل: </strong> @Model.AppUser.Email</p>
         <p><strong>شماره تماس: </strong> @Model.PhoneNumber</p>
         <p><strong>نام کاربری: </strong> @Model.AppUser.UserName</p>
-        <p><strong>تاریخ ثبت نام: </strong> @Model.AppUser.DateRegistered.ToString("MMMM dd, yyyy")</p>
+        <p><strong>تاریخ ثبت نام: </strong> @Model.AppUser.DateRegistered.ToPersianString("")</p>
     </div>
 </div>
 

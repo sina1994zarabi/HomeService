@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace App.EndPoints.MVC.Controllers
 {
@@ -40,18 +41,18 @@ namespace App.EndPoints.MVC.Controllers
 		public async Task<IActionResult> Index()
 		{
             string categoriesCacheKey = "CategoriesCacheKey";
-            string ExpertCacheKey = "ExpertCacheKey";
+            string ServiceCacheKey = "ServiceCacheKey";
             if (!_memoryCache.TryGetValue(categoriesCacheKey, out List<Category> categories))
             {
                 categories = await _categoryAppService.GetAll(default);
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(10));
                 _memoryCache.Set(categoriesCacheKey, categories, cacheEntryOptions);
             }
-			if (!_memoryCache.TryGetValue(ExpertCacheKey, out List<Service> services))
+			if (!_memoryCache.TryGetValue(ServiceCacheKey, out List<Service> services))
 			{
                 services = await _serviceAppService.GetAll(default);
 				var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(10));
-				_memoryCache.Set(ExpertCacheKey, services, cacheEntryOptions);
+				_memoryCache.Set(ServiceCacheKey, services, cacheEntryOptions);
 			}
 			ViewBag.Services = services.Take(3);
 			return View(categories);
@@ -59,15 +60,9 @@ namespace App.EndPoints.MVC.Controllers
 
         public async Task<IActionResult> Services(int Id)
         {
-            string servicesCacheKey = "ServicesCachKey";
-            if (!_memoryCache.TryGetValue(servicesCacheKey, out List<Service> model))
-            {
-                model = await _serviceAppService.GetServicesBySubCategory(Id,default);
-                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30));
-                _memoryCache.Set(servicesCacheKey, model, cacheEntryOptions);
-            }
-            return View(model);
-        }
+			var model = await _serviceAppService.GetServicesBySubCategory(Id, default);
+			return View(model);
+		}
 
 		public async Task<IActionResult> Categories()
 		{

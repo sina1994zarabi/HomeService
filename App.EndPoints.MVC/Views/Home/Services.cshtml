@@ -34,7 +34,6 @@
 							</div>
 							<div class="card-footer">
 								<div class="d-flex justify-content-between align-items-center">
-									<span class="text-muted">قیمت: @service.Price.ToString("C")</span>
 									@if (!User.Identity.IsAuthenticated)
 									{
 										<a asp-controller = "Service" asp-action = "Details" asp-route-id = "@service.Id" class="btn btn-sm btn-primary">جزییات</a>
