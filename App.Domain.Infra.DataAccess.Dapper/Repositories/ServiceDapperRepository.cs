@@ -113,7 +113,13 @@ namespace App.Domain.Infra.Repos.Dapper.Repository
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync(cancellationToken);
-                var sql = "UPDATE Services SET Title = @Title, Description = @Description, Price = @Price, SubCategoryId = @SubCategoryId, Image = @Image WHERE Id = @Id";
+                var sql = "UPDATE Services " +
+                    "SET Title = @Title," +
+                    " Description = @Description," +
+                    " Price = @Price, SubCategoryId = @SubCategoryId," +
+                    " Image = CASE " +
+                    "WHEN (@Image IS NOT NULL AND @Image <> '') THEN @Image ELSE Image END" +
+                    " WHERE Id = @Id";
                 await connection.ExecuteAsync(sql, new
                 {
                     Title = service.Title,

@@ -15,7 +15,7 @@ namespace App.Domain.Core.DTOs.ServiceDto
 		public decimal Price { get; set; }
 		public int SubCategoryId { get; set; }
 		public string? ImagePath { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
     }
 
 }

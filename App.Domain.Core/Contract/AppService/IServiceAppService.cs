@@ -17,6 +17,5 @@ namespace App.Domain.Core.Contract.AppService
         Task<List<Service>> GetServicesBySubCategory(int subCategoryId, CancellationToken cancellationToken);   
         Task Delete(int id, CancellationToken cancellationToken);
         Task Update(UpdateServiceDto updateServiceDto, CancellationToken cancellationToken,IFormFile Image);
-
     }
 }
