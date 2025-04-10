@@ -27,7 +27,8 @@ namespace App.EndPoints.MVC.Areas.Expert.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             var model = await _expertAppService.GetServiceRequests(user.Id, default);
-            return View(model.Where(x => x.Status == StatusEnum.AwaitingOffers || x.Status == StatusEnum.PendingClientConfirmation)
+            return View(model.Where(x => x.Status == StatusEnum.AwaitingOffers ||
+                                    x.Status == StatusEnum.PendingClientConfirmation)
                    .ToList());
         }
 

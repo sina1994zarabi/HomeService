@@ -50,7 +50,7 @@ namespace App.EndPoints.MVC.Areas.Account.Controllers
                 return Redirect(redirectUrl);
             }
 			_logger.LogWarning("[{Timestamp}] ورود ناموفق کاربر: {Username}", timestamp, model.Username);
-			ModelState.AddModelError("", "ورود ناموفق");
+			ModelState.AddModelError("", "ورود ناموفق . نام کاربری یا کلمه عبور یافت نشد");
             return View(model);
         }
 
